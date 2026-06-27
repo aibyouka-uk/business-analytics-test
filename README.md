@@ -7,6 +7,7 @@ statistics and AI ethics. Content is generic and based on widely available
 course/textbook material (no proprietary case study).
 
 - **100-question bank**, with **20 drawn at random** each attempt
+- A built-in **knowledge base** (`reference.html`): 16 in-depth topic sections with diagrams and links to free, open-access source documents (NIST, scikit-learn, OpenIntro, ISL, the Deep Learning Book, EUR-Lex GDPR, and more). Every question's feedback links straight to the relevant section.
 - Answer options are **shuffled** every run, so no two tests are identical
 - Instant right/wrong feedback with a short explanation after each question
 - Progress bar, live score, and an end-of-test breakdown

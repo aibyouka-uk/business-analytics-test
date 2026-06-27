@@ -43,6 +43,10 @@
     border:1px solid var(--line);font-size:.92rem;line-height:1.5;color:#cfd4ff;display:none}
   .explain.show{display:block}
   .explain b{color:var(--accent)}
+  .explain a.learn{display:inline-block;margin-top:10px;color:#fff;font-weight:600;font-size:.86rem;
+    text-decoration:none;background:rgba(91,140,255,.18);border:1px solid var(--line);
+    padding:6px 12px;border-radius:8px}
+  .explain a.learn:hover{border-color:var(--accent);background:rgba(91,140,255,.3)}
   .nav{display:flex;justify-content:space-between;align-items:center;margin-top:22px;gap:12px}
   button.btn{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;border:0;
     padding:12px 22px;border-radius:11px;font-size:.96rem;font-weight:600;cursor:pointer;transition:.15s}
@@ -217,6 +221,32 @@ const BANK = [
  {tag:"Concept",q:"The main difference between a data warehouse and a data lake is that a warehouse stores:",options:["Structured, processed data ready for analysis, while a lake stores raw data of any type","Only images, while a lake stores only text","Less data than a single spreadsheet","Data that can never be queried"],answer:0,explain:"A <b>warehouse</b> holds structured, processed data; a <b>lake</b> holds raw data of any type."}
 ];
 
+/* ============ KNOWLEDGE-BASE TOPIC MAPPING ============ */
+/* Maps each question to a section anchor in reference.html via ordered keyword rules. */
+const TOPIC_RULES = [
+  [/gdpr|data minimisation|consent|role-based access|\brbac\b|privacy by design|\bpii\b|personally identifiable|ai governance/i, "data-privacy", "Data privacy & protection"],
+  [/sampling bias/i, "statistics", "Statistics essentials"],
+  [/algorithmic|fairness|explainab|interpretab|accountability|automation bias|confirmation bias|responsible ai|human-in-the-loop|model drift|model decay|biased or unrepresentative|biased ai|amplif/i, "ai-ethics", "AI ethics & governance"],
+  [/reinforcement|the 'agent'|the 'reward'|the 'policy'|game or control a robot|trial and error/i, "reinforcement", "Reinforcement learning"],
+  [/generative ai|genai|large language model|\bllm\b|\bgpt\b|'prompt'|hallucination/i, "generative-ai", "Generative AI & LLMs"],
+  [/sentiment|natural language|\bnlp\b|text mining|polarity|positive.*negative.*neutral/i, "nlp-sentiment", "NLP & sentiment analysis"],
+  [/precision|recall|f1 score|confusion matrix|cross-validation|test set|overfitting|underfitting|\broc\b|\bauc\b|accuracy|imbalanced|data leakage/i, "model-evaluation", "Evaluating models"],
+  [/deep learning|neural network/i, "deep-learning", "Deep learning & neural networks"],
+  [/clustering|k-means|segmentation|dimensionality|principal component|\bpca\b|association rule|market-basket|grouping (similar )?(customers|news)|unlabelled data|bread|butter|recommendation system|recommender/i, "unsupervised", "Unsupervised learning"],
+  [/supervised|classification|regression|churn|spam|labelled|'label'|'feature'|loan default|continuous numeric value|house price/i, "supervised", "Supervised learning"],
+  [/three (broad )?categories of machine learning|machine learning are/i, "machine-learning", "Machine learning: the three families"],
+  [/data clean|missing value|outlier|correlation|causation|\bmedian\b|standard deviation|p-value|hypothesis|a\/b test|time-series|time series|seasonality|forecasting|exploratory data analysis/i, "statistics", "Statistics essentials"],
+  [/\betl\b|data warehouse|data lake|cloud computing|business intelligence|power bi|\bbi\b|data pipeline|data governance|open-source ai|\bsql\b|dashboard|first step before building/i, "data-infrastructure", "Data infrastructure"],
+  [/four (main )?types of analytics|descriptive analytics|diagnostic analytics|predictive analytics|prescriptive analytics|hindsight|optimal delivery routes/i, "analytics-types", "The four types of analytics"],
+  [/structured data|unstructured data|big data|'v's|semi-structured|predefined format|rows and columns|emails, images|free-text reviews/i, "data-types", "Data types & big data"],
+  [/\bkpi\b|key performance indicator/i, "kpi", "KPIs & metrics"],
+  [/business analytics|data governance/i, "analytics-foundations", "What business analytics is"]
+];
+function topicFor(qText){
+  for(const [re,a,t] of TOPIC_RULES){ if(re.test(qText)) return {a,t}; }
+  return {a:"", t:"the knowledge base"};
+}
+
 /* ===================== ENGINE ===================== */
 const TEST_SIZE = 20;
 let test=[], cur=0, score=0, answered=false;
@@ -277,7 +307,9 @@ function choose(i){
   responses[cur]={correct};
   $("liveScore").textContent=`Score: ${score}`;
   const ex=$("explain");
-  ex.innerHTML=(correct?"✓ Correct. ":"✗ Not quite. ")+item.explain;
+  const tp=topicFor(item.q);
+  const link = tp.a ? `<br><a class="learn" href="reference.html#${tp.a}" target="_blank" rel="noopener">📖 Learn more: ${tp.t} →</a>` : "";
+  ex.innerHTML=(correct?"✓ Correct. ":"✗ Not quite. ")+item.explain+link;
   ex.className="explain show";
   $("nextBtn").disabled=false;
 }

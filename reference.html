@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Knowledge Base · Business Analytics &amp; AI</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#1a1e3a; --accent:#5b8cff; --accent2:#7c5cff;
+    --good:#2ecc8f; --bad:#ff5c7c; --text:#e8ebff; --muted:#9aa0c7; --line:#2c3260;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(1200px 800px at 20% -10%,#23275a 0%,#0f1226 55%) fixed;color:var(--text);
+    line-height:1.62;}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .top{position:sticky;top:0;z-index:20;background:rgba(15,18,38,.86);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .top h1{font-size:1rem;margin:0;font-weight:700}
+  .top a.btn{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;padding:8px 16px;
+    border-radius:9px;font-size:.85rem;font-weight:600}
+  .top a.btn:hover{text-decoration:none;opacity:.92}
+  .wrap{max-width:880px;margin:0 auto;padding:28px 20px 80px}
+  .lead{color:var(--muted);font-size:1rem;margin:6px 0 26px}
+  .toc{background:linear-gradient(180deg,#1a1e3a,#161a33);border:1px solid var(--line);border-radius:16px;
+    padding:20px 24px;margin-bottom:34px}
+  .toc h2{margin:0 0 12px;font-size:.8rem;text-transform:uppercase;letter-spacing:1px;color:var(--accent)}
+  .toc ol{margin:0;padding-left:20px;columns:2;column-gap:34px}
+  .toc li{margin:5px 0;break-inside:avoid}
+  @media(max-width:560px){.toc ol{columns:1}}
+  section{scroll-margin-top:64px;border-top:1px solid var(--line);padding:30px 0 6px}
+  section:first-of-type{border-top:0}
+  section h2{font-size:1.5rem;margin:0 0 4px;display:flex;align-items:baseline;gap:10px}
+  section h2 .num{font-size:.9rem;color:var(--accent);font-weight:700}
+  h3{font-size:1.05rem;margin:22px 0 6px;color:#cdd4ff}
+  p{margin:12px 0}
+  .key{background:#161a35;border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
+    padding:12px 16px;margin:16px 0;color:#dfe3ff}
+  figure{margin:22px 0;background:#11142b;border:1px solid var(--line);border-radius:14px;padding:18px;text-align:center}
+  figure svg{max-width:100%;height:auto}
+  figcaption{color:var(--muted);font-size:.85rem;margin-top:10px}
+  .sources{margin:18px 0 4px;background:#12152d;border:1px solid var(--line);border-radius:12px;padding:12px 16px;font-size:.9rem}
+  .sources b{color:var(--accent);font-size:.78rem;text-transform:uppercase;letter-spacing:.7px}
+  .sources ul{margin:8px 0 0;padding-left:18px}
+  .sources li{margin:4px 0;color:var(--muted)}
+  .backtop{display:inline-block;margin-top:14px;font-size:.82rem;color:var(--muted)}
+  .pill{display:inline-block;font-size:.7rem;border:1px solid var(--line);border-radius:99px;padding:2px 10px;color:var(--muted);margin-left:6px}
+  /* SVG helpers */
+  .svg-label{fill:var(--text);font-size:13px;font-family:inherit}
+  .svg-muted{fill:var(--muted);font-size:11px;font-family:inherit}
+</style>
+</head>
+<body>
+<div class="top">
+  <h1>📚 Business Analytics &amp; AI — Knowledge Base</h1>
+  <a class="btn" href="index.html">← Back to the test</a>
+</div>
+<div class="wrap">
+  <p class="lead">A study companion for the knowledge test. Each section explains a concept in depth, shows a diagram where it helps, and links to free, openly available source documents and standards so you can read further. Questions in the test link straight to the relevant section here.</p>
+
+  <nav class="toc" id="top">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#analytics-foundations">What business analytics is</a></li>
+      <li><a href="#data-types">Data types &amp; big data</a></li>
+      <li><a href="#kpi">KPIs &amp; metrics</a></li>
+      <li><a href="#analytics-types">The four types of analytics</a></li>
+      <li><a href="#machine-learning">Machine learning: the three families</a></li>
+      <li><a href="#supervised">Supervised learning</a></li>
+      <li><a href="#unsupervised">Unsupervised learning</a></li>
+      <li><a href="#reinforcement">Reinforcement learning</a></li>
+      <li><a href="#deep-learning">Deep learning &amp; neural networks</a></li>
+      <li><a href="#model-evaluation">Evaluating models</a></li>
+      <li><a href="#generative-ai">Generative AI &amp; LLMs</a></li>
+      <li><a href="#nlp-sentiment">NLP &amp; sentiment analysis</a></li>
+      <li><a href="#data-infrastructure">Data infrastructure</a></li>
+      <li><a href="#statistics">Statistics essentials</a></li>
+      <li><a href="#ai-ethics">AI ethics &amp; governance</a></li>
+      <li><a href="#data-privacy">Data privacy &amp; protection</a></li>
+    </ol>
+  </nav>
+
+  <section id="analytics-foundations">
+    <h2><span class="num">01</span> What business analytics is</h2>
+    <p><strong>Business analytics</strong> is the systematic use of data, statistical analysis, and quantitative modelling to support and improve business decisions. It turns raw operational data — sales transactions, web logs, customer records, sensor readings — into <em>actionable intelligence</em> that a manager can act on. The discipline sits at the intersection of statistics, computer science, and domain expertise: the statistics provide rigour, the computing provides scale, and the domain knowledge ensures the questions and answers are meaningful for the business.</p>
+    <p>It is useful to separate analytics from neighbouring ideas. <em>Data</em> is the raw material. <em>Information</em> is data organised so it answers a question. <em>Analytics</em> is the set of methods that produce that information and, increasingly, recommend or automate the resulting decision. Storing data in a database or the cloud is a prerequisite for analytics but is not analytics itself; likewise, a polished dashboard is a delivery mechanism, not the analysis.</p>
+    <div class="key">Analytics is decision support. The test of a good analysis is not how sophisticated the model is, but whether it changes a decision for the better.</div>
+    <p>A practical analytics project almost always begins with a clearly framed business question and a definition of what success looks like, then moves through gathering and cleaning data, exploring it, modelling, and finally communicating results so they drive action. Skipping the framing step is the most common reason analytics work fails to deliver value: a technically excellent model that answers the wrong question helps no one. Mature organisations also build the surrounding habits — regular review forums, shared metrics, and clear ownership — that turn one-off analyses into routine, evidence-based decision-making.</p>
+    <div class="sources">
+      <b>Open sources &amp; further reading</b>
+      <ul>
+        <li><a href="https://www.statlearning.com/" target="_blank" rel="noopener">An Introduction to Statistical Learning</a> — free textbook; Ch. 1 frames data analysis (James, Witten, Hastie &amp; Tibshirani).</li>
+        <li><a href="https://www.openintro.org/book/os/" target="_blank" rel="noopener">OpenIntro Statistics</a> — free, openly licensed introduction to working with data.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Contents</a>
+  </section>
+
+  <section id="data-types">
+    <h2><span class="num">02</span> Data types &amp; big data</h2>
+    <p>Analysts distinguish data by how it is organised. <strong>Structured data</strong> follows a predefined schema — rows and columns with fixed fields and data types, as in a relational database table or a spreadsheet. It is easy to query (for example with SQL) and aggregate. <strong>Unstructured data</strong> has no such fixed format: free-text reviews, emails, images, audio, and video all carry meaning but require extra processing (natural language processing, computer vision) before it can be analysed. <strong>Semi-structured data</strong>, such as JSON or XML, sits between the two, carrying tags or keys without a rigid table schema.</p>
+    <p>The term <strong>big data</strong> describes datasets large or complex enough that traditional tools struggle. It is classically characterised by three "V"s: <strong>volume</strong> (sheer quantity), <strong>velocity</strong> (the speed at which it arrives and must be processed), and <strong>variety</strong> (the mix of structured and unstructured formats). A fourth, <strong>veracity</strong> (trustworthiness and quality), and sometimes <strong>value</strong>, are often added. The point of the framework is that scaling along any of these axes changes which storage and processing technologies you need.</p>
+    <div class="key">Roughly 80–90% of enterprise data is unstructured. The strategic opportunity in modern analytics — and the reason generative AI matters — is unlocking that unstructured majority.</div>
+    <p>Why does the distinction matter for a manager? Because it dictates tooling and cost. Structured data flows neatly into BI dashboards and SQL queries. Unstructured data needs an additional modelling layer to convert text or images into something countable. Knowing which kind of data a question depends on tells you roughly how much engineering effort an answer will take.</p>
+    <div class="sources">
+      <b>Open sources &amp; further reading</b>
+      <ul>
+        <li><a href="https://www.itl.nist.gov/div898/handbook/" target="_blank" rel="noopener">NIST/SEMATECH e-Handbook of Statistical Methods</a> — public-domain reference on data and exploratory analysis.</li>
+        <li><a href="https://www.openintro.org/book/os/" target="_blank" rel="noopener">OpenIntro Statistics</a>, Ch. 1 (Intro to data) — data structures and variable types.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Contents</a>
+  </section>
+
+  <section id="kpi">
+    <h2><span class="num">03</span> KPIs &amp; metrics</h2>
+    <p>A <strong>key performance indicator (KPI)</strong> is a measurable value that shows how effectively an organisation, team, or process is meeting a specific objective. A KPI is not just any number you can compute; it is a number deliberately chosen because movement in it reflects progress (or regression) toward a goal that matters. Monthly recurring revenue, customer churn rate, average resolution time, and conversion rate are common examples.</p>
+    <p>Good KPIs share a few properties. They are <em>aligned</em> to a real objective, <em>measurable</em> from data you actually have, <em>actionable</em> (someone can influence them), and <em>time-bound</em> so you can see trends. A frequent failure mode is the "vanity metric" — a number that looks impressive and rises reliably but does not connect to any decision, such as cumulative page views with no link to revenue or retention. Another is over-instrumentation: tracking so many metrics that none gets attention.</p>
+    <div class="key">A metric becomes a KPI only when it is tied to a goal and someone is accountable for moving it. Choose few, choose wisely.</div>
+    <p>It is also worth separating <em>leading</em> indicators, which predict future outcomes (e.g., trial sign-ups), from <em>lagging</em> indicators, which confirm past results (e.g., quarterly revenue). A balanced set usually includes both, so teams can steer early rather than only learn after the fact. Beware Goodhart's law: once a metric becomes a target, people optimise the metric itself, sometimes at the expense of the underlying goal — so KPIs need occasional review to ensure they still measure what you care about.</p>
+    <div class="sources">
+      <b>Open sources &amp; further reading</b>
+      <ul>
+        <li><a href="https://www.openintro.org/book/os/" target="_blank" rel="noopener">OpenIntro Statistics</a> — measurement, summarising data, and avoiding misleading numbers.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Contents</a>
+  </section>
+
+  <section id="analytics-types">
+    <h2><span class="num">04</span> The four types of analytics</h2>
+    <p>Analytics maturity is commonly described as a progression of four types, moving from understanding the past (hindsight) toward shaping the future (foresight). Each answers a different question and generally adds business value — and complexity — as you move along the chain.</p>
+    <figure>
+      <svg viewBox="0 0 760 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Four types of analytics progression">
+        <defs>
+          <linearGradient id="g4" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#5b8cff"/><stop offset="1" stop-color="#7c5cff"/>
+          </linearGradient>
+        </defs>
+        <g font-family="inherit">
+          <rect x="20" y="60" width="160" height="60" rx="10" fill="#161a35" stroke="#2c3260"/>
+          <rect x="200" y="60" width="160" height="60" rx="10" fill="#1b2348" stroke="#2c3260"/>
+          <rect x="380" y="60" width="160" height="60" rx="10" fill="#222a55" stroke="#3a4570"/>
+          <rect x="560" y="60" width="180" height="60" rx="10" fill="#2b2f63" stroke="#4a4f86"/>
+          <text x="100" y="86" text-anchor="middle" class="svg-label" font-weight="700">Descriptive</text>
+          <text x="100" y="104" text-anchor="middle" class="svg-muted">What happened?</text>
+          <text x="280" y="86" text-anchor="middle" class="svg-label" font-weight="700">Diagnostic</text>
+          <text x="280" y="104" text-anchor="middle" class="svg-muted">Why did it happen?</text>
+          <text x="460" y="86" text-anchor="middle" class="svg-label" font-weight="700">Predictive</text>
+          <text x="460" y="104" text-anchor="middle" class="svg-muted">What will happen?</text>
+          <text x="650" y="86" text-anchor="middle" class="svg-label" font-weight="700">Prescriptive</text>
+          <text x="650" y="104" text-anchor="middle" class="svg-muted">What should we do?</text>
+          <line x1="20" y1="150" x2="740" y2="150" stroke="url(#g4)" stroke-width="4"/>
+          <text x="20" y="172" class="svg-muted">Hindsight</text>
+          <text x="690" y="172" class="svg-muted">Foresight</text>
+        </g>
+      </svg>
+      <figcaption>The analytics progression: value and difficulty generally rise from descriptive to prescriptive.</figcaption>
+    </figure>
+    <p><strong>Descriptive analytics</strong> summarises what has already happened — totals, averages, trends, and the dashboards and reports built on them. <strong>Diagnostic analytics</strong> digs into <em>why</em>, using techniques like drill-down, segmentation, and correlation to find the drivers behind a result. <strong>Predictive analytics</strong> uses historical patterns and statistical or machine-learning models to estimate <em>what is likely to happen</em> — forecasting demand, scoring the probability a customer churns. <strong>Prescriptive analytics</strong> goes one step further and recommends <em>what action to take</em>, often using optimisation, simulation, or reinforcement learning to weigh options against constraints and objectives.</p>
+    <div class="key">Mnemonic: Descriptive = past, Diagnostic = cause, Predictive = future, Prescriptive = action. Reports are descriptive; an engine that recommends the best next move is prescriptive.</div>
+    <p>Most organisations build these capabilities in order, because each depends on the foundations of the one before: you cannot reliably predict without clean descriptive data, and you cannot prescribe without a trustworthy prediction of consequences.</p>
+    <div class="sources">
+      <b>Open sources &amp; further reading</b>
+      <ul>
+        <li><a href="https://www.statlearning.com/" target="_blank" rel="noopener">An Introduction to Statistical Learning</a> — predictive modelling foundations (regression, classification).</li>
+        <li><a href="http://incompleteideas.net/book/the-book.html" target="_blank" rel="noopener">Sutton &amp; Barto, Reinforcement Learning: An Introduction</a> — the basis of prescriptive, decision-optimising systems.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Contents</a>
+  </section>
+
+  <section id="machine-learning">
+    <h2><span class="num">05</span> Machine learning: the three families</h2>
+    <p><strong>Machine learning (ML)</strong> is the branch of AI in which systems learn patterns from data rather than following explicitly hand-coded rules. It is conventionally divided into three families based on what kind of feedback the learning process receives.</p>
+    <figure>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Machine learning taxonomy">
+        <g font-family="inherit">
+          <rect x="300" y="14" width="160" height="44" rx="10" fill="#2b2f63" stroke="#4a4f86"/>
+          <text x="380" y="41" text-anchor="middle" class="svg-label" font-weight="700">Machine learning</text>
+          <line x1="380" y1="58" x2="130" y2="96" stroke="#3a4570"/>
+          <line x1="380" y1="58" x2="380" y2="96" stroke="#3a4570"/>
+          <line x1="380" y1="58" x2="630" y2="96" stroke="#3a4570"/>
+          <rect x="40" y="96" width="180" height="48" rx="10" fill="#161a35" stroke="#2c3260"/>
+          <text x="130" y="120" text-anchor="middle" class="svg-label" font-weight="700">Supervised</text>
+          <text x="130" y="136" text-anchor="middle" class="svg-muted">labelled data</text>
+          <rect x="290" y="96" width="180" height="48" rx="10" fill="#161a35" stroke="#2c3260"/>
+          <text x="380" y="120" text-anchor="middle" class="svg-label" font-weight="700">Unsupervised</text>
+          <text x="380" y="136" text-anchor="middle" class="svg-muted">no labels</text>
+          <rect x="540" y="96" width="180" height="48" rx="10" fill="#161a35" stroke="#2c3260"/>
+          <text x="630" y="120" text-anchor="middle" class="svg-label" font-weight="700">Reinforcement</text>
+          <text x="630" y="136" text-anchor="middle" class="svg-muted">rewards</text>
+          <text x="130" y="176" text-anchor="middle" class="svg-muted">Classification ·</text>
+          <text x="130" y="192" text-anchor="middle" class="svg-muted">Regression</text>
+          <text x="380" y="176" text-anchor="middle" class="svg-muted">Clustering ·</text>
+          <text x="380" y="192" text-anchor="middle" class="svg-muted">Dimensionality reduction</text>
+          <text x="630" y="176" text-anchor="middle" class="svg-muted">Policy learning ·</text>
+          <text x="630" y="192" text-anchor="middle" class="svg-muted">Control</text>
+        </g>
+      </svg>
+      <figcaption>The three families of machine learning and typical tasks within each.</figcaption>
+    </figure>
+    <p>In <strong>supervised learning</strong>, the model trains on labelled examples — inputs paired with the correct output — and learns to predict the label for new inputs. In <strong>unsupervised learning</strong>, there are no labels; the model finds structure on its own, such as natural groupings or a lower-dimensional summary. In <strong>reinforcement learning</strong>, an agent learns by interacting with an environment, taking actions and adjusting based on rewards and penalties, without being told the "right" answer in advance.</p>
+    <div class="key">The quick test: Do you have labelled answers to learn from? → supervised. Looking for hidden structure with no answers? → unsupervised. Learning a sequence of decisions from feedback? → reinforcement.</div>
+    <div class="sources">
+      <b>Open sources &amp; further reading</b>
+      <ul>
+        <li><a href="https://www.statlearning.com/" target="_blank" rel="noopener">An Introduction to Statistical Learning</a> — Ch. 2 (what is statistical learning), supervised vs. unsupervised.</li>
+        <li><a href="https://scikit-learn.org/stable/" target="_blank" rel="noopener">scikit-learn User Guide</a> — open-source documentation covering each ML family.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Contents</a>
+  </section>
+
+  <section id="supervised">
+    <h2><span class="num">06</span> Supervised learning</h2>
+    <p><strong>Supervised learning</strong> trains a model on labelled data: each training example pairs an input with the known correct output (the <strong>label</strong> or <strong>target</strong>). The model learns the relationship between inputs and outputs so it can predict the label for new, unseen data. The inputs are described by <strong>features</strong> — the measurable variables the model uses, such as a customer's tenure, recent spend, and support tickets.</p>
+    <p>Supervised problems split into two kinds by the type of output. <strong>Classification</strong> predicts a discrete category: spam vs. not spam, will-churn vs. will-stay, fraud vs. legitimate. <strong>Regression</strong> predicts a continuous number: a house price, next month's demand, expected lifetime value. The same dataset can pose either kind of question depending on how you frame the target.</p>
+    <div class="key">Supervised = learning from labelled answers. Categories → classification. Numbers → regression. The quality of the labels caps the quality of the model.</div>
+    <p>Two business-critical applications recur. <strong>Churn prediction</strong> is a classification task: train a classifier (logistic regression, a gradient-boosted tree, etc.) on historical customers labelled as retained or lapsed, using features like satisfaction trend, usage, and tenure, then score current customers by their probability of leaving so retention effort can be focused. <strong>Demand or sales forecasting</strong> is typically a regression/time-series task. Because supervised models learn from labelled history, they inherit any bias in how those labels were created — a theme that connects directly to model evaluation and ethics.</p>
+    <div class="sources">
+      <b>Open sources &amp; further reading</b>
+      <ul>
+        <li><a href="https://www.statlearning.com/" target="_blank" rel="noopener">An Introduction to Statistical Learning</a> — Ch. 3 (regression) &amp; Ch. 4 (classification), free PDF.</li>
+        <li><a href="https://scikit-learn.org/stable/supervised_learning.html" target="_blank" rel="noopener">scikit-learn: Supervised learning</a> — open-source reference on classifiers and regressors.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Contents</a>
+  </section>
+
+  <section id="unsupervised">
+    <h2><span class="num">07</span> Unsupervised learning</h2>
+    <p><strong>Unsupervised learning</strong> works on data with no labels. Instead of predicting a known answer, the model discovers structure on its own. The two most common goals are grouping and simplification.</p>
+    <p><strong>Clustering</strong> groups similar records together so that items within a group resemble each other more than items in other groups. <strong>K-means</strong> is the best-known clustering algorithm: you pick a number of clusters <em>k</em>, and the algorithm iteratively assigns points to the nearest cluster centre and recomputes the centres until they stabilise. Customer <strong>segmentation</strong> — dividing a customer base into meaningful groups by behaviour such as purchase frequency, order value, and engagement — is the classic business use, enabling targeted rather than one-size-fits-all action.</p>
+    <p><strong>Dimensionality reduction</strong> simplifies data with many variables into a few informative ones while preserving as much signal as possible. <strong>Principal Component Analysis (PCA)</strong> is the standard technique, useful for visualisation and for speeding up downstream models. A third family, <strong>association rule mining</strong> (market-basket analysis), finds items that co-occur — "customers who buy bread often buy butter" — to drive recommendations and store layout.</p>
+    <div class="key">No labels, looking for structure → unsupervised. Grouping rows → clustering. Compressing columns → dimensionality reduction. Co-occurring items → association rules.</div>
+    <p>Because there is no ground-truth label, evaluating unsupervised results is more subjective: you judge clusters by whether they are stable, interpretable, and useful, not by an accuracy score.</p>
+    <div class="sources">
+      <b>Open sources &amp; further reading</b>
+      <ul>
+        <li><a href="https://www.statlearning.com/" target="_blank" rel="noopener">An Introduction to Statistical Learning</a> — Ch. 12 (unsupervised learning: PCA &amp; clustering).</li>
+        <li><a href="https://scikit-learn.org/stable/modules/clustering.html" target="_blank" rel="noopener">scikit-learn: Clustering</a> — open-source guide to k-means and other methods.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Contents</a>
+  </section>
+
+  <section id="reinforcement">
+    <h2><span class="num">08</span> Reinforcement learning</h2>
+    <p><strong>Reinforcement learning (RL)</strong> trains an <strong>agent</strong> to make a sequence of decisions by interacting with an <strong>environment</strong>. Unlike supervised learning, there is no labelled "correct action" for each situation; the agent learns by trial and error, guided by a <strong>reward</strong> signal that tells it how good its actions were. Over many interactions it refines a <strong>policy</strong> — a strategy mapping each situation to an action — to maximise cumulative long-term reward.</p>
+    <figure>
+      <svg viewBox="0 0 620 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Reinforcement learning loop">
+        <g font-family="inherit">
+          <rect x="60" y="80" width="170" height="60" rx="12" fill="#2b2f63" stroke="#4a4f86"/>
+          <text x="145" y="116" text-anchor="middle" class="svg-label" font-weight="700">Agent</text>
+          <rect x="390" y="80" width="170" height="60" rx="12" fill="#161a35" stroke="#2c3260"/>
+          <text x="475" y="116" text-anchor="middle" class="svg-label" font-weight="700">Environment</text>
+          <path d="M230 96 H390" stroke="#5b8cff" stroke-width="2.5" marker-end="url(#arr)"/>
+          <text x="310" y="88" text-anchor="middle" class="svg-muted">action</text>
+          <path d="M390 124 H230" stroke="#2ecc8f" stroke-width="2.5" marker-end="url(#arr)"/>
+          <text x="310" y="150" text-anchor="middle" class="svg-muted">state, reward</text>
+          <defs>
+            <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+              <path d="M0,0 L7,3 L0,6 Z" fill="#9aa0c7"/>
+            </marker>
+          </defs>
+        </g>
+      </svg>
+      <figcaption>The RL loop: the agent acts; the environment returns a new state and a reward; the policy improves.</figcaption>
+    </figure>
+    <p>The vocabulary maps cleanly onto a business recommendation engine. The <em>agent</em> is the engine; the <em>environment</em> is customers, products, and competitors; the <em>state</em> is the current situation (a customer's history and basket); the <em>actions</em> are the offers or recommendations it can make; the <em>reward</em> is a purchase or a high satisfaction score; and the <em>policy</em> is the evolving rulebook the engine optimises to maximise long-term customer value. RL is what makes prescriptive analytics self-improving, replacing static rules with a system that learns from outcomes. Famous demonstrations include game-playing and robotics, where an agent masters a task through millions of trial-and-error attempts.</p>
+    <div class="sources">
+      <b>Open sources &amp; further reading</b>
+      <ul>
+        <li><a href="http://incompleteideas.net/book/the-book.html" target="_blank" rel="noopener">Sutton &amp; Barto, Reinforcement Learning: An Introduction</a> — the standard text, free online (full PDF).</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Contents</a>
+  </section>
+
+  <section id="deep-learning">
+    <h2><span class="num">09</span> Deep learning &amp; neural networks</h2>
+    <p><strong>Deep learning</strong> is the subset of machine learning that uses <strong>neural networks</strong> with many layers (hence "deep"). A neural network is composed of simple units ("neurons") arranged in layers; each connection has a weight, and during training the network adjusts those weights to reduce the gap between its predictions and the truth. Stacking many layers lets the network learn hierarchical features automatically — for images, early layers detect edges, later layers detect shapes and objects — which is why deep learning excels at unstructured data like images, audio, and text.</p>
+    <p>Deep models are powerful but data- and compute-hungry, and they are prone to the central tension of all modelling: the balance between fitting the training data and generalising to new data. That tension is covered in the next section, but it is worth naming the two failure modes here. <strong>Overfitting</strong> is when a model learns the training data too closely — including its noise — and performs well in training but poorly on new data. <strong>Underfitting</strong> is the opposite: the model is too simple to capture the real pattern and performs poorly everywhere. Techniques such as regularisation, dropout, and gathering more data help control overfitting.</p>
+    <div class="key">More layers ≠ always better. A model that is too complex memorises noise (overfits); one that is too simple misses the signal (underfits). The art is finding the balance.</div>
+    <div class="sources">
+      <b>Open sources &amp; further reading</b>
+      <ul>
+        <li><a href="https://www.deeplearningbook.org/" target="_blank" rel="noopener">Goodfellow, Bengio &amp; Courville, Deep Learning</a> — the standard textbook, free online (see Ch. 6 &amp; 7).</li>
+        <li><a href="https://www.statlearning.com/" target="_blank" rel="noopener">An Introduction to Statistical Learning</a> — Ch. 10 gives an accessible deep-learning primer.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Contents</a>
+  </section>
+
+  <section id="model-evaluation">
+    <h2><span class="num">10</span> Evaluating models</h2>
+    <p>A model is only useful if it works on data it has not seen. To estimate that, data is split: the model trains on a <strong>training set</strong> and is judged on a held-out <strong>test set</strong>. <strong>Cross-validation</strong> strengthens this by rotating the split across several "folds" so every record is used for both training and testing at different times, giving a more reliable estimate of generalisation and reducing the luck of a single split.</p>
+    <p>For classification, a <strong>confusion matrix</strong> tabulates predictions against reality as true positives, false positives, true negatives, and false negatives. From it we derive the key metrics:</p>
+    <figure>
+      <svg viewBox="0 0 520 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Confusion matrix">
+        <g font-family="inherit">
+          <text x="270" y="24" text-anchor="middle" class="svg-muted">Predicted</text>
+          <text x="150" y="52" text-anchor="middle" class="svg-muted">Positive</text>
+          <text x="370" y="52" text-anchor="middle" class="svg-muted">Negative</text>
+          <text x="34" y="120" text-anchor="middle" class="svg-muted" transform="rotate(-90 34 120)">Actual</text>
+          <rect x="60" y="64" width="220" height="70" fill="rgba(46,204,143,.18)" stroke="#2c3260"/>
+          <text x="170" y="96" text-anchor="middle" class="svg-label" font-weight="700">True Positive</text>
+          <text x="170" y="116" text-anchor="middle" class="svg-muted">correctly flagged</text>
+          <rect x="280" y="64" width="200" height="70" fill="rgba(255,92,124,.16)" stroke="#2c3260"/>
+          <text x="380" y="96" text-anchor="middle" class="svg-label" font-weight="700">False Negative</text>
+          <text x="380" y="116" text-anchor="middle" class="svg-muted">missed</text>
+          <rect x="60" y="134" width="220" height="70" fill="rgba(255,92,124,.16)" stroke="#2c3260"/>
+          <text x="170" y="166" text-anchor="middle" class="svg-label" font-weight="700">False Positive</text>
+          <text x="170" y="186" text-anchor="middle" class="svg-muted">false alarm</text>
+          <rect x="280" y="134" width="200" height="70" fill="rgba(46,204,143,.18)" stroke="#2c3260"/>
+          <text x="380" y="166" text-anchor="middle" class="svg-label" font-weight="700">True Negative</text>
+          <text x="380" y="186" text-anchor="middle" class="svg-muted">correctly cleared</text>
+        </g>
+      </svg>
+      <figcaption>The confusion matrix. Precision = TP/(TP+FP); Recall = TP/(TP+FN).</figcaption>
+    </figure>
+    <p><strong>Accuracy</strong> is the share of all predictions that are correct. <strong>Precision</strong> asks: of the cases we flagged positive, how many really were? <strong>Recall</strong> asks: of the truly positive cases, how many did we catch? The <strong>F1 score</strong> is their harmonic mean, useful when you need to balance the two. <strong>ROC/AUC</strong> summarises the trade-off between catching positives and raising false alarms across thresholds.</p>
+    <div class="key">Accuracy misleads on imbalanced data: if 99% of cases are negative, always predicting "negative" scores 99% accuracy yet catches nothing. Watch precision and recall instead. And beware data leakage — letting future or answer-revealing information into features — which inflates test scores but collapses in production.</div>
+    <div class="sources">
+      <b>Open sources &amp; further reading</b>
+      <ul>
+        <li><a href="https://scikit-learn.org/stable/modules/model_evaluation.html" target="_blank" rel="noopener">scikit-learn: Metrics &amp; scoring</a> — precision, recall, F1, ROC/AUC, confusion matrix.</li>
+        <li><a href="https://scikit-learn.org/stable/modules/cross_validation.html" target="_blank" rel="noopener">scikit-learn: Cross-validation</a> — open-source reference.</li>
+        <li><a href="https://www.statlearning.com/" target="_blank" rel="noopener">An Introduction to Statistical Learning</a> — Ch. 5 (resampling: validation &amp; cross-validation).</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Contents</a>
+  </section>
+
+  <section id="generative-ai">
+    <h2><span class="num">11</span> Generative AI &amp; LLMs</h2>
+    <p><strong>Generative AI</strong> describes models that create new content — text, images, code, audio — by learning the patterns in vast training data and then producing novel outputs that resemble it. This contrasts with traditional ("discriminative") models that only classify or score existing data. A <strong>large language model (LLM)</strong> is a generative model trained on enormous amounts of text to understand and generate language; GPT, Claude, and Gemini are examples. Modern LLMs are built on the <em>transformer</em> architecture, whose attention mechanism lets the model weigh the relevance of every word to every other.</p>
+    <p>You interact with a generative model through a <strong>prompt</strong> — the instruction or question you give it. A central limitation is <strong>hallucination</strong>: the model can produce fluent, confident output that is factually wrong or fabricated, because it generates plausible text rather than retrieving verified facts. This is why generative outputs should be treated as drafts to verify, not authoritative answers.</p>
+    <div class="key">Generative AI's superpower in analytics is turning unstructured text into structured insight at speed — summarising thousands of reviews or documents in seconds. Its weakness is reliability: outputs need human validation, especially for high-stakes decisions.</div>
+    <p>For business analytics, the most valuable early use is exactly that summarisation-of-unstructured-data capability, paired with a human-in-the-loop check. Generative AI also introduces governance considerations — bias in training data, data privacy, and the risk of fluent-but-false output — that responsible deployment must manage.</p>
+    <div class="sources">
+      <b>Open sources &amp; further reading</b>
+      <ul>
+        <li><a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">Vaswani et al., "Attention Is All You Need"</a> — the open-access paper introducing the transformer.</li>
+        <li><a href="https://doi.org/10.6028/NIST.AI.600-1" target="_blank" rel="noopener">NIST AI RMF: Generative AI Profile (AI 600-1)</a> — public standard on generative-AI risks.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Contents</a>
+  </section>
+
+  <section id="nlp-sentiment">
+    <h2><span class="num">12</span> NLP &amp; sentiment analysis</h2>
+    <p><strong>Natural Language Processing (NLP)</strong> is the field concerned with enabling computers to understand, interpret, and generate human language. It underpins search, translation, chatbots, and text analytics. A foundational step is often <strong>text mining</strong> — extracting useful structure and patterns from unstructured text.</p>
+    <p><strong>Sentiment analysis</strong> is a specific, high-value NLP task: determining the emotional tone of a piece of text, usually classifying it by <strong>polarity</strong> as positive, negative, or neutral (sometimes with finer gradations or specific emotions). Applied to product reviews, support tickets, or social media, it lets a business quantify the "voice of the customer" at a scale no human team could read manually, and surface recurring themes behind complaints or praise.</p>
+    <div class="key">Sentiment analysis is often the ideal first AI deployment for a business: it tackles a real pain point (understanding customer feedback) with relatively little change to existing workflows.</div>
+    <p>Effective sentiment work begins with <strong>data cleaning</strong> — normalising text, handling missing entries, and dealing with slang and sarcasm. Modern approaches use LLMs to assign sentiment and extract themes quickly, but the same caution applies as for all generative AI: models can misclassify ambiguous or colloquial language, so outputs need periodic human validation to avoid systematic bias in what gets flagged.</p>
+    <div class="sources">
+      <b>Open sources &amp; further reading</b>
+      <ul>
+        <li><a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">Vaswani et al., "Attention Is All You Need"</a> — the transformer architecture behind modern NLP.</li>
+        <li><a href="https://doi.org/10.6028/NIST.AI.600-1" target="_blank" rel="noopener">NIST Generative AI Profile</a> — risks relevant to text-classification and theme extraction.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Contents</a>
+  </section>
+
+  <section id="data-infrastructure">
+    <h2><span class="num">13</span> Data infrastructure</h2>
+    <p>Analytics needs plumbing. <strong>ETL</strong> — Extract, Transform, Load — is the process that pulls data from source systems, cleans and reshapes it, and loads it into a destination for analysis; the newer <em>ELT</em> variant loads first and transforms in place. A <strong>data pipeline</strong> is the automated flow that moves data from source to destination on a schedule, keeping reports current without manual effort.</p>
+    <p>Where the data lands matters. A <strong>data warehouse</strong> is a central repository of structured, integrated, cleaned data optimised for queries and reporting — the trusted source for dashboards. A <strong>data lake</strong> instead stores raw data of any type, structured and unstructured, in its native format; it is cheaper and more flexible but requires more work to make analysis-ready. Many organisations use both. <strong>Cloud computing</strong> provides the scalable, on-demand storage and processing that makes all of this affordable without owning hardware.</p>
+    <figure>
+      <svg viewBox="0 0 720 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ETL pipeline">
+        <g font-family="inherit">
+          <rect x="20" y="44" width="120" height="48" rx="10" fill="#161a35" stroke="#2c3260"/>
+          <text x="80" y="73" text-anchor="middle" class="svg-label">Sources</text>
+          <rect x="190" y="44" width="120" height="48" rx="10" fill="#1b2348" stroke="#2c3260"/>
+          <text x="250" y="67" text-anchor="middle" class="svg-label">Extract /</text>
+          <text x="250" y="82" text-anchor="middle" class="svg-muted">Transform</text>
+          <rect x="360" y="44" width="120" height="48" rx="10" fill="#222a55" stroke="#3a4570"/>
+          <text x="420" y="73" text-anchor="middle" class="svg-label">Load</text>
+          <rect x="530" y="44" width="170" height="48" rx="10" fill="#2b2f63" stroke="#4a4f86"/>
+          <text x="615" y="67" text-anchor="middle" class="svg-label">Warehouse /</text>
+          <text x="615" y="82" text-anchor="middle" class="svg-muted">BI &amp; dashboards</text>
+          <path d="M140 68 H190" stroke="#5b8cff" stroke-width="2.5" marker-end="url(#arr2)"/>
+          <path d="M310 68 H360" stroke="#5b8cff" stroke-width="2.5" marker-end="url(#arr2)"/>
+          <path d="M480 68 H530" stroke="#5b8cff" stroke-width="2.5" marker-end="url(#arr2)"/>
+          <defs><marker id="arr2" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#9aa0c7"/></marker></defs>
+        </g>
+      </svg>
+      <figcaption>A typical pipeline: source systems → ETL → warehouse → business intelligence.</figcaption>
+    </figure>
+    <p><strong>Business Intelligence (BI)</strong> tools — such as Power BI, Tableau, and Looker — turn warehoused data into reports and interactive <strong>dashboards</strong> that visualise key metrics for monitoring and decisions. <strong>SQL</strong> remains the core language for querying structured data. Overseeing it all is <strong>data governance</strong>: the policies and processes ensuring data quality, security, and proper, compliant use. A recurring strategic choice is open-source tooling (more flexibility and control, more setup effort) versus closed-source/managed services (easier deployment and vendor support); most enterprises blend both.</p>
+    <div class="sources">
+      <b>Open sources &amp; further reading</b>
+      <ul>
+        <li><a href="https://www.postgresql.org/docs/current/tutorial-sql.html" target="_blank" rel="noopener">PostgreSQL Documentation: The SQL Language</a> — open-source, freely available SQL reference.</li>
+        <li><a href="https://www.itl.nist.gov/div898/handbook/" target="_blank" rel="noopener">NIST/SEMATECH e-Handbook</a> — public reference for turning data into analysis-ready form.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Contents</a>
+  </section>
+
+  <section id="statistics">
+    <h2><span class="num">14</span> Statistics essentials</h2>
+    <p>Sound analytics rests on statistical fundamentals. <strong>Data cleaning</strong> — detecting and fixing inaccurate, incomplete, or duplicate records — typically consumes most of an analyst's time, and missing values are handled either by <strong>imputation</strong> (filling estimates) or by removing affected records. An <strong>outlier</strong> is a point far from the rest of the data; it may be an error or a genuine signal, so outliers are investigated, not blindly deleted.</p>
+    <p>Describing data uses measures of central tendency and spread. The <strong>median</strong> (middle value) is robust to outliers, whereas the <strong>mean</strong> is pulled toward extremes; <strong>standard deviation</strong> measures how spread out values are around the mean. Relationships are summarised by the <strong>correlation coefficient</strong>, which ranges from −1 to +1. Crucially, <strong>correlation does not imply causation</strong>: two variables moving together can be coincidence or driven by a hidden third factor.</p>
+    <div class="key">Median resists outliers; the mean does not. Correlation ranges −1 to +1 and never proves cause. These three facts prevent a large share of analytical mistakes.</div>
+    <p>To test ideas, analysts use <strong>hypothesis testing</strong>, where a small <strong>p-value</strong> (commonly below 0.05) indicates a result unlikely to be due to chance alone — statistically significant. <strong>A/B testing</strong> applies this to compare two versions and see which performs better. Beware <strong>sampling bias</strong>: if your sample is not representative of the population, conclusions will be skewed no matter how much data you have. Finally, <strong>time-series</strong> data is ordered in time and often shows <strong>seasonality</strong> (regular repeating patterns); <strong>forecasting</strong> uses such history to estimate future values.</p>
+    <div class="sources">
+      <b>Open sources &amp; further reading</b>
+      <ul>
+        <li><a href="https://www.openintro.org/book/os/" target="_blank" rel="noopener">OpenIntro Statistics</a> — free, openly licensed coverage of all of the above.</li>
+        <li><a href="https://www.itl.nist.gov/div898/handbook/" target="_blank" rel="noopener">NIST/SEMATECH e-Handbook of Statistical Methods</a> — public-domain reference (EDA, hypothesis testing, time series).</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Contents</a>
+  </section>
+
+  <section id="ai-ethics">
+    <h2><span class="num">15</span> AI ethics &amp; governance</h2>
+    <p>As models influence real decisions, their risks must be managed deliberately. <strong>Algorithmic bias</strong> is systematic, unfair treatment of certain groups by a model; its leading cause is training on biased or unrepresentative data — adding AI to biased data tends to <em>industrialise</em> the bias rather than remove it. <strong>Fairness</strong> is the goal of not unjustly disadvantaging particular groups, and <strong>explainability</strong> (interpretability) is the ability to understand and articulate how a model reached a decision — essential for trust and for contesting outcomes.</p>
+    <p><strong>Accountability</strong> assigns clear responsibility for a model's outcomes, so that when something goes wrong, ownership is traceable and remediation is possible. Two human cognitive biases compound the risks: <strong>automation bias</strong>, the tendency to over-trust automated outputs even when wrong, and <strong>confirmation bias</strong>, the tendency to favour information confirming what we already believe (and to use AI to validate rather than challenge our views).</p>
+    <div class="key">Mitigations cluster around oversight: human-in-the-loop review for high-stakes decisions, regular model auditing, monitoring for drift, and clear data-usage policies. Embed ethics as a workflow checkpoint, not a one-off policy document.</div>
+    <p>Models also degrade over time — <strong>model drift</strong> (or decay) is the decline in performance as real-world data shifts away from the training distribution, which is why monitoring and retraining are part of responsible operation. Frameworks like the NIST AI Risk Management Framework organise these concerns around governing, mapping, measuring, and managing AI risk, and emphasise that trustworthy AI is built, not assumed.</p>
+    <div class="sources">
+      <b>Open sources &amp; further reading</b>
+      <ul>
+        <li><a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener">NIST AI Risk Management Framework (AI RMF 1.0)</a> — the leading public standard (<a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf" target="_blank" rel="noopener">full PDF</a>).</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Contents</a>
+  </section>
+
+  <section id="data-privacy">
+    <h2><span class="num">16</span> Data privacy &amp; protection</h2>
+    <p>Handling personal data carries legal and ethical duties. The <strong>General Data Protection Regulation (GDPR)</strong> — and its UK equivalent — is the landmark regulation protecting the personal data and privacy of individuals, with significant penalties for breaches. <strong>Personally identifiable information (PII)</strong> is any data that can identify a specific person, and it warrants the strictest handling.</p>
+    <p>Several principles flow from these rules. <strong>Data minimisation</strong> means collecting only the personal data genuinely necessary for a stated purpose — not hoarding data "just in case." <strong>Consent</strong> requires obtaining clear permission before processing personal data, respecting individuals' rights and meeting legal obligations. <strong>Role-based access control (RBAC)</strong> limits who can see which data according to their job role, reducing exposure. <strong>Privacy by design</strong> builds these protections into systems from the outset rather than bolting them on after a problem.</p>
+    <div class="key">Practical compliance: collect less (minimisation), ask first (consent), restrict access (RBAC), and design privacy in from day one. These both satisfy regulators and build customer trust.</div>
+    <p>As organisations scale AI, privacy connects to broader <strong>AI governance</strong> — the framework of policies and processes for responsible, accountable AI — including named ownership of model outcomes and, increasingly, considerations like AI liability. Privacy is not merely a compliance cost; transparent, careful data handling is itself a differentiator that earns customer confidence.</p>
+    <div class="sources">
+      <b>Open sources &amp; further reading</b>
+      <ul>
+        <li><a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng" target="_blank" rel="noopener">Regulation (EU) 2016/679 (GDPR)</a> — the official legal text on EUR-Lex.</li>
+        <li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/" target="_blank" rel="noopener">ICO: UK GDPR guidance and resources</a> — openly licensed regulator guidance.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Contents</a>
+  </section>
+
+  <p style="text-align:center;color:var(--muted);margin-top:40px;font-size:.9rem">
+    Built as a study companion · <a href="index.html">Take the knowledge test →</a>
+  </p>
+</div>
+</body>
+</html>
