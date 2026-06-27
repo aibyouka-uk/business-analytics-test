@@ -79,6 +79,12 @@
       <li><a href="#statistics">Statistics essentials</a></li>
       <li><a href="#ai-ethics">AI ethics &amp; governance</a></li>
       <li><a href="#data-privacy">Data privacy &amp; protection</a></li>
+      <li><a href="#automation-spectrum">The automation spectrum</a></li>
+      <li><a href="#algorithmic-insurance">AI risk &amp; algorithmic insurance</a></li>
+      <li><a href="#bias-mitigation">Mitigating algorithmic bias</a></li>
+      <li><a href="#ai-regulation">AI regulation: the EU AI Act</a></li>
+      <li><a href="#measuring-genai-bias">Measuring bias in generative AI</a></li>
+      <li><a href="#ai-verification">Verifying AI-assisted analysis</a></li>
     </ol>
   </nav>
 
@@ -445,6 +451,96 @@
       <ul>
         <li><a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng" target="_blank" rel="noopener">Regulation (EU) 2016/679 (GDPR)</a> — the official legal text on EUR-Lex.</li>
         <li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/" target="_blank" rel="noopener">ICO: UK GDPR guidance and resources</a> — openly licensed regulator guidance.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Contents</a>
+  </section>
+
+  <section id="automation-spectrum">
+    <h2><span class="num">17</span> The automation spectrum &amp; human–AI collaboration</h2>
+    <p>Not every analytics tool should be equally autonomous. A widely used framing (popularised by IBM) places automation on a <strong>five-tier spectrum</strong>, ordered by how much the machine decides versus the human:</p>
+    <p><strong>1. Basic automation</strong> — simple task and workflow handling, such as auto-sorting and tagging emails; staff oversee the final action. <strong>2. Human-directed</strong> — the system advises in a consultative role (e.g., suggesting which product to pitch), but the human makes the call. <strong>3. Machine intervention</strong> — the machine decides in routine scenarios (e.g., reordering stock from predictions), while humans handle atypical or high-stakes cases. <strong>4. Fully autonomous</strong> — the system controls decisions in defined situations (e.g., launching and adjusting ad campaigns), with humans stepping in only for the unprecedented or strategic. <strong>5. Humans optional</strong> — full self-direction in any scenario, like a fully autonomous vehicle.</p>
+    <div class="key">Choosing the tier is a design decision. The more autonomy you grant, the higher the model accuracy you need — because there is less human oversight left to catch mistakes.</div>
+    <p>The complementary idea is <strong>human–AI symbiosis</strong>: the goal is to <em>enrich</em> human expertise, not replace it. Research shows humans and AI often evaluate risk differently, so the strongest systems are <strong>hybrid</strong> — combining data-driven prediction with a structured model of human expert judgement. Such hybrids tend to outperform either humans or algorithms working alone, and earn higher adoption because experts trust a tool that reflects their reasoning.</p>
+    <div class="sources">
+      <b>Open sources &amp; further reading</b>
+      <ul>
+        <li><a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener">NIST AI Risk Management Framework</a> — human-AI configuration, oversight and accountability.</li>
+        <li><a href="https://www.ibm.com/think/topics/ai-automation" target="_blank" rel="noopener">IBM — AI automation</a> — practitioner overview of automation levels.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Contents</a>
+  </section>
+
+  <section id="algorithmic-insurance">
+    <h2><span class="num">18</span> AI risk &amp; algorithmic insurance</h2>
+    <p>When an AI system makes high-stakes decisions — a medical triage, a credit approval — who bears the risk when it errs? <strong>Algorithmic insurance</strong> is a framework that prices and transfers that risk. Its central move is to shift liability from the <em>end user</em> to the <strong>model provider</strong>: because users (for example, clinicians) cannot control the underlying model, the insurance contract sits between the provider and an insurer, not the user.</p>
+    <p>This closes a feedback loop. If a deployed model produces more errors, the insurer <strong>raises the premium</strong>; that margin pressure forces the provider to improve the model. The premium itself is a function of the model's <strong>generalisability</strong> — its ability to perform on new, previously unseen populations — alongside accuracy and interpretability. So the framework rewards providers who train on diverse data and test for robustness.</p>
+    <div class="key">Key question: "Who is the primary risk holder?" In algorithmic insurance the answer is the model provider — which aligns financial incentives with building safer, more generalisable models.</div>
+    <p>The concept moved from research into industry when a major reinsurer (Munich Re) created a dedicated AI-insurance unit, giving organisations a way to deploy AI while quantifying and hedging its operational risk rather than avoiding it altogether.</p>
+    <div class="sources">
+      <b>Open sources &amp; further reading</b>
+      <ul>
+        <li><a href="https://arxiv.org/abs/2106.00839" target="_blank" rel="noopener">Bertsimas &amp; Orfanoudaki, "Pricing Algorithmic Insurance"</a> — open-access paper (arXiv:2106.00839).</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Contents</a>
+  </section>
+
+  <section id="bias-mitigation">
+    <h2><span class="num">19</span> Mitigating algorithmic bias</h2>
+    <p><strong>Algorithmic bias</strong> usually traces back to biased or unrepresentative training data — and simply adding AI to biased data <em>industrialises</em> the bias rather than removing it. Mitigation therefore spans the whole pipeline, in three stages:</p>
+    <p><strong>Pre-processing (data curation)</strong> fixes representation <em>before</em> training — reweighing instances, resampling, or augmenting under-represented groups to achieve parity across protected attributes. <strong>In-processing (algorithmic constraints)</strong> builds fairness into the training objective itself; a classic technique is <strong>adversarial debiasing</strong>, where a secondary "adversary" model tries to predict a protected attribute from the main model's output, and the main model is penalised whenever the adversary succeeds. <strong>Post-processing (output correction)</strong> adjusts decision thresholds <em>after</em> training to equalise error rates (for example, equalised odds) across subgroups.</p>
+    <div class="key">No single technique is enough. Bias is managed end-to-end — curate the data, constrain the training, correct the outputs — and then audited continuously, because data and populations shift over time.</div>
+    <div class="sources">
+      <b>Open sources &amp; further reading</b>
+      <ul>
+        <li><a href="https://arxiv.org/abs/1908.09635" target="_blank" rel="noopener">Mehrabi et al., "A Survey on Bias and Fairness in Machine Learning"</a> — open-access (arXiv:1908.09635).</li>
+        <li><a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener">NIST AI Risk Management Framework</a> — managing bias and harmful outcomes.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Contents</a>
+  </section>
+
+  <section id="ai-regulation">
+    <h2><span class="num">20</span> AI regulation: the EU AI Act</h2>
+    <p>The <strong>EU AI Act</strong> (Regulation (EU) 2024/1689) is the first comprehensive AI law, and it takes a <strong>risk-based approach</strong> with four tiers. <strong>Unacceptable-risk</strong> systems (e.g., government social scoring) are banned. <strong>High-risk</strong> systems face strict obligations. <strong>Limited-risk</strong> systems carry transparency duties — a chatbot, for instance, must disclose that it is AI. <strong>Minimal-risk</strong> systems (spam filters, games) have no special obligations.</p>
+    <p>Systems used in areas like critical infrastructure, employment, healthcare, education and law enforcement are typically classified as <strong>high-risk</strong>. That classification legally mandates, before market deployment: a risk-management system, high-quality data governance, technical documentation and logging, transparency to users, meaningful <strong>human oversight</strong>, and appropriate accuracy and robustness — often with third-party conformity assessment.</p>
+    <div class="key">Even where a system is not legally "high-risk", these obligations — documentation, data governance, human oversight, transparency — are simply good AI governance and a sensible default.</div>
+    <div class="sources">
+      <b>Open sources &amp; further reading</b>
+      <ul>
+        <li><a href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" target="_blank" rel="noopener">European Commission — Regulatory framework for AI</a> (official).</li>
+        <li><a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" rel="noopener">Regulation (EU) 2024/1689 (AI Act)</a> — the official legal text on EUR-Lex.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Contents</a>
+  </section>
+
+  <section id="measuring-genai-bias">
+    <h2><span class="num">21</span> Measuring bias in generative AI</h2>
+    <p>Measuring bias in <strong>generative AI</strong> is harder than in a classifier, because the outputs are free-form text rather than labels you can score against a ground truth. Three methods are standard:</p>
+    <p><strong>Stereotype &amp; toxicity benchmarking</strong> runs curated prompt sets (such as <em>BOLD</em> or <em>RealToxicityPrompts</em>) and scores the generations for biased, toxic or asymmetric content across groups. <strong>Counterfactual fairness testing</strong> submits identical prompts while changing only a protected attribute — for example, "a 65-year-old <em>male</em> presenting with chest pain…" versus "…<em>female</em>…" — then compares the outputs (sentiment, recommendations, tone) for systematic variance. <strong>Automated red-teaming</strong> uses adversarial models to probe the system at scale, deliberately seeking latent biases and harmful outputs before real users encounter them.</p>
+    <div class="key">These quantitative checks complement, but never replace, periodic human review — generative models can misclassify ambiguous or colloquial language in ways a benchmark misses.</div>
+    <div class="sources">
+      <b>Open sources &amp; further reading</b>
+      <ul>
+        <li><a href="https://doi.org/10.6028/NIST.AI.600-1" target="_blank" rel="noopener">NIST AI 600-1 — Generative AI Profile</a> — public standard on generative-AI risks.</li>
+        <li><a href="https://aclanthology.org/2020.findings-emnlp.301/" target="_blank" rel="noopener">Gehman et al., "RealToxicityPrompts"</a> — open-access benchmark paper (ACL Findings 2020).</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Contents</a>
+  </section>
+
+  <section id="ai-verification">
+    <h2><span class="num">22</span> Verifying AI-assisted analysis</h2>
+    <p>When analysts use AI assistants — LLMs that turn natural-language requests into code — the biggest danger is not a crash but <strong>automation bias</strong>: trusting a clean, professional-looking output without checking how it was produced. The most common errors are <strong>semantic, not syntactic</strong> — the code runs fine but computes the wrong thing, for example counting total rows instead of unique items, silently dropping a category, or inverting a percentage.</p>
+    <p>Research on how analysts verify AI-generated analyses identifies two complementary modes: <strong>procedure-oriented</strong> verification (reading the generated code and logic) and <strong>data-oriented</strong> verification (inspecting the raw intermediate tables and row counts). Practical habits that catch errors early: force the tool to print intermediate tables and row counts after each step; confirm a <em>unique</em> count (e.g., a distinct/<code>.nunique()</code> count) where intended; make the AI state and then check its assumptions about column meanings; and run quick sanity checks (do the percentages sum to 100%?).</p>
+    <div class="key">Treat AI as a fast advisory partner, with the human owning the logic. Don't just read the polished explanation — open the intermediate data and verify the grain.</div>
+    <div class="sources">
+      <b>Open sources &amp; further reading</b>
+      <ul>
+        <li><a href="https://arxiv.org/abs/2309.10947" target="_blank" rel="noopener">Gu et al., "How Do Analysts Understand and Verify AI-Assisted Data Analyses?"</a> — CHI 2024, open-access (arXiv:2309.10947).</li>
       </ul>
     </div>
     <a class="backtop" href="#top">↑ Contents</a>

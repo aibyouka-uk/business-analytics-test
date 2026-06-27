@@ -251,6 +251,12 @@ const BANK = [
 /* ============ KNOWLEDGE-BASE TOPIC MAPPING ============ */
 /* Maps each question to a section anchor in reference.html via ordered keyword rules. */
 const TOPIC_RULES = [
+  [/automation tier|\bibm\b|machine intervention|humans optional|fully autonomous|human-directed|basic automation|symbiosis|enrich.*human|comparing human|\bhybrid\b|model-centric/i, "automation-spectrum", "The automation spectrum"],
+  [/algorithmic insurance|risk holder|pay the premium|\bpremium\b|generalisab|munich re|insurer|liable/i, "algorithmic-insurance", "AI risk & algorithmic insurance"],
+  [/pre-processing|post-processing|in-processing|adversarial debiasing|reweigh|bias mitigation|equalise/i, "bias-mitigation", "Mitigating algorithmic bias"],
+  [/eu ai act|high-risk/i, "ai-regulation", "AI regulation: the EU AI Act"],
+  [/counterfactual|\bbold\b|realtoxicity|red-team|stereotype/i, "measuring-genai-bias", "Measuring bias in generative AI"],
+  [/automation bias|semantic|unique identifier|nunique|row count|intermediate table|procedure-oriented|data-oriented|ai data assistant|ai assistant|rows instead of unique|unique items|logic errors|errors are most often/i, "ai-verification", "Verifying AI-assisted analysis"],
   [/gdpr|data minimisation|consent|role-based access|\brbac\b|privacy by design|\bpii\b|personally identifiable|ai governance/i, "data-privacy", "Data privacy & protection"],
   [/sampling bias/i, "statistics", "Statistics essentials"],
   [/algorithmic|fairness|explainab|interpretab|accountability|automation bias|confirmation bias|responsible ai|human-in-the-loop|model drift|model decay|biased or unrepresentative|biased ai|amplif/i, "ai-ethics", "AI ethics & governance"],
