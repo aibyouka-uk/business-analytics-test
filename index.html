@@ -59,6 +59,41 @@
   .chan{display:inline-block;margin-top:10px;font-size:.82rem;font-weight:600;color:#fff;
     background:rgba(91,140,255,.18);border:1px solid var(--line);padding:6px 12px;border-radius:8px}
   .chan:hover{border-color:var(--accent);text-decoration:none}
+  /* start-here assistant */
+  .assistant{background:linear-gradient(180deg,#1a1e3a,#161a33);border:1px solid var(--line);border-radius:18px;padding:24px;margin-bottom:30px}
+  .assistant .ah{display:flex;align-items:center;gap:10px;margin-bottom:2px}
+  .assistant .ah .live{width:10px;height:10px;border-radius:50%;background:var(--good);box-shadow:0 0 10px var(--good)}
+  .assistant h2{margin:0;font-size:1.25rem}
+  .assistant .sub{color:var(--muted);font-size:.88rem;margin:4px 0 14px}
+  .chatlog{display:flex;flex-direction:column;gap:10px;max-height:370px;overflow-y:auto;margin-bottom:12px;padding-right:4px}
+  .msg{max-width:90%;padding:11px 14px;border-radius:13px;font-size:.92rem;line-height:1.5}
+  .msg.bot{background:#12152d;border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:4px}
+  .msg.user{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+  .msg.bot b{color:var(--accent)}
+  .msg .src{display:inline-block;margin-top:9px;font-size:.82rem;font-weight:600;color:#fff;background:rgba(91,140,255,.18);border:1px solid var(--line);padding:5px 11px;border-radius:8px;text-decoration:none}
+  .msg .src:hover{border-color:var(--accent);text-decoration:none}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .chip{font-size:.8rem;background:#161a35;border:1px solid var(--line);color:var(--muted);padding:6px 12px;border-radius:99px;cursor:pointer;transition:.15s}
+  .chip:hover{border-color:var(--accent);color:var(--text)}
+  .chatform{display:flex;gap:8px}
+  .chatform input{flex:1;background:#11142b;border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--text);font-size:.95rem;font-family:inherit}
+  .chatform input:focus{outline:none;border-color:var(--accent)}
+  .chatform button{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;border:0;padding:0 22px;border-radius:10px;font-weight:600;cursor:pointer}
+  /* compare toggle */
+  .compare{margin:0 0 28px}
+  .compare-toggle{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+  .ctab{background:#161a35;border:1px solid var(--line);color:var(--text);font-size:.92rem;font-weight:600;padding:11px 18px;border-radius:11px;cursor:pointer;transition:.15s}
+  .ctab:hover{border-color:var(--accent)}
+  .ctab.active{background:linear-gradient(90deg,var(--accent),var(--accent2));border-color:transparent;color:#fff}
+  .cpanel{display:none;background:linear-gradient(180deg,#1a1e3a,#161a33);border:1px solid var(--line);border-radius:16px;padding:22px 24px}
+  .cpanel.show{display:block}
+  .cpanel h3{margin:0 0 4px;font-size:1.15rem}
+  .cpanel>.intro{color:var(--muted);font-size:.9rem;margin:0 0 14px}
+  .cpanel .pt{margin:13px 0}
+  .cpanel .pt h4{margin:0 0 3px;font-size:.95rem;color:#cdd4ff}
+  .cpanel .pt p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.55}
+  .cpanel .pt p .lab{color:var(--accent);font-weight:600}
+  .cpanel .foot{margin-top:16px;font-size:.8rem;color:var(--muted);font-style:italic;border-top:1px solid var(--line);padding-top:12px}
   footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:50px;border-top:1px solid var(--line);padding-top:24px}
 </style>
 </head>
@@ -70,6 +105,18 @@
     <h1>Learn it · Test yourself · Go to the source</h1>
     <p>A self-contained hub to build and check your understanding of core business-analytics and AI concepts — then dive into the official learning resources from the companies building the models.</p>
   </div>
+
+  <!-- START HERE ASSISTANT -->
+  <section class="assistant" id="start-here">
+    <div class="ah"><span class="live"></span><h2>Start here — ask the assistant</h2></div>
+    <p class="sub">Ask a general question about AI, machine learning, analytics, statistics or data ethics. Answers are drawn from this site's knowledge base, each with a link to read the full section. (This assistant runs in your browser and answers from the knowledge base — it is not a live chatbot.)</p>
+    <div class="chatlog" id="chatlog"></div>
+    <div class="chips" id="chips"></div>
+    <form class="chatform" id="chatform" autocomplete="off">
+      <input id="chatinput" type="text" placeholder="e.g. What's the difference between supervised and unsupervised learning?" aria-label="Ask a question">
+      <button type="submit">Ask</button>
+    </form>
+  </section>
 
   <!-- THREE SECTIONS -->
   <div class="cards">
@@ -104,25 +151,36 @@
     </div>
     <p class="note">Channel links always surface the latest videos; the individual talks below are snapshots from mid-2026. Video titles are as published; talks may be hosted on third-party news channels.</p>
 
-    <div class="providers">
-
-      <!-- OpenAI -->
-      <div class="prov" style="--pc:#10a37f">
-        <div class="ph"><div class="badge">AI</div><div><h3>OpenAI</h3></div></div>
-        <div class="who">Maker of ChatGPT and the GPT models.</div>
-        <h4>Official learning</h4>
-        <ul>
-          <li><a href="https://academy.openai.com/" target="_blank" rel="noopener">OpenAI Academy</a> — free courses &amp; AI literacy</li>
-          <li><a href="https://developers.openai.com/" target="_blank" rel="noopener">OpenAI Developers</a> — docs, guides &amp; learn</li>
-          <li><a href="https://cookbook.openai.com/" target="_blank" rel="noopener">OpenAI Cookbook</a> — runnable code recipes</li>
-        </ul>
-        <h4>On YouTube — senior leaders</h4>
-        <a class="vid" href="https://www.youtube.com/watch?v=Wpxv-8nG8ec" target="_blank" rel="noopener">
-          <img src="https://img.youtube.com/vi/Wpxv-8nG8ec/hqdefault.jpg" alt="OpenAI Town Hall thumbnail" loading="lazy">
-          <div><div class="vt">OpenAI Town Hall with Sam Altman</div><div class="vs">Sam Altman, CEO · OpenAI channel · 2026</div></div>
-        </a>
-        <a class="chan" href="https://www.youtube.com/@OpenAI" target="_blank" rel="noopener">▶ Official channel — latest videos</a>
+    <div class="compare">
+      <div class="compare-toggle">
+        <button class="ctab active" data-panel="agree">🤝 What everybody agrees on</button>
+        <button class="ctab" data-panel="differ">⚖️ What providers view differently</button>
       </div>
+      <div class="cpanel show" id="panel-agree">
+        <h3>🤝 Where all six broadly agree</h3>
+        <p class="intro">Across OpenAI, Anthropic, Google, Meta, DeepSeek and Microsoft, recent talks, docs and product launches converge on a striking amount.</p>
+        <div class="pt"><h4>The frontier is shifting from chatbots to agents &amp; reasoning</h4><p>All six now ship autonomous, tool-using <span class="lab">agents</span> and reasoning models that "think" before answering — from Microsoft's Autopilots to OpenAI, Claude, Gemini and DeepSeek agents.</p></div>
+        <div class="pt"><h4>Capability still scales — but data quality and post-training matter as much as size</h4><p>Bigger models help, yet all now stress better data, fine-tuning and reinforcement/reasoning training over raw parameter count.</p></div>
+        <div class="pt"><h4>Multimodality is the default</h4><p>Text, image, audio and video in a single model is the shared direction of travel.</p></div>
+        <div class="pt"><h4>Reliability and hallucination remain unsolved</h4><p>Everyone acknowledges benchmarks are imperfect and outputs can be confidently wrong — so human oversight is needed for high-stakes use.</p></div>
+        <div class="pt"><h4>Safety and responsible-AI frameworks are table stakes</h4><p>Every lab publishes a safety / responsible-AI framework and supports guardrails and evaluation of some kind.</p></div>
+        <div class="pt"><h4>AI will reshape work — and compute is the constraint</h4><p>All expect major economic impact and reskilling, and all are racing on inference cost, efficiency and the energy/compute needed to scale.</p></div>
+        <div class="foot">Synthesis of public statements, docs and the talks linked below, as of mid-2026. Watch each provider's channel for their latest.</div>
+      </div>
+      <div class="cpanel" id="panel-differ">
+        <h3>⚖️ Where they genuinely diverge</h3>
+        <p class="intro">The disagreements are just as telling — on openness, safety posture, timelines and even the underlying architecture.</p>
+        <div class="pt"><h4>Open weights vs closed</h4><p><span class="lab">Meta</span> (Llama) and <span class="lab">DeepSeek</span> release open-weight models anyone can run; <span class="lab">OpenAI, Anthropic and Google</span> keep frontier models closed (Google offers smaller open Gemma; OpenAI has released some open weights). <span class="lab">Microsoft</span> stays platform-neutral, hosting many. It reflects a real split on whether openness makes AI safer or riskier.</p></div>
+        <div class="pt"><h4>How much to foreground safety</h4><p><span class="lab">Anthropic</span> is the most safety-forward (interpretability, a Responsible Scaling Policy, Constitutional AI). <span class="lab">Google DeepMind</span> frames safety around scientific rigour and AGI. <span class="lab">OpenAI</span> balances a fast capability race with safety commitments. <span class="lab">Microsoft</span>'s Mustafa Suleyman pushes "humanist superintelligence" — powerful but contained. <span class="lab">Meta</span>'s Yann LeCun is the most sceptical that today's models pose existential risk.</p></div>
+        <div class="pt"><h4>AGI timelines &amp; definitions</h4><p>Amodei (Anthropic) and Altman (OpenAI) talk of "powerful AI" within a few years; Hassabis (DeepMind) is more measured and expects further breakthroughs are needed; LeCun (Meta) argues today's LLMs alone won't get there at all.</p></div>
+        <div class="pt"><h4>The architecture bet</h4><p>Most scale transformers plus test-time reasoning (OpenAI's o-series, DeepSeek R1, Gemini "thinking", Claude). Meta's LeCun is betting on a different path — world models (JEPA) beyond next-token prediction.</p></div>
+        <div class="pt"><h4>Business model &amp; moat</h4><p>OpenAI and Anthropic are product+API labs; Google integrates AI into Search and Cloud; Microsoft sells an enterprise platform (Copilot) and partners; Meta open-sources to commoditise the model layer; DeepSeek competes on radically lower training and inference cost.</p></div>
+        <div class="pt"><h4>Geopolitics</h4><p>DeepSeek's rise (China, low-cost, open) reframed the field against US labs and export-control dynamics — a fault line each navigates differently.</p></div>
+        <div class="foot">Positions evolve; this is a synthesis of public statements and the talks linked below, as of mid-2026.</div>
+      </div>
+    </div>
+
+    <div class="providers">
 
       <!-- Anthropic -->
       <div class="prov" style="--pc:#d97757">
@@ -140,6 +198,24 @@
           <div><div class="vt">Dario Amodei from the World Economic Forum</div><div class="vs">Dario Amodei, CEO · WSJ · 2026</div></div>
         </a>
         <a class="chan" href="https://www.youtube.com/@anthropic-ai" target="_blank" rel="noopener">▶ Official channel — latest videos</a>
+      </div>
+
+      <!-- DeepSeek -->
+      <div class="prov" style="--pc:#7c5cff">
+        <div class="ph"><div class="badge">DS</div><div><h3>DeepSeek</h3></div></div>
+        <div class="who">Open-weight models from China (V3, R1).</div>
+        <h4>Official learning</h4>
+        <ul>
+          <li><a href="https://api-docs.deepseek.com/" target="_blank" rel="noopener">DeepSeek API Docs</a> — reference &amp; quickstart</li>
+          <li><a href="https://github.com/deepseek-ai" target="_blank" rel="noopener">DeepSeek on GitHub</a> — open-source models &amp; papers</li>
+          <li><a href="https://huggingface.co/deepseek-ai" target="_blank" rel="noopener">DeepSeek on Hugging Face</a> — model cards &amp; weights</li>
+        </ul>
+        <h4>On YouTube — senior leaders</h4>
+        <a class="vid" href="https://www.youtube.com/watch?v=PqPAhR5qTxQ" target="_blank" rel="noopener">
+          <img src="https://img.youtube.com/vi/PqPAhR5qTxQ/hqdefault.jpg" alt="DeepSeek founder thumbnail" loading="lazy">
+          <div><div class="vt">DeepSeek founder Liang Wenfeng — news feature</div><div class="vs">Liang Wenfeng, founder · Reuters</div></div>
+        </a>
+        <div class="vs" style="margin-top:8px">DeepSeek has no official YouTube channel; it publishes mainly via GitHub &amp; its API docs.</div>
       </div>
 
       <!-- Google -->
@@ -178,22 +254,22 @@
         <a class="chan" href="https://www.youtube.com/@AIatMeta" target="_blank" rel="noopener">▶ AI at Meta channel</a>
       </div>
 
-      <!-- DeepSeek -->
-      <div class="prov" style="--pc:#7c5cff">
-        <div class="ph"><div class="badge">DS</div><div><h3>DeepSeek</h3></div></div>
-        <div class="who">Open-weight models from China (V3, R1).</div>
+      <!-- OpenAI -->
+      <div class="prov" style="--pc:#10a37f">
+        <div class="ph"><div class="badge">AI</div><div><h3>OpenAI</h3></div></div>
+        <div class="who">Maker of ChatGPT and the GPT models.</div>
         <h4>Official learning</h4>
         <ul>
-          <li><a href="https://api-docs.deepseek.com/" target="_blank" rel="noopener">DeepSeek API Docs</a> — reference &amp; quickstart</li>
-          <li><a href="https://github.com/deepseek-ai" target="_blank" rel="noopener">DeepSeek on GitHub</a> — open-source models &amp; papers</li>
-          <li><a href="https://huggingface.co/deepseek-ai" target="_blank" rel="noopener">DeepSeek on Hugging Face</a> — model cards &amp; weights</li>
+          <li><a href="https://academy.openai.com/" target="_blank" rel="noopener">OpenAI Academy</a> — free courses &amp; AI literacy</li>
+          <li><a href="https://developers.openai.com/" target="_blank" rel="noopener">OpenAI Developers</a> — docs, guides &amp; learn</li>
+          <li><a href="https://cookbook.openai.com/" target="_blank" rel="noopener">OpenAI Cookbook</a> — runnable code recipes</li>
         </ul>
         <h4>On YouTube — senior leaders</h4>
-        <a class="vid" href="https://www.youtube.com/watch?v=PqPAhR5qTxQ" target="_blank" rel="noopener">
-          <img src="https://img.youtube.com/vi/PqPAhR5qTxQ/hqdefault.jpg" alt="DeepSeek founder thumbnail" loading="lazy">
-          <div><div class="vt">DeepSeek founder Liang Wenfeng — news feature</div><div class="vs">Liang Wenfeng, founder · Reuters</div></div>
+        <a class="vid" href="https://www.youtube.com/watch?v=Wpxv-8nG8ec" target="_blank" rel="noopener">
+          <img src="https://img.youtube.com/vi/Wpxv-8nG8ec/hqdefault.jpg" alt="OpenAI Town Hall thumbnail" loading="lazy">
+          <div><div class="vt">OpenAI Town Hall with Sam Altman</div><div class="vs">Sam Altman, CEO · OpenAI channel · 2026</div></div>
         </a>
-        <div class="vs" style="margin-top:8px">DeepSeek has no official YouTube channel; it publishes mainly via GitHub &amp; its API docs.</div>
+        <a class="chan" href="https://www.youtube.com/@OpenAI" target="_blank" rel="noopener">▶ Official channel — latest videos</a>
       </div>
 
       <!-- Microsoft -->
@@ -222,5 +298,74 @@
     <a href="reference.html">Knowledge base</a> · <a href="test.html">Take the test</a> · learning links point to each company's official resources
   </footer>
 </div>
+
+<script>
+/* ===== Start-here knowledge assistant (client-side; answers from the knowledge base) ===== */
+const KB = [
+ {id:"analytics-foundations",t:"What business analytics is",kw:"business analytics decision intelligence define what is",a:"<b>Business analytics</b> is the systematic use of data, statistics and modelling to support better business decisions — turning raw data into actionable intelligence. The test of a good analysis isn't model sophistication but whether it improves a decision."},
+ {id:"data-types",t:"Data types & big data",kw:"structured unstructured data big data volume velocity variety semi-structured metadata",a:"<b>Structured data</b> fits a fixed schema (rows and columns); <b>unstructured data</b> (text, images, audio) has no fixed format and needs extra processing. 'Big data' is described by volume, velocity and variety (often plus veracity)."},
+ {id:"kpi",t:"KPIs & metrics",kw:"kpi metric key performance indicator measure vanity goal",a:"A <b>KPI</b> is a measurable value chosen because it tracks progress toward a specific objective. Good KPIs are aligned, measurable, actionable and time-bound — and someone is accountable for moving them."},
+ {id:"analytics-types",t:"The four types of analytics",kw:"descriptive diagnostic predictive prescriptive four types analytics hindsight foresight",a:"Analytics progresses through four types: <b>descriptive</b> (what happened), <b>diagnostic</b> (why), <b>predictive</b> (what's likely) and <b>prescriptive</b> (what to do). Value and difficulty rise from hindsight to foresight."},
+ {id:"machine-learning",t:"Machine learning",kw:"machine learning ml three families types artificial intelligence",a:"<b>Machine learning</b> lets systems learn patterns from data instead of hand-coded rules. Its three families are supervised (labelled data), unsupervised (no labels) and reinforcement learning (rewards). AI is the broad field, ML a subset, deep learning a subset of ML."},
+ {id:"supervised",t:"Supervised learning",kw:"supervised classification regression label target feature churn spam predict house price",a:"<b>Supervised learning</b> trains on labelled examples to predict an outcome. If the output is a category it's classification (spam vs not); if it's a number it's regression (a price)."},
+ {id:"unsupervised",t:"Unsupervised learning",kw:"unsupervised clustering kmeans k-means segmentation pca dimensionality association market basket grouping",a:"<b>Unsupervised learning</b> finds structure in unlabelled data — clustering groups similar records (e.g. k-means for customer segmentation), dimensionality reduction (PCA) simplifies many variables, and association rules find co-occurring items."},
+ {id:"reinforcement",t:"Reinforcement learning",kw:"reinforcement learning agent environment reward policy state trial error",a:"In <b>reinforcement learning</b> an agent learns by trial and error: it takes actions in an environment and adjusts based on rewards, refining a policy that maps situations to actions to maximise long-term reward. It powers game-playing, robotics and recommendation engines."},
+ {id:"deep-learning",t:"Deep learning",kw:"deep learning neural network neurons layers",a:"<b>Deep learning</b> uses multi-layer neural networks that learn hierarchical features automatically, which is why it excels at images, audio and text. The trade-off is balancing fit and generalisation (overfitting vs underfitting)."},
+ {id:"model-evaluation",t:"Evaluating models",kw:"evaluation precision recall f1 accuracy confusion matrix cross-validation overfitting underfitting roc auc test train imbalanced leakage generalise",a:"Models are judged on held-out data and via cross-validation. For classification, <b>precision</b> asks how many flagged positives were right, <b>recall</b> how many real positives were caught, and <b>F1</b> balances them; accuracy can mislead on imbalanced data."},
+ {id:"generative-ai",t:"Generative AI & LLMs",kw:"generative ai genai llm large language model gpt prompt hallucination transformer",a:"<b>Generative AI</b> creates new content from learned patterns; an <b>LLM</b> is a generative model trained on huge text corpora, built on the transformer architecture. A key limitation is hallucination — fluent but false output — so generations need verification."},
+ {id:"nlp-sentiment",t:"NLP & sentiment analysis",kw:"nlp natural language processing sentiment polarity text mining",a:"<b>NLP</b> lets computers work with human language. <b>Sentiment analysis</b> classifies the emotional tone of text (positive/negative/neutral) — a high-value, low-friction first AI use for understanding customer feedback at scale."},
+ {id:"data-infrastructure",t:"Data infrastructure",kw:"etl elt data warehouse lake pipeline cloud bi business intelligence sql dashboard governance",a:"Data plumbing moves and stores data: <b>ETL</b> pipelines extract-transform-load it; a <b>warehouse</b> holds structured, query-ready data while a <b>lake</b> holds raw data of any type; BI tools and SQL turn it into dashboards. Data governance keeps it quality, secure and compliant."},
+ {id:"statistics",t:"Statistics essentials",kw:"statistics correlation causation outlier median mean standard deviation pvalue hypothesis ab test sampling bias time series seasonality forecasting cleaning missing",a:"Core stats prevent mistakes: the <b>median</b> resists outliers, <b>correlation</b> ranges -1 to +1 and never proves causation, a low <b>p-value</b> signals statistical significance, and an unrepresentative sample (sampling bias) skews everything."},
+ {id:"ai-ethics",t:"AI ethics & governance",kw:"ethics governance bias fairness explainability interpretability accountability automation confirmation responsible model drift oversight human-in-the-loop",a:"As models drive decisions, risks must be managed: <b>algorithmic bias</b> usually traces to biased data, <b>fairness</b> and <b>explainability</b> build trust, and <b>accountability</b> assigns ownership. Mitigations centre on human oversight, auditing and monitoring for drift."},
+ {id:"data-privacy",t:"Data privacy & protection",kw:"privacy gdpr consent data minimisation rbac role-based access pii personal data",a:"Handling personal data carries duties: <b>GDPR</b> protects individuals' data, <b>PII</b> needs the strictest care, and principles like data minimisation, consent, role-based access and privacy-by-design keep you compliant and trusted."}
+];
+const COMPOSITE = [
+ {re:/supervised.*unsupervised|unsupervised.*supervised|difference.*(supervised|unsupervised)/, id:"supervised", a:"<b>Supervised</b> learning uses labelled data to predict a known target (classification or regression). <b>Unsupervised</b> learning has no labels and instead finds structure — like clustering customers or reducing dimensions. Quick test: do you have answers to learn from?"},
+ {re:/precision.*recall|recall.*precision/, id:"model-evaluation", a:"<b>Precision</b> = of the cases you flagged positive, how many really were. <b>Recall</b> = of the truly positive cases, how many you caught. <b>F1</b> balances the two — useful when classes are imbalanced."},
+ {re:/correlation.*causation|causation.*correlation/, id:"statistics", a:"<b>Correlation</b> measures whether two variables move together (-1 to +1); it does <b>not</b> prove one causes the other. A hidden third factor or coincidence can produce correlation without causation."},
+ {re:/\bai\b.*\bml\b|machine learning.*deep learning|ai vs ml|difference between ai/, id:"machine-learning", a:"<b>AI</b> is the broad goal of machines doing intelligent tasks; <b>machine learning</b> is the subset that learns from data; <b>deep learning</b> is the subset of ML using multi-layer neural networks. Generative AI/LLMs are a recent branch of deep learning."},
+ {re:/overfit|underfit/, id:"model-evaluation", a:"<b>Overfitting</b> = the model learns the training data too closely (including noise) and generalises poorly. <b>Underfitting</b> = it's too simple to capture the pattern. The art is balancing the two — more data and regularisation help."}
+];
+const _$ = id => document.getElementById(id);
+function scrollLog(){ const l=_$("chatlog"); if(l) l.scrollTop=l.scrollHeight; }
+function addMsg(content, who, isText){ const d=document.createElement("div"); d.className="msg "+who; if(isText){ d.textContent=content; } else { d.innerHTML=content; } _$("chatlog").appendChild(d); scrollLog(); }
+function findAnswer(qRaw){
+  const q=qRaw.toLowerCase();
+  for(const c of COMPOSITE){ if(c.re.test(q)) return c; }
+  if(/^(hi|hello|hey|yo|help|start)\b/.test(q)) return {a:"Hi! Ask me about any concept on this site — analytics types, machine learning, generative AI, statistics, ethics or privacy. Try a suggestion below.", id:""};
+  const STOP=new Set("what whats which when where why how does do did is are was the that this these those tell about explain can you your give given define defined mean means with from our and for into want need know more".split(" "));
+  const words=q.split(/[^a-z0-9]+/).filter(w=>w.length>2 && !STOP.has(w));
+  let best=null, score=0;
+  for(const s of KB){ let sc=0; const hay=(s.t+" "+s.kw).toLowerCase(); for(const w of words){ if(hay.includes(w)) sc+=(s.t.toLowerCase().includes(w)?2:1); } if(sc>score){score=sc;best=s;} }
+  if(best && score>0) return {a:best.a, id:best.id};
+  return {a:"I don't have that in the knowledge base yet. I can explain analytics types, supervised/unsupervised/reinforcement learning, deep learning, model evaluation, generative AI, NLP, data infrastructure, statistics, AI ethics and data privacy. Try rephrasing, or pick a suggestion below.", id:""};
+}
+function ask(text){
+  if(!text || !text.trim()) return;
+  addMsg(text, "user", true);
+  const r=findAnswer(text);
+  let html=r.a;
+  if(r.id){ const sec=KB.find(s=>s.id===r.id); html += '<br><a class="src" href="reference.html#'+r.id+'" target="_blank" rel="noopener">📖 Read the full section: '+(sec?sec.t:"")+' →</a>'; }
+  setTimeout(()=>addMsg(html, "bot", false), 130);
+}
+const SUGGESTIONS=["What is machine learning?","Supervised vs unsupervised learning","What is overfitting?","Explain precision and recall","What is generative AI?","What does GDPR require?"];
+(function initChat(){
+  if(!_$("chatlog")) return;
+  addMsg("Hi 👋 I'm the knowledge assistant. Ask me a general question about AI, data or analytics and I'll answer from this site's knowledge base — with a link to read more.", "bot", false);
+  const chips=_$("chips");
+  SUGGESTIONS.forEach(s=>{ const c=document.createElement("button"); c.type="button"; c.className="chip"; c.textContent=s; c.onclick=()=>ask(s); chips.appendChild(c); });
+  _$("chatform").addEventListener("submit", e=>{ e.preventDefault(); const v=_$("chatinput").value; _$("chatinput").value=""; ask(v); });
+})();
+/* ===== Resources: agree / differ toggle ===== */
+document.querySelectorAll(".ctab").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".ctab").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".cpanel").forEach(p=>p.classList.remove("show"));
+    btn.classList.add("active");
+    const p=document.getElementById("panel-"+btn.dataset.panel);
+    if(p) p.classList.add("show");
+  });
+});
+</script>
 </body>
 </html>
