@@ -3,345 +3,224 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Business Analytics &amp; AI — Knowledge Test</title>
+<title>Business Analytics &amp; AI — Learn, Test &amp; Go Deeper</title>
 <style>
   :root{
-    --bg:#0f1226; --card:#1a1e3a; --card2:#232850; --accent:#5b8cff; --accent2:#7c5cff;
-    --good:#2ecc8f; --bad:#ff5c7c; --text:#e8ebff; --muted:#9aa0c7; --line:#2c3260;
+    --bg:#0f1226; --card:#1a1e3a; --accent:#5b8cff; --accent2:#7c5cff;
+    --good:#2ecc8f; --text:#e8ebff; --muted:#9aa0c7; --line:#2c3260;
   }
   *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
   body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    background:radial-gradient(1200px 800px at 20% -10%,#23275a 0%,#0f1226 55%) fixed;color:var(--text);
-    min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:32px 16px;}
-  .wrap{width:100%;max-width:760px}
-  header{text-align:center;margin-bottom:22px}
-  header h1{font-size:1.55rem;margin:0 0 6px;font-weight:700;letter-spacing:.2px}
-  header p{margin:0;color:var(--muted);font-size:.92rem}
-  .card{background:linear-gradient(180deg,#1a1e3a,#161a33);border:1px solid var(--line);
-    border-radius:18px;padding:26px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
-  .bar{height:8px;background:#11142b;border-radius:99px;overflow:hidden;margin-bottom:8px}
-  .bar > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));
-    transition:width .35s ease}
-  .meta{display:flex;justify-content:space-between;color:var(--muted);font-size:.82rem;margin-bottom:18px}
-  .tag{display:inline-block;font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;
-    color:var(--accent);border:1px solid var(--line);padding:3px 10px;border-radius:99px;margin-bottom:14px}
-  .q{font-size:1.16rem;line-height:1.45;font-weight:600;margin:0 0 18px}
-  .opts{display:flex;flex-direction:column;gap:10px}
-  .opt{display:flex;align-items:center;gap:12px;text-align:left;cursor:pointer;
-    background:#161a35;border:1px solid var(--line);color:var(--text);
-    padding:14px 16px;border-radius:12px;font-size:.98rem;transition:.15s;width:100%}
-  .opt:hover:not(.locked){border-color:var(--accent);transform:translateY(-1px)}
-  .opt .key{flex:0 0 26px;height:26px;border-radius:7px;display:grid;place-items:center;
-    background:#222855;font-size:.8rem;font-weight:700;color:var(--muted)}
-  .opt.correct{border-color:var(--good);background:rgba(46,204,143,.14)}
-  .opt.correct .key{background:var(--good);color:#06231a}
-  .opt.wrong{border-color:var(--bad);background:rgba(255,92,124,.13)}
-  .opt.wrong .key{background:var(--bad);color:#2a0712}
-  .opt.locked{cursor:default}
-  .opt.dim{opacity:.55}
-  .explain{margin-top:16px;padding:14px 16px;border-radius:12px;background:#12152d;
-    border:1px solid var(--line);font-size:.92rem;line-height:1.5;color:#cfd4ff;display:none}
-  .explain.show{display:block}
-  .explain b{color:var(--accent)}
-  .explain a.learn{display:inline-block;margin-top:10px;color:#fff;font-weight:600;font-size:.86rem;
-    text-decoration:none;background:rgba(91,140,255,.18);border:1px solid var(--line);
-    padding:6px 12px;border-radius:8px}
-  .explain a.learn:hover{border-color:var(--accent);background:rgba(91,140,255,.3)}
-  .nav{display:flex;justify-content:space-between;align-items:center;margin-top:22px;gap:12px}
-  button.btn{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;border:0;
-    padding:12px 22px;border-radius:11px;font-size:.96rem;font-weight:600;cursor:pointer;transition:.15s}
-  button.btn:disabled{opacity:.4;cursor:not-allowed}
-  button.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--muted)}
-  button.btn.big{padding:15px 30px;font-size:1.05rem}
-  .score{color:var(--muted);font-size:.86rem;font-weight:600}
-  .intro{text-align:center}
-  .intro p{color:var(--muted);line-height:1.55;margin:10px 0 22px}
-  .pill{display:inline-flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:6px}
-  .pill span{font-size:.78rem;color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:5px 12px}
-  .result{text-align:center}
-  .result .big{font-size:3.2rem;font-weight:800;margin:6px 0;
-    background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .result h2{margin:0 0 4px}
-  .result .verdict{color:var(--muted);margin-bottom:20px}
-  .breakdown{text-align:left;margin-top:18px;display:flex;flex-direction:column;gap:8px;max-height:340px;overflow:auto}
-  .row{display:flex;gap:10px;align-items:flex-start;font-size:.86rem;padding:8px 10px;border-radius:9px;background:#12152d}
-  .dot{flex:0 0 18px;height:18px;border-radius:50%;margin-top:1px;display:grid;place-items:center;font-size:.7rem;font-weight:800}
-  .dot.ok{background:var(--good);color:#06231a}
-  .dot.no{background:var(--bad);color:#2a0712}
-  .hidden{display:none}
-  @media(max-width:480px){.card{padding:20px}.q{font-size:1.05rem}}
+    background:radial-gradient(1200px 800px at 20% -10%,#23275a 0%,#0f1226 55%) fixed;color:var(--text);line-height:1.6}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1000px;margin:0 auto;padding:40px 20px 80px}
+  .hero{text-align:center;margin-bottom:40px}
+  .hero h1{font-size:2.1rem;margin:0 0 10px;font-weight:800;letter-spacing:.2px}
+  .hero p{color:var(--muted);font-size:1.05rem;margin:0 auto;max-width:620px}
+  .kicker{display:inline-block;font-size:.74rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);
+    border:1px solid var(--line);border-radius:99px;padding:5px 14px;margin-bottom:16px}
+  /* top section cards */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:56px}
+  @media(max-width:760px){.cards{grid-template-columns:1fr}}
+  .card{display:block;background:linear-gradient(180deg,#1a1e3a,#161a33);border:1px solid var(--line);
+    border-radius:18px;padding:26px;transition:.18s;color:var(--text)}
+  .card:hover{transform:translateY(-3px);border-color:var(--accent);text-decoration:none;box-shadow:0 18px 50px rgba(0,0,0,.4)}
+  .card .ico{font-size:2rem;margin-bottom:12px}
+  .card h2{margin:0 0 8px;font-size:1.2rem}
+  .card p{margin:0 0 14px;color:var(--muted);font-size:.92rem}
+  .card .go{font-weight:700;color:var(--accent);font-size:.92rem}
+  .card .meta{display:inline-block;margin-top:12px;font-size:.74rem;color:var(--muted);border:1px solid var(--line);
+    border-radius:99px;padding:3px 10px}
+  /* resources */
+  .section-head{text-align:center;margin:0 0 8px}
+  .section-head h2{font-size:1.6rem;margin:0 0 8px}
+  .section-head p{color:var(--muted);margin:0 auto 6px;max-width:680px}
+  .note{text-align:center;color:var(--muted);font-size:.82rem;margin:0 auto 30px;max-width:680px;font-style:italic}
+  .providers{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+  @media(max-width:760px){.providers{grid-template-columns:1fr}}
+  .prov{background:linear-gradient(180deg,#1a1e3a,#161a33);border:1px solid var(--line);border-radius:18px;
+    padding:22px;border-left:4px solid var(--pc,#5b8cff)}
+  .prov .ph{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+  .prov .badge{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;font-weight:800;font-size:1.1rem;
+    background:var(--pc,#5b8cff);color:#0b0e1f;flex:0 0 42px}
+  .prov h3{margin:0;font-size:1.15rem}
+  .prov .who{color:var(--muted);font-size:.82rem;margin:2px 0 14px}
+  .prov h4{font-size:.72rem;text-transform:uppercase;letter-spacing:.8px;color:var(--accent);margin:14px 0 8px}
+  .prov ul{margin:0;padding-left:18px}
+  .prov li{margin:5px 0;font-size:.9rem}
+  .vid{display:flex;gap:12px;align-items:center;background:#12152d;border:1px solid var(--line);border-radius:12px;
+    padding:10px;margin-top:8px;transition:.15s}
+  .vid:hover{border-color:var(--accent);text-decoration:none}
+  .vid img{width:120px;height:68px;object-fit:cover;border-radius:8px;flex:0 0 120px;background:#0b0e1f}
+  .vid .vt{font-size:.85rem;font-weight:600;color:var(--text);line-height:1.35}
+  .vid .vs{font-size:.74rem;color:var(--muted);margin-top:3px}
+  .chan{display:inline-block;margin-top:10px;font-size:.82rem;font-weight:600;color:#fff;
+    background:rgba(91,140,255,.18);border:1px solid var(--line);padding:6px 12px;border-radius:8px}
+  .chan:hover{border-color:var(--accent);text-decoration:none}
+  footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:50px;border-top:1px solid var(--line);padding-top:24px}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <h1>Business Analytics &amp; AI — Knowledge Test</h1>
-    <p>Core definitions, concepts &amp; applications</p>
-  </header>
 
-  <!-- START -->
-  <div class="card intro" id="startCard">
-    <div class="pill"><span>100-question bank</span><span>20 random per test</span><span>shuffled answers</span></div>
-    <p>Each attempt draws <b>20 questions at random</b> from a pool of 100 covering analytics types, machine learning, generative AI, data infrastructure, statistics and AI ethics. Answer order is shuffled, so every run is different. You get instant feedback and a short explanation after each answer.</p>
-    <button class="btn big" id="startBtn">Start test</button>
+  <div class="hero">
+    <span class="kicker">Business Analytics &amp; AI</span>
+    <h1>Learn it · Test yourself · Go to the source</h1>
+    <p>A self-contained hub to build and check your understanding of core business-analytics and AI concepts — then dive into the official learning resources from the companies building the models.</p>
   </div>
 
-  <!-- QUIZ -->
-  <div class="card hidden" id="quizCard">
-    <div class="bar"><i id="prog"></i></div>
-    <div class="meta">
-      <span id="counter">Question 1 of 20</span>
-      <span class="score" id="liveScore">Score: 0</span>
+  <!-- THREE SECTIONS -->
+  <div class="cards">
+    <a class="card" href="reference.html">
+      <div class="ico">📚</div>
+      <h2>Knowledge Base</h2>
+      <p>Sixteen in-depth topic sections — analytics types, machine learning, generative AI, statistics, ethics — with diagrams and links to open-access sources.</p>
+      <span class="go">Open the knowledge base →</span>
+      <br><span class="meta">16 sections · diagrams · sources</span>
+    </a>
+    <a class="card" href="test.html">
+      <div class="ico">📝</div>
+      <h2>The Test</h2>
+      <p>A 100-question bank that draws 20 at random each attempt, shuffles the answers, and gives instant feedback plus a "Learn more" link into the knowledge base.</p>
+      <span class="go">Take the test →</span>
+      <br><span class="meta">100 questions · 20 per run</span>
+    </a>
+    <a class="card" href="#resources">
+      <div class="ico">🎓</div>
+      <h2>Official Learning Resources</h2>
+      <p>Free learning hubs from the six leading LLM makers, plus their official YouTube channels and recent talks from senior leaders.</p>
+      <span class="go">Browse the resources →</span>
+      <br><span class="meta">6 providers · hubs + videos</span>
+    </a>
+  </div>
+
+  <!-- RESOURCES SECTION -->
+  <div id="resources">
+    <div class="section-head">
+      <h2>🎓 Official Learning Resources — the 6 leading LLM makers</h2>
+      <p>Go straight to the source. Each card links the company's free learning hub and its official YouTube channel, with a recent talk from a senior leader.</p>
     </div>
-    <span class="tag" id="qTag">Concept</span>
-    <p class="q" id="qText">—</p>
-    <div class="opts" id="opts"></div>
-    <div class="explain" id="explain"></div>
-    <div class="nav">
-      <button class="btn ghost" id="quitBtn">Quit</button>
-      <button class="btn" id="nextBtn" disabled>Next →</button>
+    <p class="note">Channel links always surface the latest videos; the individual talks below are snapshots from mid-2026. Video titles are as published; talks may be hosted on third-party news channels.</p>
+
+    <div class="providers">
+
+      <!-- OpenAI -->
+      <div class="prov" style="--pc:#10a37f">
+        <div class="ph"><div class="badge">AI</div><div><h3>OpenAI</h3></div></div>
+        <div class="who">Maker of ChatGPT and the GPT models.</div>
+        <h4>Official learning</h4>
+        <ul>
+          <li><a href="https://academy.openai.com/" target="_blank" rel="noopener">OpenAI Academy</a> — free courses &amp; AI literacy</li>
+          <li><a href="https://developers.openai.com/" target="_blank" rel="noopener">OpenAI Developers</a> — docs, guides &amp; learn</li>
+          <li><a href="https://cookbook.openai.com/" target="_blank" rel="noopener">OpenAI Cookbook</a> — runnable code recipes</li>
+        </ul>
+        <h4>On YouTube — senior leaders</h4>
+        <a class="vid" href="https://www.youtube.com/watch?v=Wpxv-8nG8ec" target="_blank" rel="noopener">
+          <img src="https://img.youtube.com/vi/Wpxv-8nG8ec/hqdefault.jpg" alt="OpenAI Town Hall thumbnail" loading="lazy">
+          <div><div class="vt">OpenAI Town Hall with Sam Altman</div><div class="vs">Sam Altman, CEO · OpenAI channel · 2026</div></div>
+        </a>
+        <a class="chan" href="https://www.youtube.com/@OpenAI" target="_blank" rel="noopener">▶ Official channel — latest videos</a>
+      </div>
+
+      <!-- Anthropic -->
+      <div class="prov" style="--pc:#d97757">
+        <div class="ph"><div class="badge">A</div><div><h3>Anthropic</h3></div></div>
+        <div class="who">Maker of Claude; safety-focused AI lab.</div>
+        <h4>Official learning</h4>
+        <ul>
+          <li><a href="https://www.anthropic.com/learn" target="_blank" rel="noopener">Anthropic Academy (Learn)</a> — guides &amp; tracks</li>
+          <li><a href="https://anthropic.skilljar.com/" target="_blank" rel="noopener">Anthropic Courses</a> — free certificated courses</li>
+          <li><a href="https://docs.anthropic.com/" target="_blank" rel="noopener">Claude docs</a> &amp; <a href="https://github.com/anthropics/courses" target="_blank" rel="noopener">courses on GitHub</a></li>
+        </ul>
+        <h4>On YouTube — senior leaders</h4>
+        <a class="vid" href="https://www.youtube.com/watch?v=K7F6ohcBJus" target="_blank" rel="noopener">
+          <img src="https://img.youtube.com/vi/K7F6ohcBJus/hqdefault.jpg" alt="Dario Amodei at WEF thumbnail" loading="lazy">
+          <div><div class="vt">Dario Amodei from the World Economic Forum</div><div class="vs">Dario Amodei, CEO · WSJ · 2026</div></div>
+        </a>
+        <a class="chan" href="https://www.youtube.com/@anthropic-ai" target="_blank" rel="noopener">▶ Official channel — latest videos</a>
+      </div>
+
+      <!-- Google -->
+      <div class="prov" style="--pc:#4285f4">
+        <div class="ph"><div class="badge">G</div><div><h3>Google</h3></div></div>
+        <div class="who">Gemini models &amp; Google DeepMind research.</div>
+        <h4>Official learning</h4>
+        <ul>
+          <li><a href="https://developers.google.com/machine-learning/crash-course" target="_blank" rel="noopener">Machine Learning Crash Course</a> — free, ~15h</li>
+          <li><a href="https://ai.google.dev/" target="_blank" rel="noopener">Google AI for Developers</a> — build with Gemini</li>
+          <li><a href="https://ai.google/learn-ai-skills/" target="_blank" rel="noopener">Learn AI Skills</a> — tools, training &amp; skills</li>
+        </ul>
+        <h4>On YouTube — senior leaders</h4>
+        <a class="vid" href="https://www.youtube.com/watch?v=dgBLVm2L1P4" target="_blank" rel="noopener">
+          <img src="https://img.youtube.com/vi/dgBLVm2L1P4/hqdefault.jpg" alt="Demis Hassabis thumbnail" loading="lazy">
+          <div><div class="vt">A new era of discovery: AI and the frontiers of science</div><div class="vs">Demis Hassabis, CEO Google DeepMind · 2026</div></div>
+        </a>
+        <a class="chan" href="https://www.youtube.com/@Google_DeepMind" target="_blank" rel="noopener">▶ Google DeepMind channel</a>
+      </div>
+
+      <!-- Meta -->
+      <div class="prov" style="--pc:#0866ff">
+        <div class="ph"><div class="badge">M</div><div><h3>Meta</h3></div></div>
+        <div class="who">Maker of the open-weight Llama models; FAIR research.</div>
+        <h4>Official learning</h4>
+        <ul>
+          <li><a href="https://www.llama.com/docs/overview/" target="_blank" rel="noopener">Llama Docs &amp; Resources</a> — get started with Llama</li>
+          <li><a href="https://github.com/meta-llama/llama-cookbook" target="_blank" rel="noopener">Llama Cookbook</a> — notebooks: inference, fine-tuning, RAG</li>
+          <li><a href="https://ai.meta.com/" target="_blank" rel="noopener">Meta AI</a> — research &amp; blog</li>
+        </ul>
+        <h4>On YouTube — senior leaders</h4>
+        <a class="vid" href="https://www.youtube.com/watch?v=ngBraLDqzdI" target="_blank" rel="noopener">
+          <img src="https://img.youtube.com/vi/ngBraLDqzdI/hqdefault.jpg" alt="Yann LeCun thumbnail" loading="lazy">
+          <div><div class="vt">Yann LeCun on what comes after LLMs</div><div class="vs">Yann LeCun, Meta chief AI scientist · 2026</div></div>
+        </a>
+        <a class="chan" href="https://www.youtube.com/@AIatMeta" target="_blank" rel="noopener">▶ AI at Meta channel</a>
+      </div>
+
+      <!-- DeepSeek -->
+      <div class="prov" style="--pc:#7c5cff">
+        <div class="ph"><div class="badge">DS</div><div><h3>DeepSeek</h3></div></div>
+        <div class="who">Open-weight models from China (V3, R1).</div>
+        <h4>Official learning</h4>
+        <ul>
+          <li><a href="https://api-docs.deepseek.com/" target="_blank" rel="noopener">DeepSeek API Docs</a> — reference &amp; quickstart</li>
+          <li><a href="https://github.com/deepseek-ai" target="_blank" rel="noopener">DeepSeek on GitHub</a> — open-source models &amp; papers</li>
+          <li><a href="https://huggingface.co/deepseek-ai" target="_blank" rel="noopener">DeepSeek on Hugging Face</a> — model cards &amp; weights</li>
+        </ul>
+        <h4>On YouTube — senior leaders</h4>
+        <a class="vid" href="https://www.youtube.com/watch?v=PqPAhR5qTxQ" target="_blank" rel="noopener">
+          <img src="https://img.youtube.com/vi/PqPAhR5qTxQ/hqdefault.jpg" alt="DeepSeek founder thumbnail" loading="lazy">
+          <div><div class="vt">DeepSeek founder Liang Wenfeng — news feature</div><div class="vs">Liang Wenfeng, founder · Reuters</div></div>
+        </a>
+        <div class="vs" style="margin-top:8px">DeepSeek has no official YouTube channel; it publishes mainly via GitHub &amp; its API docs.</div>
+      </div>
+
+      <!-- Microsoft -->
+      <div class="prov" style="--pc:#00a4ef">
+        <div class="ph"><div class="badge">MS</div><div><h3>Microsoft</h3></div></div>
+        <div class="who">Copilot &amp; Azure AI; long-time OpenAI partner.</div>
+        <h4>Official learning</h4>
+        <ul>
+          <li><a href="https://microsoft.github.io/generative-ai-for-beginners/" target="_blank" rel="noopener">Generative AI for Beginners</a> — 21-lesson course</li>
+          <li><a href="https://learn.microsoft.com/en-us/training/paths/introduction-generative-ai/" target="_blank" rel="noopener">Microsoft Learn: Generative AI</a> — training paths</li>
+          <li><a href="https://github.com/microsoft/AI-For-Beginners" target="_blank" rel="noopener">AI for Beginners</a> — 12-week curriculum</li>
+        </ul>
+        <h4>On YouTube — senior leaders</h4>
+        <a class="vid" href="https://www.youtube.com/watch?v=YTrBz6Z5c0E" target="_blank" rel="noopener">
+          <img src="https://img.youtube.com/vi/YTrBz6Z5c0E/hqdefault.jpg" alt="Mustafa Suleyman thumbnail" loading="lazy">
+          <div><div class="vt">Mustafa Suleyman on "humanist superintelligence"</div><div class="vs">Mustafa Suleyman, CEO Microsoft AI · FT · 2026</div></div>
+        </a>
+        <a class="chan" href="https://www.youtube.com/@Microsoft" target="_blank" rel="noopener">▶ Microsoft channel</a>
+      </div>
+
     </div>
   </div>
 
-  <!-- RESULTS -->
-  <div class="card result hidden" id="resultCard">
-    <h2>Test complete</h2>
-    <div class="big" id="finalPct">0%</div>
-    <div class="verdict" id="verdict">—</div>
-    <div class="score" id="finalScore"></div>
-    <div class="breakdown" id="breakdown"></div>
-    <div class="nav" style="justify-content:center;margin-top:22px">
-      <button class="btn big" id="againBtn">New 20-question test</button>
-    </div>
-  </div>
+  <footer>
+    Business Analytics &amp; AI learning hub · updated June 2026<br>
+    <a href="reference.html">Knowledge base</a> · <a href="test.html">Take the test</a> · learning links point to each company's official resources
+  </footer>
 </div>
-
-<script>
-/* ===================== 100-QUESTION GENERIC BANK ===================== */
-const BANK = [
- {tag:"Definition",q:"Business analytics is best described as:",options:["Using data, statistical analysis and modelling to support business decision-making","Storing large volumes of raw data in the cloud","Designing a company logo and brand identity","Writing advertising copy for campaigns"],answer:0,explain:"Business analytics applies <b>data, statistics and modelling</b> to support decisions."},
- {tag:"Concept",q:"Data organised in a predefined format, such as rows and columns in a database, is called:",options:["Structured data","Unstructured data","Metadata","Streaming data"],answer:0,explain:"<b>Structured data</b> fits a fixed schema like database tables; free text and images are unstructured."},
- {tag:"Concept",q:"Emails, images, social-media posts and free-text reviews are examples of:",options:["Unstructured data","Structured data","Tabular data","Relational data"],answer:0,explain:"These have no fixed schema and are <b>unstructured data</b>."},
- {tag:"Definition",q:"The classic 'V's used to characterise big data include:",options:["Volume, velocity and variety","Validity, vision and value","Version, vector and vault","Volume, virtue and victory"],answer:0,explain:"Big data is commonly defined by <b>volume, velocity and variety</b> (often plus veracity)."},
- {tag:"Definition",q:"A KPI (key performance indicator) is:",options:["A measurable value showing how effectively an objective is being met","A type of database server","A machine-learning algorithm","A data-cleaning technique"],answer:0,explain:"A <b>KPI</b> is a measurable value tracking progress toward an objective."},
- {tag:"Concept",q:"The four main types of analytics, ordered from hindsight to foresight, are:",options:["Descriptive → diagnostic → predictive → prescriptive","Predictive → descriptive → prescriptive → diagnostic","Prescriptive → predictive → diagnostic → descriptive","Diagnostic → descriptive → prescriptive → predictive"],answer:0,explain:"The standard progression is <b>descriptive → diagnostic → predictive → prescriptive</b>."},
- {tag:"Concept",q:"Descriptive analytics answers which question?",options:["What happened?","Why did it happen?","What will happen?","What should we do?"],answer:0,explain:"Descriptive analytics summarises <b>what happened</b>."},
- {tag:"Concept",q:"Diagnostic analytics answers which question?",options:["Why did it happen?","What happened?","What will happen?","What should we do?"],answer:0,explain:"Diagnostic analytics explains <b>why</b> something happened."},
- {tag:"Concept",q:"Predictive analytics answers which question?",options:["What is likely to happen?","What already happened?","Why did it happen?","What action should we take?"],answer:0,explain:"Predictive analytics forecasts <b>what is likely to happen</b>."},
- {tag:"Concept",q:"Prescriptive analytics answers which question?",options:["What action should we take?","What happened?","Why did it happen?","What will happen?"],answer:0,explain:"Prescriptive analytics recommends <b>what action to take</b>, often via optimisation or simulation."},
- {tag:"Application",q:"A dashboard showing last quarter's sales totals by region is mainly an example of:",options:["Descriptive analytics","Predictive analytics","Prescriptive analytics","Reinforcement learning"],answer:0,explain:"Reporting past totals is <b>descriptive analytics</b>."},
- {tag:"Application",q:"Recommending the optimal delivery routes that minimise total cost is an example of:",options:["Prescriptive analytics","Descriptive analytics","Diagnostic analytics","Data cleaning"],answer:0,explain:"Recommending an optimal action is <b>prescriptive analytics</b>."},
- {tag:"Concept",q:"The three broad categories of machine learning are:",options:["Supervised, unsupervised and reinforcement learning","Descriptive, diagnostic and predictive","Structured, unstructured and semi-structured","Classification, clustering and reporting"],answer:0,explain:"ML is broadly <b>supervised, unsupervised and reinforcement</b> learning."},
- {tag:"Definition",q:"Supervised learning is defined by the fact that it:",options:["Learns from labelled data to predict an outcome","Finds patterns in unlabelled data","Learns by trial and error using rewards","Requires no data at all"],answer:0,explain:"Supervised learning trains on <b>labelled examples</b> to predict a target."},
- {tag:"Definition",q:"Unsupervised learning is defined by the fact that it:",options:["Finds patterns or groupings in unlabelled data","Uses labelled examples to predict a category","Maximises a reward signal over time","Only works on numeric time series"],answer:0,explain:"Unsupervised learning discovers structure in <b>unlabelled data</b>."},
- {tag:"Definition",q:"Reinforcement learning is defined by the fact that it:",options:["Learns by trial and error, guided by rewards and penalties","Requires a fully labelled training set","Only summarises historical data","Cannot improve after deployment"],answer:0,explain:"Reinforcement learning learns through <b>trial and error guided by rewards</b>."},
- {tag:"Concept",q:"A model that predicts a discrete category (e.g., spam vs. not spam) performs:",options:["Classification","Regression","Clustering","Dimensionality reduction"],answer:0,explain:"Predicting categories is <b>classification</b>."},
- {tag:"Concept",q:"A model that predicts a continuous numeric value (e.g., a house price) performs:",options:["Regression","Classification","Clustering","Association"],answer:0,explain:"Predicting a continuous number is <b>regression</b>."},
- {tag:"Concept",q:"Grouping similar customers together without any predefined labels is an example of:",options:["Clustering (unsupervised learning)","Classification (supervised learning)","Regression","Reinforcement learning"],answer:0,explain:"Grouping unlabelled data is <b>clustering</b>, an unsupervised task."},
- {tag:"Concept",q:"K-means is an algorithm used for:",options:["Clustering","Linear regression","Spam classification","Reward optimisation"],answer:0,explain:"K-means is a popular <b>clustering</b> algorithm."},
- {tag:"Application",q:"Predicting whether a customer will churn (leave) or stay is typically framed as:",options:["A classification problem","A regression problem","A clustering problem","A dimensionality-reduction problem"],answer:0,explain:"A yes/no outcome like churn is <b>classification</b>."},
- {tag:"Application",q:"Customer segmentation for marketing is most commonly done with:",options:["Clustering","Linear regression","Reinforcement learning","Hypothesis testing"],answer:0,explain:"Segmentation groups similar customers using <b>clustering</b>."},
- {tag:"Concept",q:"Detecting that customers who buy bread often also buy butter is an example of:",options:["Association rule mining (market-basket analysis)","Regression","Reinforcement learning","Time-series forecasting"],answer:0,explain:"Finding co-occurring items is <b>association rule mining</b>."},
- {tag:"Concept",q:"Principal Component Analysis (PCA) is mainly used for:",options:["Dimensionality reduction","Classifying emails","Forecasting sales","Cleaning missing values"],answer:0,explain:"PCA reduces the number of variables — <b>dimensionality reduction</b>."},
- {tag:"Concept",q:"In reinforcement learning, the 'agent' is:",options:["The learner or decision-maker that takes actions","The reward signal","The dataset used for training","The cloud server"],answer:0,explain:"The <b>agent</b> is the decision-maker that interacts with the environment."},
- {tag:"Concept",q:"In reinforcement learning, the 'reward' is:",options:["A feedback signal indicating how good an action was","The set of all possible actions","The model's source code","The training/test split"],answer:0,explain:"The <b>reward</b> is feedback guiding the agent toward better actions."},
- {tag:"Concept",q:"In reinforcement learning, the 'policy' is:",options:["The strategy mapping states to actions","The hardware the model runs on","The labelled training data","The confusion matrix"],answer:0,explain:"A <b>policy</b> maps situations (states) to the actions the agent takes."},
- {tag:"Application",q:"Training an AI to play a game or control a robot through repeated attempts is a classic use of:",options:["Reinforcement learning","Supervised classification","Association rule mining","Descriptive analytics"],answer:0,explain:"Game-playing and robotics are classic <b>reinforcement learning</b> applications."},
- {tag:"Definition",q:"Deep learning refers to:",options:["Machine learning using multi-layered (deep) neural networks","Any analysis done on a large dataset","Manually written business rules","Storing data across many servers"],answer:0,explain:"Deep learning uses <b>multi-layer neural networks</b>."},
- {tag:"Definition",q:"Overfitting occurs when a model:",options:["Fits the training data too closely and generalises poorly to new data","Is too simple to capture the underlying pattern","Has no access to training data","Runs too slowly to deploy"],answer:0,explain:"<b>Overfitting</b> = memorising training noise, poor generalisation."},
- {tag:"Definition",q:"Underfitting occurs when a model:",options:["Is too simple to capture the underlying pattern in the data","Memorises the training data exactly","Has too many features to compute","Always achieves perfect accuracy"],answer:0,explain:"<b>Underfitting</b> = the model is too simple to learn the pattern."},
- {tag:"Concept",q:"Why is a separate test set held out from training?",options:["To estimate how the model performs on unseen data","To increase the size of the training data","To make training run faster","To store the model parameters"],answer:0,explain:"A held-out <b>test set</b> estimates real-world generalisation."},
- {tag:"Concept",q:"Cross-validation is used to:",options:["Assess how well a model generalises by training/testing on multiple data splits","Permanently delete outliers","Encrypt the dataset","Visualise data in a dashboard"],answer:0,explain:"<b>Cross-validation</b> rotates train/test splits to gauge generalisation."},
- {tag:"Definition",q:"In classification, precision measures:",options:["Of the items predicted positive, the fraction that are actually positive","Of the actual positives, the fraction correctly found","The fraction of all predictions that are correct","The spread of the data"],answer:0,explain:"<b>Precision</b> = TP / (TP + FP)."},
- {tag:"Definition",q:"In classification, recall measures:",options:["Of the actual positives, the fraction the model correctly identified","Of predicted positives, the fraction that are correct","The total number of features","The model training time"],answer:0,explain:"<b>Recall</b> = TP / (TP + FN)."},
- {tag:"Definition",q:"The F1 score is:",options:["The harmonic mean of precision and recall","The total number of correct predictions","The variance of the predictions","The number of training epochs"],answer:0,explain:"<b>F1</b> balances precision and recall as their harmonic mean."},
- {tag:"Definition",q:"A confusion matrix shows:",options:["Counts of true/false positives and negatives for a classifier","The correlation between two variables","The trend of a time series","The structure of a neural network"],answer:0,explain:"A <b>confusion matrix</b> tabulates TP, FP, TN and FN."},
- {tag:"Definition",q:"In machine learning, a 'feature' is:",options:["An input variable the model uses to make predictions","The outcome being predicted","The accuracy of the model","A type of database"],answer:0,explain:"A <b>feature</b> is an input/predictor variable."},
- {tag:"Definition",q:"In supervised learning, the 'label' (or target) is:",options:["The outcome the model is trained to predict","An input variable","The learning rate","The size of the dataset"],answer:0,explain:"The <b>label/target</b> is the known answer the model learns to predict."},
- {tag:"Definition",q:"Generative AI refers to systems that:",options:["Create new content such as text, images or code from learned patterns","Only classify existing data into categories","Exclusively clean and store data","Replace databases with spreadsheets"],answer:0,explain:"<b>Generative AI</b> produces new content from learned patterns."},
- {tag:"Definition",q:"A large language model (LLM) is:",options:["A model trained on vast text data to understand and generate language","A spreadsheet formula engine","A type of relational database","A data-visualisation library"],answer:0,explain:"An <b>LLM</b> is trained on large text corpora to process and generate language."},
- {tag:"Concept",q:"Which of these is an example of a large language model?",options:["GPT","MySQL","Tableau","Hadoop"],answer:0,explain:"<b>GPT</b> is an LLM; the others are a database, a BI tool and a big-data framework."},
- {tag:"Definition",q:"In generative AI, a 'prompt' is:",options:["The input or instruction given to the model","The model's internal weights","The training dataset","The evaluation metric"],answer:0,explain:"A <b>prompt</b> is the instruction/input you give the model."},
- {tag:"Definition",q:"An AI 'hallucination' is when a model:",options:["Produces plausible-sounding but false or fabricated information","Runs out of memory","Refuses to answer any question","Trains faster than expected"],answer:0,explain:"A <b>hallucination</b> is confident but incorrect/fabricated output."},
- {tag:"Definition",q:"Natural Language Processing (NLP) is concerned with:",options:["Enabling computers to understand and work with human language","Designing computer networks","Optimising database indexes","Rendering 3D graphics"],answer:0,explain:"<b>NLP</b> lets computers process human language."},
- {tag:"Definition",q:"Sentiment analysis is the task of:",options:["Determining the emotional tone (positive/negative/neutral) of text","Counting the words in a document","Translating text between languages","Encrypting customer data"],answer:0,explain:"<b>Sentiment analysis</b> classifies the emotional tone of text."},
- {tag:"Concept",q:"Assigning a review a 'positive', 'negative' or 'neutral' label describes its:",options:["Sentiment polarity","File format","Word count","Encryption level"],answer:0,explain:"Positive/negative/neutral is the text's <b>sentiment polarity</b>."},
- {tag:"Application",q:"A strong use of generative AI in analytics is to:",options:["Summarise large volumes of unstructured text into structured insight quickly","Replace the need for any data governance","Guarantee perfectly unbiased decisions","Eliminate the need for databases"],answer:0,explain:"GenAI excels at <b>summarising unstructured text</b> at speed."},
- {tag:"Concept",q:"A key reason GenAI outputs should not be used unchecked is that they:",options:["Can be biased or factually wrong and need human validation","Are always too short to be useful","Cannot process text data","Only work offline"],answer:0,explain:"GenAI outputs require <b>human validation</b> for accuracy and bias."},
- {tag:"Definition",q:"In a data pipeline, ETL stands for:",options:["Extract, Transform, Load","Estimate, Test, Launch","Encode, Transfer, Link","Explore, Train, Learn"],answer:0,explain:"ETL = <b>Extract, Transform, Load</b>."},
- {tag:"Definition",q:"A data warehouse is best described as:",options:["A central repository of integrated, structured data optimised for analysis and reporting","A folder of raw image files","A real-time chat system","A spreadsheet on one laptop"],answer:0,explain:"A <b>data warehouse</b> stores integrated, structured data for analytics."},
- {tag:"Definition",q:"A data lake differs from a data warehouse mainly because it:",options:["Stores raw data in its native format, including unstructured data","Can only hold a few rows of data","Is always smaller than a spreadsheet","Cannot be queried at all"],answer:0,explain:"A <b>data lake</b> holds raw data (structured and unstructured) in native format."},
- {tag:"Concept",q:"A major benefit of cloud computing for analytics is:",options:["On-demand, scalable storage and compute without owning hardware","Guaranteed elimination of all data bias","No need to clean data","Automatic legal compliance everywhere"],answer:0,explain:"Cloud offers <b>scalable, on-demand</b> storage and compute."},
- {tag:"Definition",q:"Business Intelligence (BI) refers to:",options:["Tools and processes that turn data into reports and dashboards for decisions","A type of supervised learning model","A programming language","A data-encryption standard"],answer:0,explain:"<b>BI</b> converts data into reports/dashboards to support decisions."},
- {tag:"Concept",q:"Which of these is a Business Intelligence / dashboard tool?",options:["Power BI","TensorFlow","PostgreSQL","Kubernetes"],answer:0,explain:"<b>Power BI</b> (like Tableau or Looker) is a BI tool."},
- {tag:"Definition",q:"Data governance refers to:",options:["The policies and processes ensuring data quality, security and proper use","The speed of a database query","A clustering algorithm","A type of dashboard chart"],answer:0,explain:"<b>Data governance</b> sets policies for data quality, security and use."},
- {tag:"Concept",q:"A commonly cited trade-off of open-source AI tools versus closed-source APIs is:",options:["More flexibility and control, but more setup and maintenance effort","Higher cost and less transparency","No ability to be customised","Guaranteed vendor support with no configuration"],answer:0,explain:"Open-source = <b>flexibility/control</b>; closed-source APIs = easier deployment and vendor support."},
- {tag:"Definition",q:"Data cleaning (data cleansing) is the process of:",options:["Detecting and fixing inaccurate, incomplete or duplicate data","Deleting the entire dataset","Encrypting all records","Visualising data in charts"],answer:0,explain:"<b>Data cleaning</b> fixes inaccurate, incomplete or duplicate data."},
- {tag:"Concept",q:"Two common ways to handle missing values are:",options:["Imputation (filling estimates) or removing affected records","Encrypting and ignoring them","Always doubling the dataset","Converting them to images"],answer:0,explain:"Missing values are usually <b>imputed</b> or the records removed."},
- {tag:"Definition",q:"An outlier is:",options:["A data point that differs markedly from the rest of the data","The most common value in a dataset","The average of all values","A missing record"],answer:0,explain:"An <b>outlier</b> lies far from the bulk of the data."},
- {tag:"Concept",q:"The phrase 'correlation does not imply causation' means:",options:["Two variables moving together does not prove one causes the other","Correlation can never be measured","Causation is impossible to establish","Variables can never be related"],answer:0,explain:"Co-movement alone does not prove a <b>causal</b> link."},
- {tag:"Concept",q:"A correlation coefficient always falls in the range:",options:["−1 to +1","0 to 100","−100 to +100","0 to 1 only"],answer:0,explain:"Correlation coefficients range from <b>−1 to +1</b>."},
- {tag:"Concept",q:"Which measure of central tendency is least affected by extreme outliers?",options:["The median","The mean","The range","The standard deviation"],answer:0,explain:"The <b>median</b> is robust to outliers; the mean is pulled by them."},
- {tag:"Definition",q:"Standard deviation measures:",options:["How spread out the values are around the mean","The most frequent value","The middle value","The total number of records"],answer:0,explain:"<b>Standard deviation</b> quantifies spread/dispersion."},
- {tag:"Concept",q:"In hypothesis testing, a small p-value (e.g., below 0.05) typically indicates:",options:["The result is statistically significant (unlikely under the null hypothesis)","The sample size was too small","The data is perfectly clean","There is definitely a causal effect"],answer:0,explain:"A small <b>p-value</b> suggests the result is unlikely under the null hypothesis — statistically significant."},
- {tag:"Definition",q:"An A/B test is used to:",options:["Compare two versions to see which performs better","Encrypt two datasets","Merge two databases","Reduce the number of features"],answer:0,explain:"An <b>A/B test</b> compares two variants to measure which performs better."},
- {tag:"Definition",q:"Sampling bias occurs when:",options:["The sample is not representative of the population it is meant to describe","The dataset is too large to process","Every record is duplicated","The model trains too slowly"],answer:0,explain:"<b>Sampling bias</b> = an unrepresentative sample, skewing conclusions."},
- {tag:"Definition",q:"Time-series data is:",options:["Data points collected and indexed in time order","Data with no particular order","Only image data","Data stored in a single cell"],answer:0,explain:"<b>Time-series</b> data is ordered by time."},
- {tag:"Definition",q:"Seasonality in a time series refers to:",options:["Regular, repeating patterns tied to time periods","A one-off spike with no pattern","Random unpredictable noise","Missing values"],answer:0,explain:"<b>Seasonality</b> is a recurring periodic pattern."},
- {tag:"Definition",q:"Forecasting is the practice of:",options:["Using historical data to estimate future values","Summarising what already happened","Encrypting future records","Removing outliers from data"],answer:0,explain:"<b>Forecasting</b> projects future values from historical data."},
- {tag:"Definition",q:"Algorithmic (AI) bias refers to:",options:["Systematic, unfair outcomes a model produces for certain groups","A model running out of memory","The speed of training","A type of data backup"],answer:0,explain:"<b>Algorithmic bias</b> = systematic unfair outcomes for certain groups."},
- {tag:"Concept",q:"A leading cause of biased AI models is:",options:["Training on biased or unrepresentative data","Using too small a learning rate","Storing data in the cloud","Adding a progress bar to the app"],answer:0,explain:"Biased outcomes usually trace back to <b>biased training data</b>."},
- {tag:"Definition",q:"Fairness in AI primarily concerns:",options:["Ensuring the model does not unjustly disadvantage particular groups","Making the model run as fast as possible","Reducing the file size of the model","Maximising the number of features"],answer:0,explain:"<b>Fairness</b> is about avoiding unjust disadvantage to particular groups."},
- {tag:"Definition",q:"Explainability (interpretability) in AI means:",options:["Being able to understand and articulate how a model reached its decision","Hiding the model from users","Training without any data","Guaranteeing 100% accuracy"],answer:0,explain:"<b>Explainability</b> is understanding how a model reaches its decisions."},
- {tag:"Definition",q:"Accountability in AI governance means:",options:["Assigning clear responsibility for a model's decisions and outcomes","Ensuring models never need monitoring","Removing humans from all decisions","Keeping all data secret"],answer:0,explain:"<b>Accountability</b> assigns ownership of model outcomes."},
- {tag:"Definition",q:"GDPR is:",options:["A regulation protecting the personal data and privacy of individuals","A machine-learning algorithm","A cloud storage product","A data-visualisation standard"],answer:0,explain:"<b>GDPR</b> is a data-protection and privacy regulation."},
- {tag:"Concept",q:"The principle of 'data minimisation' means:",options:["Collecting only the personal data necessary for a specific purpose","Deleting all data after one day","Collecting as much data as possible","Compressing files to save space"],answer:0,explain:"<b>Data minimisation</b> = collect only what is necessary."},
- {tag:"Concept",q:"Obtaining explicit consent before processing personal data is important because it:",options:["Respects individuals' rights and is often legally required","Speeds up model training","Improves dashboard colours","Reduces the need for cleaning"],answer:0,explain:"<b>Consent</b> protects individuals' rights and is frequently a legal requirement."},
- {tag:"Concept",q:"Role-based access control (RBAC) helps protect data by:",options:["Restricting data access based on a user's role","Encrypting only public data","Deleting logs automatically","Sharing all data with everyone"],answer:0,explain:"<b>RBAC</b> limits access according to each user's role."},
- {tag:"Concept",q:"Automation bias is the tendency to:",options:["Over-trust automated or AI-generated outputs, even when they are wrong","Distrust all technology","Always collect more data","Prefer manual spreadsheets"],answer:0,explain:"<b>Automation bias</b> = over-reliance on automated outputs."},
- {tag:"Concept",q:"Confirmation bias is the tendency to:",options:["Favour information that confirms one's existing beliefs","Ignore all prior assumptions","Always change your mind","Sample data randomly"],answer:0,explain:"<b>Confirmation bias</b> = favouring evidence that confirms existing views."},
- {tag:"Definition",q:"'Privacy by design' means:",options:["Building privacy protections into systems from the very start","Adding privacy only after a breach","Making all data public by default","Disabling user accounts"],answer:0,explain:"<b>Privacy by design</b> embeds privacy from the outset."},
- {tag:"Concept",q:"'Human-in-the-loop' refers to:",options:["Keeping human review and oversight within an automated decision process","Removing all humans from the workflow","Hiring more data scientists","Running models without any data"],answer:0,explain:"<b>Human-in-the-loop</b> keeps human oversight in automated decisions."},
- {tag:"Definition",q:"AI governance is best described as:",options:["The framework of policies and processes for responsible, accountable AI use","A single machine-learning model","A type of cloud database","A data-visualisation chart"],answer:0,explain:"<b>AI governance</b> is the policy/process framework for responsible AI."},
- {tag:"Definition",q:"Model drift (or model decay) is when:",options:["A deployed model's performance degrades as real-world data changes over time","A model is deleted by accident","Training data is encrypted","A dashboard loads slowly"],answer:0,explain:"<b>Model drift</b> is performance decline as data distributions shift."},
- {tag:"Definition",q:"PII stands for:",options:["Personally Identifiable Information","Predictive Inference Index","Public Internet Interface","Processed Input Indicator"],answer:0,explain:"<b>PII</b> = Personally Identifiable Information."},
- {tag:"Concept",q:"Commonly cited pillars of Responsible AI include:",options:["Fairness, transparency, accountability and privacy","Speed, secrecy, scale and profit","Volume, velocity, variety and veracity","Extract, transform, load and report"],answer:0,explain:"Responsible AI commonly rests on <b>fairness, transparency, accountability and privacy/safety</b>."},
- {tag:"Concept",q:"A recommendation system primarily aims to:",options:["Suggest relevant items to users based on data about preferences or behaviour","Encrypt customer transactions","Clean missing values in a table","Forecast quarterly GDP"],answer:0,explain:"A <b>recommendation system</b> suggests relevant items from preference/behaviour data."},
- {tag:"Application",q:"Forecasting next month's product demand from past sales is best approached with:",options:["Time-series / predictive modelling","Association rule mining","K-means clustering","A confusion matrix"],answer:0,explain:"Demand forecasting uses <b>time-series / predictive</b> models."},
- {tag:"Concept",q:"Which task is unsupervised?",options:["Grouping customers into segments without predefined labels","Predicting whether an email is spam","Estimating a house's sale price","Forecasting next week's revenue"],answer:0,explain:"Segmenting unlabelled customers is <b>unsupervised</b>; the others use labelled targets."},
- {tag:"Concept",q:"Which task is supervised?",options:["Predicting loan default (yes/no) from labelled history","Grouping news articles into unknown topics","Reducing 50 variables down to 2 components","Discovering product bundles via co-purchase patterns"],answer:0,explain:"Predicting a labelled outcome (default yes/no) is <b>supervised</b>."},
- {tag:"Definition",q:"Accuracy, as a classification metric, is:",options:["The fraction of all predictions that are correct","The spread of the residuals","The number of features used","The time taken to train"],answer:0,explain:"<b>Accuracy</b> = correct predictions / total predictions."},
- {tag:"Concept",q:"Why can accuracy be misleading on an imbalanced dataset (e.g., 99% one class)?",options:["A model can score high by always predicting the majority class while missing the rare class","Accuracy cannot be computed on imbalanced data","Accuracy always equals precision","Imbalanced data has no labels"],answer:0,explain:"With imbalance, high <b>accuracy</b> can hide poor detection of the rare class — check precision/recall."},
- {tag:"Definition",q:"A data dashboard is primarily intended to:",options:["Visualise key metrics and trends for quick monitoring and decisions","Train neural networks","Store raw backups","Encrypt customer records"],answer:0,explain:"A <b>dashboard</b> visualises key metrics for monitoring and decisions."},
- {tag:"Concept",q:"The main purpose of exploratory data analysis (EDA) is to:",options:["Understand a dataset's structure, patterns and quality before modelling","Deploy a model to production","Write the final report","Delete all outliers automatically"],answer:0,explain:"<b>EDA</b> profiles structure, patterns and quality before modelling."},
- {tag:"Definition",q:"Structured Query Language (SQL) is mainly used to:",options:["Query and manipulate data in relational databases","Render interactive 3D charts","Train deep neural networks","Encrypt network traffic"],answer:0,explain:"<b>SQL</b> queries and manipulates relational-database data."},
- {tag:"Concept",q:"A 'feature' that strongly leaks the answer (e.g., using tomorrow's data to predict today) causes:",options:["Data leakage, giving overly optimistic results that fail in production","Faster, more reliable training","Better generalisation","Lower variance in all cases"],answer:0,explain:"<b>Data leakage</b> inflates test performance but fails on real, future data."},
- {tag:"Concept",q:"The first step before building any analytics model should usually be to:",options:["Clearly define the business question and success metric","Buy the most powerful GPU available","Pick the most complex model first","Publish results to stakeholders"],answer:0,explain:"Start by <b>defining the business question and success metric</b> — it guides everything else."},
- {tag:"Concept",q:"An ROC curve and its AUC are used to:",options:["Evaluate a classifier's trade-off between true-positive and false-positive rates","Measure database storage size","Visualise seasonality in time series","Encrypt model weights"],answer:0,explain:"<b>ROC/AUC</b> summarise a classifier's true-positive vs false-positive trade-off."},
- {tag:"Concept",q:"The main difference between a data warehouse and a data lake is that a warehouse stores:",options:["Structured, processed data ready for analysis, while a lake stores raw data of any type","Only images, while a lake stores only text","Less data than a single spreadsheet","Data that can never be queried"],answer:0,explain:"A <b>warehouse</b> holds structured, processed data; a <b>lake</b> holds raw data of any type."}
-];
-
-/* ============ KNOWLEDGE-BASE TOPIC MAPPING ============ */
-/* Maps each question to a section anchor in reference.html via ordered keyword rules. */
-const TOPIC_RULES = [
-  [/gdpr|data minimisation|consent|role-based access|\brbac\b|privacy by design|\bpii\b|personally identifiable|ai governance/i, "data-privacy", "Data privacy & protection"],
-  [/sampling bias/i, "statistics", "Statistics essentials"],
-  [/algorithmic|fairness|explainab|interpretab|accountability|automation bias|confirmation bias|responsible ai|human-in-the-loop|model drift|model decay|biased or unrepresentative|biased ai|amplif/i, "ai-ethics", "AI ethics & governance"],
-  [/reinforcement|the 'agent'|the 'reward'|the 'policy'|game or control a robot|trial and error/i, "reinforcement", "Reinforcement learning"],
-  [/generative ai|genai|large language model|\bllm\b|\bgpt\b|'prompt'|hallucination/i, "generative-ai", "Generative AI & LLMs"],
-  [/sentiment|natural language|\bnlp\b|text mining|polarity|positive.*negative.*neutral/i, "nlp-sentiment", "NLP & sentiment analysis"],
-  [/precision|recall|f1 score|confusion matrix|cross-validation|test set|overfitting|underfitting|\broc\b|\bauc\b|accuracy|imbalanced|data leakage/i, "model-evaluation", "Evaluating models"],
-  [/deep learning|neural network/i, "deep-learning", "Deep learning & neural networks"],
-  [/clustering|k-means|segmentation|dimensionality|principal component|\bpca\b|association rule|market-basket|grouping (similar )?(customers|news)|unlabelled data|bread|butter|recommendation system|recommender/i, "unsupervised", "Unsupervised learning"],
-  [/supervised|classification|regression|churn|spam|labelled|'label'|'feature'|loan default|continuous numeric value|house price/i, "supervised", "Supervised learning"],
-  [/three (broad )?categories of machine learning|machine learning are/i, "machine-learning", "Machine learning: the three families"],
-  [/data clean|missing value|outlier|correlation|causation|\bmedian\b|standard deviation|p-value|hypothesis|a\/b test|time-series|time series|seasonality|forecasting|exploratory data analysis/i, "statistics", "Statistics essentials"],
-  [/\betl\b|data warehouse|data lake|cloud computing|business intelligence|power bi|\bbi\b|data pipeline|data governance|open-source ai|\bsql\b|dashboard|first step before building/i, "data-infrastructure", "Data infrastructure"],
-  [/four (main )?types of analytics|descriptive analytics|diagnostic analytics|predictive analytics|prescriptive analytics|hindsight|optimal delivery routes/i, "analytics-types", "The four types of analytics"],
-  [/structured data|unstructured data|big data|'v's|semi-structured|predefined format|rows and columns|emails, images|free-text reviews/i, "data-types", "Data types & big data"],
-  [/\bkpi\b|key performance indicator/i, "kpi", "KPIs & metrics"],
-  [/business analytics|data governance/i, "analytics-foundations", "What business analytics is"]
-];
-function topicFor(qText){
-  for(const [re,a,t] of TOPIC_RULES){ if(re.test(qText)) return {a,t}; }
-  return {a:"", t:"the knowledge base"};
-}
-
-/* ===================== ENGINE ===================== */
-const TEST_SIZE = 20;
-let test=[], cur=0, score=0, answered=false;
-const responses=[];
-const $=id=>document.getElementById(id);
-const optKeys=["A","B","C","D"];
-
-function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-
-function buildTest(){
-  const picked=shuffle(BANK).slice(0,TEST_SIZE);
-  test=picked.map(q=>{
-    const correctText=q.options[q.answer];
-    const opts=shuffle(q.options);
-    return {tag:q.tag,q:q.q,options:opts,answer:opts.indexOf(correctText),explain:q.explain};
-  });
-}
-
-function startTest(){
-  buildTest(); cur=0; score=0; answered=false; responses.length=0;
-  $("startCard").classList.add("hidden");
-  $("resultCard").classList.add("hidden");
-  $("quizCard").classList.remove("hidden");
-  render();
-}
-
-function render(){
-  const item=test[cur]; answered=false;
-  $("qTag").textContent=item.tag;
-  $("qText").textContent=item.q;
-  $("counter").textContent=`Question ${cur+1} of ${test.length}`;
-  $("liveScore").textContent=`Score: ${score}`;
-  $("prog").style.width=`${(cur/test.length)*100}%`;
-  $("explain").className="explain"; $("explain").innerHTML="";
-  $("nextBtn").disabled=true;
-  $("nextBtn").textContent = cur===test.length-1 ? "See results →" : "Next →";
-  const box=$("opts"); box.innerHTML="";
-  item.options.forEach((opt,i)=>{
-    const b=document.createElement("button");
-    b.className="opt";
-    b.innerHTML=`<span class="key">${optKeys[i]}</span><span>${opt}</span>`;
-    b.onclick=()=>choose(i);
-    box.appendChild(b);
-  });
-}
-
-function choose(i){
-  if(answered) return; answered=true;
-  const item=test[cur];
-  [...document.querySelectorAll(".opt")].forEach((b,idx)=>{
-    b.classList.add("locked");
-    if(idx===item.answer) b.classList.add("correct");
-    else if(idx===i) b.classList.add("wrong");
-    else b.classList.add("dim");
-  });
-  const correct=i===item.answer;
-  if(correct) score++;
-  responses[cur]={correct};
-  $("liveScore").textContent=`Score: ${score}`;
-  const ex=$("explain");
-  const tp=topicFor(item.q);
-  const link = tp.a ? `<br><a class="learn" href="reference.html#${tp.a}" target="_blank" rel="noopener">📖 Learn more: ${tp.t} →</a>` : "";
-  ex.innerHTML=(correct?"✓ Correct. ":"✗ Not quite. ")+item.explain+link;
-  ex.className="explain show";
-  $("nextBtn").disabled=false;
-}
-
-function next(){ if(cur<test.length-1){cur++;render();} else showResults(); }
-
-function showResults(){
-  $("quizCard").classList.add("hidden");
-  $("resultCard").classList.remove("hidden");
-  const pct=Math.round((score/test.length)*100);
-  $("finalPct").textContent=pct+"%";
-  $("finalScore").textContent=`${score} of ${test.length} correct`;
-  let v;
-  if(pct>=85) v="Excellent — strong command of the concepts and applications.";
-  else if(pct>=70) v="Solid understanding — a few areas to revisit.";
-  else if(pct>=50) v="Developing — review the explanations and try again.";
-  else v="Worth reviewing the fundamentals, then retaking the test.";
-  $("verdict").textContent=v;
-  const bd=$("breakdown"); bd.innerHTML="";
-  test.forEach((q,idx)=>{
-    const ok=responses[idx]&&responses[idx].correct;
-    const row=document.createElement("div");
-    row.className="row";
-    row.innerHTML=`<span class="dot ${ok?'ok':'no'}">${ok?'✓':'✗'}</span><span><b>Q${idx+1}.</b> ${q.q}</span>`;
-    bd.appendChild(row);
-  });
-}
-
-$("startBtn").onclick=startTest;
-$("nextBtn").onclick=next;
-$("againBtn").onclick=startTest;
-$("quitBtn").onclick=()=>{ $("quizCard").classList.add("hidden"); $("startCard").classList.remove("hidden"); };
-</script>
 </body>
 </html>
