@@ -113,6 +113,20 @@
   .term p{margin:0;color:var(--muted);font-size:.86rem;line-height:1.45}
   .term .more{font-size:.72rem;color:var(--accent);margin-top:6px;display:inline-block;text-decoration:none}
   .jempty{color:var(--muted);font-size:.9rem;padding:10px 2px}
+  /* AI news */
+  .news{margin:0 0 56px}
+  .news .srcrow{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px;justify-content:center}
+  .news .srcrow a{font-size:.82rem;color:#fff;background:rgba(91,140,255,.16);border:1px solid var(--line);padding:6px 12px;border-radius:8px;text-decoration:none}
+  .news .srcrow a:hover{border-color:var(--accent)}
+  .news .feed{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:760px){.news .feed{grid-template-columns:1fr}}
+  .nitem{display:flex;flex-direction:column;background:linear-gradient(180deg,#1a1e3a,#161a33);border:1px solid var(--line);border-radius:12px;padding:14px 16px;transition:.15s}
+  .nitem:hover{border-color:var(--accent)}
+  .nitem a.nt{color:var(--text);font-weight:600;font-size:.95rem;line-height:1.4;text-decoration:none}
+  .nitem a.nt:hover{color:var(--accent)}
+  .nitem .nm{margin-top:auto;padding-top:10px;color:var(--muted);font-size:.76rem;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .nitem .nm a{color:var(--muted);text-decoration:none}.nitem .nm a:hover{color:var(--accent)}
+  .news .nstatus{color:var(--muted);font-size:.8rem;margin-top:12px;text-align:center}
   footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:50px;border-top:1px solid var(--line);padding-top:24px}
 </style>
 </head>
@@ -167,6 +181,25 @@
       <span class="go">Смотреть источники →</span>
       <br><span class="meta">6 ИИ-лабораторий + 6 консалтингов</span>
     </a>
+  </div>
+
+  <!-- AI NEWS -->
+  <div class="news" id="news">
+    <div class="section-head">
+      <h2>📰 Свежие новости ИИ</h2>
+      <p>Живая лента самых обсуждаемых новостей об ИИ прямо сейчас — подтягивается с Hacker News при каждом открытии страницы — плюс проверенные издания, где всегда есть свежее. (Новости в основном на английском.)</p>
+    </div>
+    <div class="srcrow">
+      <a href="https://www.deeplearning.ai/the-batch/" target="_blank" rel="noopener">The Batch</a>
+      <a href="https://www.technologyreview.com/topic/artificial-intelligence/" target="_blank" rel="noopener">MIT Tech Review · ИИ</a>
+      <a href="https://arstechnica.com/ai/" target="_blank" rel="noopener">Ars Technica · ИИ</a>
+      <a href="https://news.google.com/search?q=artificial%20intelligence%20when%3A7d" target="_blank" rel="noopener">Google News · ИИ</a>
+      <a href="https://openai.com/news/" target="_blank" rel="noopener">OpenAI</a>
+      <a href="https://www.anthropic.com/news" target="_blank" rel="noopener">Anthropic</a>
+      <a href="https://deepmind.google/discover/blog/" target="_blank" rel="noopener">Google DeepMind</a>
+    </div>
+    <div class="feed" id="newsfeed"></div>
+    <div class="nstatus" id="newsstatus">Загружаем свежие новости…</div>
   </div>
 
   <!-- JARGON BUSTER -->
@@ -481,6 +514,34 @@ const SUGGESTIONS=["Что такое машинное обучение?","Об�
   const chips=_$("chips");
   SUGGESTIONS.forEach(s=>{ const c=document.createElement("button"); c.type="button"; c.className="chip"; c.textContent=s; c.onclick=()=>ask(s); chips.appendChild(c); });
   _$("chatform").addEventListener("submit", e=>{ e.preventDefault(); const v=_$("chatinput").value; _$("chatinput").value=""; ask(v); });
+})();
+/* ===== Live AI news (Hacker News Algolia API) ===== */
+(function initNews(){
+  const feed=document.getElementById("newsfeed"), status=document.getElementById("newsstatus");
+  if(!feed) return;
+  const Q=["AI","OpenAI","Anthropic","Gemini","LLM"];
+  const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  const dom=u=>{try{return new URL(u).hostname.replace(/^www\./,"");}catch(e){return"";}};
+  const ago=s=>{const d=Math.floor(Date.now()/1000)-s;if(d<3600)return Math.max(1,Math.floor(d/60))+"м назад";if(d<86400)return Math.floor(d/3600)+"ч назад";return Math.floor(d/86400)+"д назад";};
+  Promise.all(Q.map(q=>fetch("https://hn.algolia.com/api/v1/search_by_date?query="+encodeURIComponent(q)+"&tags=story&numericFilters=points%3E60&hitsPerPage=12").then(r=>r.json()).catch(()=>({hits:[]}))))
+   .then(res=>{
+     const seen=new Set(); let hits=[];
+     res.forEach(r=>(r.hits||[]).forEach(h=>{ if(h.url&&h.title&&!seen.has(h.objectID)){seen.add(h.objectID); hits.push(h);} }));
+     hits.sort((a,b)=>b.created_at_i-a.created_at_i);
+     hits=hits.slice(0,9);
+     if(!hits.length){ status.textContent="Не удалось загрузить ленту — попробуйте проверенные источники выше."; return; }
+     feed.innerHTML="";
+     hits.forEach(h=>{
+       const el=document.createElement("div"); el.className="nitem";
+       el.innerHTML='<a class="nt" href="'+encodeURI(h.url)+'" target="_blank" rel="noopener">'+esc(h.title)+'</a>'+
+         '<div class="nm"><span>'+esc(dom(h.url))+'</span><span>▲ '+h.points+'</span>'+
+         '<a href="https://news.ycombinator.com/item?id='+h.objectID+'" target="_blank" rel="noopener">💬 '+(h.num_comments||0)+'</a>'+
+         '<span>'+ago(h.created_at_i)+'</span></div>';
+       feed.appendChild(el);
+     });
+     status.textContent="Прямая трансляция с Hacker News · топ новостей об ИИ (60+ баллов), новые сверху.";
+   })
+   .catch(()=>{ status.textContent="Не удалось загрузить ленту — попробуйте проверенные источники выше."; });
 })();
 /* ===== Jargon Buster glossary ===== */
 const GLOSSARY=[
