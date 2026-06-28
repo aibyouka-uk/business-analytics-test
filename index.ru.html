@@ -460,7 +460,7 @@ function findAnswer(qRaw){
   for(const c of COMPOSITE){ if(c.re.test(q)) return c; }
   if(/^(hi|hello|hey|yo|help|start)\b/.test(q)) return {a:"Привет! Спросите о любом понятии на сайте — виды аналитики, машинное обучение, генеративный ИИ, статистика, этика или приватность. Попробуйте подсказку ниже.", id:""};
   const STOP=new Set("что такое какой какая когда где почему как это этот эта эти тот значит про объясни можешь дайте мне моё нужно про и для в на с о об у".split(" "));
-  const words=q.split(/[^a-z0-9]+/).filter(w=>w.length>2 && !STOP.has(w));
+  const words=q.split(/[^a-zа-яё0-9]+/i).filter(w=>w.length>2 && !STOP.has(w));
   let best=null, score=0;
   for(const s of KB){ let sc=0; const hay=(s.t+" "+s.kw).toLowerCase(); for(const w of words){ if(hay.includes(w)) sc+=(s.t.toLowerCase().includes(w)?2:1); } if(sc>score){score=sc;best=s;} }
   if(best && score>0) return {a:best.a, id:best.id};
