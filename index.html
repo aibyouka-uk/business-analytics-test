@@ -519,7 +519,7 @@ const SUGGESTIONS=["What is machine learning?","Supervised vs unsupervised learn
 (function initNews(){
   const feed=document.getElementById("newsfeed"), status=document.getElementById("newsstatus");
   if(!feed) return;
-  const Q=["AI","OpenAI","Anthropic","Gemini","LLM"];
+  const Q=["artificial intelligence","OpenAI","Anthropic","Gemini","LLM","GPT"];
   const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
   const dom=u=>{try{return new URL(u).hostname.replace(/^www\./,"");}catch(e){return"";}};
   const ago=s=>{const d=Math.floor(Date.now()/1000)-s;if(d<3600)return Math.max(1,Math.floor(d/60))+"m ago";if(d<86400)return Math.floor(d/3600)+"h ago";return Math.floor(d/86400)+"d ago";};
