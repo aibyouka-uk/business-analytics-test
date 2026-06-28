@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Справочник · Бизнес-аналитика и ИИ</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#1a1e3a; --accent:#5b8cff; --accent2:#7c5cff;
+    --good:#2ecc8f; --bad:#ff5c7c; --text:#e8ebff; --muted:#9aa0c7; --line:#2c3260;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(1200px 800px at 20% -10%,#23275a 0%,#0f1226 55%) fixed;color:var(--text);
+    line-height:1.62;}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .top{position:sticky;top:0;z-index:20;background:rgba(15,18,38,.86);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .top h1{font-size:1rem;margin:0;font-weight:700}
+  .top a.btn{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;padding:8px 16px;
+    border-radius:9px;font-size:.85rem;font-weight:600}
+  .top a.btn:hover{text-decoration:none;opacity:.92}
+  .wrap{max-width:880px;margin:0 auto;padding:28px 20px 80px}
+  .lead{color:var(--muted);font-size:1rem;margin:6px 0 26px}
+  .toc{background:linear-gradient(180deg,#1a1e3a,#161a33);border:1px solid var(--line);border-radius:16px;
+    padding:20px 24px;margin-bottom:34px}
+  .toc h2{margin:0 0 12px;font-size:.8rem;text-transform:uppercase;letter-spacing:1px;color:var(--accent)}
+  .toc ol{margin:0;padding-left:20px;columns:2;column-gap:34px}
+  .toc li{margin:5px 0;break-inside:avoid}
+  @media(max-width:560px){.toc ol{columns:1}}
+  section{scroll-margin-top:64px;border-top:1px solid var(--line);padding:30px 0 6px}
+  section:first-of-type{border-top:0}
+  section h2{font-size:1.5rem;margin:0 0 4px;display:flex;align-items:baseline;gap:10px}
+  section h2 .num{font-size:.9rem;color:var(--accent);font-weight:700}
+  h3{font-size:1.05rem;margin:22px 0 6px;color:#cdd4ff}
+  p{margin:12px 0}
+  .key{background:#161a35;border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
+    padding:12px 16px;margin:16px 0;color:#dfe3ff}
+  figure{margin:22px 0;background:#11142b;border:1px solid var(--line);border-radius:14px;padding:18px;text-align:center}
+  figure svg{max-width:100%;height:auto}
+  figcaption{color:var(--muted);font-size:.85rem;margin-top:10px}
+  .sources{margin:18px 0 4px;background:#12152d;border:1px solid var(--line);border-radius:12px;padding:12px 16px;font-size:.9rem}
+  .sources b{color:var(--accent);font-size:.78rem;text-transform:uppercase;letter-spacing:.7px}
+  .sources ul{margin:8px 0 0;padding-left:18px}
+  .sources li{margin:4px 0;color:var(--muted)}
+  .backtop{display:inline-block;margin-top:14px;font-size:.82rem;color:var(--muted)}
+  .pill{display:inline-block;font-size:.7rem;border:1px solid var(--line);border-radius:99px;padding:2px 10px;color:var(--muted);margin-left:6px}
+  /* SVG helpers */
+  .svg-label{fill:var(--text);font-size:13px;font-family:inherit}
+  .svg-muted{fill:var(--muted);font-size:11px;font-family:inherit}
+</style>
+</head>
+<body>
+<div class="top">
+  <h1>📚 Бизнес-аналитика и ИИ — Справочник</h1>
+  <span style="display:flex;gap:8px;align-items:center"><span style="display:inline-flex"><a href="reference.html" style="font-size:.78rem;font-weight:700;color:var(--muted);text-decoration:none;border:1px solid var(--line);border-radius:99px 0 0 99px;padding:6px 12px">EN</a><a href="reference.ru.html" style="font-size:.78rem;font-weight:700;color:#fff;text-decoration:none;border:1px solid var(--line);border-radius:0 99px 99px 0;margin-left:-1px;padding:6px 12px;background:linear-gradient(90deg,var(--accent),var(--accent2))">RU</a></span><a class="btn" href="index.ru.html" style="background:transparent;border:1px solid var(--line);color:var(--muted)">🏠 Главная</a><a class="btn" href="test.ru.html">Пройти тест →</a></span>
+</div>
+<div class="wrap">
+  <p class="lead">Спутник к тесту знаний. Каждый раздел подробно объясняет понятие, показывает схему, где это помогает, и ведёт к бесплатным открытым источникам и стандартам, чтобы вы могли почитать дальше. Вопросы теста ссылаются прямо на нужный раздел здесь. (Источники — на английском.)</p>
+
+  <nav class="toc" id="top">
+    <h2>Содержание</h2>
+    <ol>
+      <li><a href="#analytics-foundations">Что такое бизнес-аналитика</a></li>
+      <li><a href="#data-types">Виды данных и большие данные</a></li>
+      <li><a href="#kpi">KPI и метрики</a></li>
+      <li><a href="#analytics-types">Четыре вида аналитики</a></li>
+      <li><a href="#machine-learning">Машинное обучение: три семейства</a></li>
+      <li><a href="#supervised">Обучение с учителем</a></li>
+      <li><a href="#unsupervised">Обучение без учителя</a></li>
+      <li><a href="#reinforcement">Обучение с подкреплением</a></li>
+      <li><a href="#deep-learning">Глубокое обучение и нейросети</a></li>
+      <li><a href="#model-evaluation">Оценка моделей</a></li>
+      <li><a href="#generative-ai">Генеративный ИИ и LLM</a></li>
+      <li><a href="#nlp-sentiment">NLP и анализ тональности</a></li>
+      <li><a href="#data-infrastructure">Инфраструктура данных</a></li>
+      <li><a href="#statistics">Основы статистики</a></li>
+      <li><a href="#ai-ethics">Этика и управление ИИ</a></li>
+      <li><a href="#data-privacy">Приватность и защита данных</a></li>
+      <li><a href="#automation-spectrum">Спектр автоматизации</a></li>
+      <li><a href="#algorithmic-insurance">Риски ИИ и алгоритмическое страхование</a></li>
+      <li><a href="#bias-mitigation">Снижение предвзятости</a></li>
+      <li><a href="#ai-regulation">Регулирование ИИ: EU AI Act</a></li>
+      <li><a href="#measuring-genai-bias">Измерение предвзятости в генеративном ИИ</a></li>
+      <li><a href="#ai-verification">Проверка ИИ-анализа</a></li>
+    </ol>
+  </nav>
+
+  <section id="analytics-foundations">
+    <h2><span class="num">01</span> Что такое бизнес-аналитика</h2>
+    <p><strong>Бизнес-аналитика</strong> — это системное использование данных, статистики и количественного моделирования для поддержки и улучшения бизнес-решений. Она превращает сырые операционные данные — транзакции продаж, веб-логи, записи о клиентах, показания датчиков — в <em>практическую пользу</em>, на основе которой действует менеджер. Дисциплина — на стыке статистики, информатики и предметной экспертизы: статистика даёт строгость, вычисления — масштаб, а знание предметной области делает вопросы и ответы осмысленными для бизнеса.</p>
+    <p>Полезно отделять аналитику от соседних понятий. <em>Данные</em> — сырьё. <em>Информация</em> — данные, организованные так, что отвечают на вопрос. <em>Аналитика</em> — набор методов, что производят эту информацию и всё чаще советуют или автоматизируют итоговое решение. Хранение данных в базе или облаке — предпосылка аналитики, но не сама аналитика; аналогично, красивый дашборд — это способ доставки, а не анализ.</p>
+    <div class="key">Аналитика — это поддержка решений. Хороший анализ проверяется не сложностью модели, а тем, меняет ли он решение к лучшему.</div>
+    <p>Практический аналитический проект почти всегда начинается с чётко сформулированного бизнес-вопроса и определения того, как выглядит успех, затем идёт сбор и очистка данных, их разведка, моделирование и, наконец, донесение результатов так, чтобы они вели к действию. Пропуск шага формулировки — самая частая причина, почему аналитика не приносит ценности: технически отличная модель, отвечающая не на тот вопрос, не помогает никому. Зрелые организации также выстраивают привычки вокруг — регулярные обзоры, общие метрики и чёткую ответственность — что превращают разовые анализы в рутинные решения на основе данных.</p>
+    <div class="sources">
+      <b>Открытые источники и что почитать</b>
+      <ul>
+        <li><a href="https://www.statlearning.com/" target="_blank" rel="noopener">An Introduction to Statistical Learning</a> — free textbook; Ch. 1 frames data analysis (James, Witten, Hastie &amp; Tibshirani).</li>
+        <li><a href="https://www.openintro.org/book/os/" target="_blank" rel="noopener">OpenIntro Statistics</a> — free, openly licensed introduction to working with data.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Содержание</a>
+  </section>
+
+  <section id="data-types">
+    <h2><span class="num">02</span> Виды данных и большие данные</h2>
+    <p>Аналитики различают данные по тому, как они организованы. <strong>Структурированные данные</strong> следуют заранее заданной схеме — строки и столбцы с фиксированными полями и типами, как в таблице реляционной БД или электронной таблице. Их легко запрашивать (например, через SQL) и агрегировать. <strong>Неструктурированные данные</strong> такого формата не имеют: отзывы, письма, изображения, аудио и видео несут смысл, но требуют доп. обработки (обработка языка, компьютерное зрение) до анализа. <strong>Полуструктурированные данные</strong>, как JSON или XML, — между ними: несут теги или ключи без жёсткой табличной схемы.</p>
+    <p>Термин <strong>большие данные</strong> описывает наборы, достаточно крупные или сложные, чтобы традиционные инструменты не справлялись. Классически их характеризуют три «V»: <strong>объём</strong> (количество), <strong>скорость</strong> (как быстро поступают и должны обрабатываться) и <strong>разнообразие</strong> (смесь структурированных и неструктурированных форматов). Часто добавляют четвёртое — <strong>достоверность</strong> (надёжность и качество), иногда <strong>ценность</strong>. Смысл в том, что рост по любой из осей меняет нужные технологии хранения и обработки.</p>
+    <div class="key">Примерно 80–90% корпоративных данных — неструктурированные. Стратегическая возможность современной аналитики — и причина важности генеративного ИИ — в раскрытии этого неструктурированного большинства.</div>
+    <p>Почему различие важно для менеджера? Потому что оно диктует инструменты и стоимость. Структурированные данные аккуратно ложатся в BI-дашборды и SQL-запросы. Неструктурированным нужен доп. слой моделирования, чтобы превратить текст или изображения в нечто счётное. Понимание того, на каком типе данных держится вопрос, примерно говорит, сколько инженерных усилий потребует ответ.</p>
+    <div class="sources">
+      <b>Открытые источники и что почитать</b>
+      <ul>
+        <li><a href="https://www.itl.nist.gov/div898/handbook/" target="_blank" rel="noopener">NIST/SEMATECH e-Handbook of Statistical Methods</a> — public-domain reference on data and exploratory analysis.</li>
+        <li><a href="https://www.openintro.org/book/os/" target="_blank" rel="noopener">OpenIntro Statistics</a>, Ch. 1 (Intro to data) — data structures and variable types.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Содержание</a>
+  </section>
+
+  <section id="kpi">
+    <h2><span class="num">03</span> KPI и метрики</h2>
+    <p><strong>Ключевой показатель эффективности (KPI)</strong> — это измеримое значение, показывающее, насколько эффективно организация, команда или процесс достигают конкретной цели. KPI — не любое вычислимое число; это число, выбранное намеренно, потому что его движение отражает прогресс (или регресс) к важной цели. Ежемесячная регулярная выручка, отток клиентов, среднее время решения и конверсия — частые примеры.</p>
+    <p>У хороших KPI несколько свойств. Они <em>согласованы</em> с реальной целью, <em>измеримы</em> из имеющихся данных, на них <em>можно влиять</em> и они <em>привязаны ко времени</em>, чтобы видеть тренды. Частая ошибка — «метрика тщеславия»: число, что выглядит впечатляюще и надёжно растёт, но не связано ни с каким решением, например суммарные просмотры без связи с выручкой или удержанием. Другая — переизбыток метрик: их так много, что ни одна не получает внимания.</p>
+    <div class="key">Метрика становится KPI, только когда она привязана к цели и кто-то отвечает за её движение. Выбирайте немного и с умом.</div>
+    <p>Стоит также отделять <em>опережающие</em> индикаторы, что предсказывают будущие исходы (напр. регистрации на триал), от <em>запаздывающих</em>, что подтверждают прошлые результаты (напр. квартальная выручка). Сбалансированный набор обычно включает оба, чтобы команды направляли заранее, а не узнавали постфактум. Берегитесь закона Гудхарта: как только метрика становится целью, люди оптимизируют саму метрику, иногда в ущерб исходной цели — поэтому KPI нужно иногда пересматривать.</p>
+    <div class="sources">
+      <b>Открытые источники и что почитать</b>
+      <ul>
+        <li><a href="https://www.openintro.org/book/os/" target="_blank" rel="noopener">OpenIntro Statistics</a> — measurement, summarising data, and avoiding misleading numbers.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Содержание</a>
+  </section>
+
+  <section id="analytics-types">
+    <h2><span class="num">04</span> Четыре вида аналитики</h2>
+    <p>Зрелость аналитики обычно описывают как прогрессию из четырёх видов — от понимания прошлого (взгляд назад) к формированию будущего (взгляд вперёд). Каждый отвечает на свой вопрос и, как правило, добавляет бизнес-ценность — и сложность — по мере движения по цепочке.</p>
+    <figure>
+      <svg viewBox="0 0 760 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Four types of analytics progression">
+        <defs>
+          <linearGradient id="g4" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#5b8cff"/><stop offset="1" stop-color="#7c5cff"/>
+          </linearGradient>
+        </defs>
+        <g font-family="inherit">
+          <rect x="20" y="60" width="160" height="60" rx="10" fill="#161a35" stroke="#2c3260"/>
+          <rect x="200" y="60" width="160" height="60" rx="10" fill="#1b2348" stroke="#2c3260"/>
+          <rect x="380" y="60" width="160" height="60" rx="10" fill="#222a55" stroke="#3a4570"/>
+          <rect x="560" y="60" width="180" height="60" rx="10" fill="#2b2f63" stroke="#4a4f86"/>
+          <text x="100" y="86" text-anchor="middle" class="svg-label" font-weight="700">Описательная</text>
+          <text x="100" y="104" text-anchor="middle" class="svg-muted">Что произошло?</text>
+          <text x="280" y="86" text-anchor="middle" class="svg-label" font-weight="700">Диагностическая</text>
+          <text x="280" y="104" text-anchor="middle" class="svg-muted">Почему произошло?</text>
+          <text x="460" y="86" text-anchor="middle" class="svg-label" font-weight="700">Предиктивная</text>
+          <text x="460" y="104" text-anchor="middle" class="svg-muted">Что произойдёт?</text>
+          <text x="650" y="86" text-anchor="middle" class="svg-label" font-weight="700">Прескриптивная</text>
+          <text x="650" y="104" text-anchor="middle" class="svg-muted">Что нам делать?</text>
+          <line x1="20" y1="150" x2="740" y2="150" stroke="url(#g4)" stroke-width="4"/>
+          <text x="20" y="172" class="svg-muted">Взгляд назад</text>
+          <text x="690" y="172" class="svg-muted">Взгляд вперёд</text>
+        </g>
+      </svg>
+      <figcaption>Прогрессия аналитики: ценность и сложность растут от описательной к прескриптивной.</figcaption>
+    </figure>
+    <p><strong>Описательная аналитика</strong> обобщает, что уже произошло — итоги, средние, тренды и дашборды и отчёты на их основе. <strong>Диагностическая аналитика</strong> копает, <em>почему</em>, используя детализацию, сегментацию и корреляцию, чтобы найти драйверы результата. <strong>Предиктивная аналитика</strong> использует исторические закономерности и статистические/ML-модели, чтобы оценить, <em>что вероятно произойдёт</em> — прогноз спроса, вероятность оттока клиента. <strong>Прескриптивная аналитика</strong> идёт дальше и советует, <em>какое действие предпринять</em>, часто через оптимизацию, симуляцию или обучение с подкреплением, взвешивая варианты против ограничений и целей.</p>
+    <div class="key">Мнемоника: Описательная = прошлое, Диагностическая = причина, Предиктивная = будущее, Прескриптивная = действие. Отчёты — описательные; движок, советующий лучший ход, — прескриптивный.</div>
+    <p>Большинство организаций строят эти возможности по порядку, потому что каждая опирается на основу предыдущей: нельзя надёжно прогнозировать без чистых описательных данных и нельзя предписывать без надёжного прогноза последствий.</p>
+    <div class="sources">
+      <b>Открытые источники и что почитать</b>
+      <ul>
+        <li><a href="https://www.statlearning.com/" target="_blank" rel="noopener">An Introduction to Statistical Learning</a> — predictive modelling foundations (regression, classification).</li>
+        <li><a href="http://incompleteideas.net/book/the-book.html" target="_blank" rel="noopener">Sutton &amp; Barto, Reinforcement Learning: An Introduction</a> — the basis of prescriptive, decision-optimising systems.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Содержание</a>
+  </section>
+
+  <section id="machine-learning">
+    <h2><span class="num">05</span> Машинное обучение: три семейства</h2>
+    <p><strong>Машинное обучение (МО)</strong> — раздел ИИ, где системы учатся закономерностям из данных, а не следуют явно прописанным правилам. Его условно делят на три семейства по тому, какую обратную связь получает процесс обучения.</p>
+    <figure>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Machine learning taxonomy">
+        <g font-family="inherit">
+          <rect x="300" y="14" width="160" height="44" rx="10" fill="#2b2f63" stroke="#4a4f86"/>
+          <text x="380" y="41" text-anchor="middle" class="svg-label" font-weight="700">Машинное обучение</text>
+          <line x1="380" y1="58" x2="130" y2="96" stroke="#3a4570"/>
+          <line x1="380" y1="58" x2="380" y2="96" stroke="#3a4570"/>
+          <line x1="380" y1="58" x2="630" y2="96" stroke="#3a4570"/>
+          <rect x="40" y="96" width="180" height="48" rx="10" fill="#161a35" stroke="#2c3260"/>
+          <text x="130" y="120" text-anchor="middle" class="svg-label" font-weight="700">С учителем</text>
+          <text x="130" y="136" text-anchor="middle" class="svg-muted">размеченные данные</text>
+          <rect x="290" y="96" width="180" height="48" rx="10" fill="#161a35" stroke="#2c3260"/>
+          <text x="380" y="120" text-anchor="middle" class="svg-label" font-weight="700">Без учителя</text>
+          <text x="380" y="136" text-anchor="middle" class="svg-muted">без меток</text>
+          <rect x="540" y="96" width="180" height="48" rx="10" fill="#161a35" stroke="#2c3260"/>
+          <text x="630" y="120" text-anchor="middle" class="svg-label" font-weight="700">С подкреплением</text>
+          <text x="630" y="136" text-anchor="middle" class="svg-muted">награды</text>
+          <text x="130" y="176" text-anchor="middle" class="svg-muted">Классификация ·</text>
+          <text x="130" y="192" text-anchor="middle" class="svg-muted">Регрессия</text>
+          <text x="380" y="176" text-anchor="middle" class="svg-muted">Кластеризация ·</text>
+          <text x="380" y="192" text-anchor="middle" class="svg-muted">Понижение размерности</text>
+          <text x="630" y="176" text-anchor="middle" class="svg-muted">Обучение политики ·</text>
+          <text x="630" y="192" text-anchor="middle" class="svg-muted">Управление</text>
+        </g>
+      </svg>
+      <figcaption>Три семейства машинного обучения и типичные задачи в каждом.</figcaption>
+    </figure>
+    <p>При <strong>обучении с учителем</strong> модель тренируется на размеченных примерах — входы в паре с правильным выходом — и учится предсказывать метку для новых входов. При <strong>обучении без учителя</strong> меток нет; модель сама находит структуру, например естественные группы или сжатое представление. При <strong>обучении с подкреплением</strong> агент учится, взаимодействуя со средой, совершая действия и корректируясь по наградам и штрафам, без заранее данного «правильного» ответа.</p>
+    <div class="key">Быстрый тест: есть размеченные ответы для обучения? → с учителем. Ищете скрытую структуру без ответов? → без учителя. Учите последовательность решений по обратной связи? → с подкреплением.</div>
+    <div class="sources">
+      <b>Открытые источники и что почитать</b>
+      <ul>
+        <li><a href="https://www.statlearning.com/" target="_blank" rel="noopener">An Introduction to Statistical Learning</a> — Ch. 2 (what is statistical learning), supervised vs. unsupervised.</li>
+        <li><a href="https://scikit-learn.org/stable/" target="_blank" rel="noopener">scikit-learn User Guide</a> — open-source documentation covering each ML family.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Содержание</a>
+  </section>
+
+  <section id="supervised">
+    <h2><span class="num">06</span> Обучение с учителем</h2>
+    <p><strong>Обучение с учителем</strong> trains a model on labelled data: each training example pairs an input with the known correct output (the <strong>label</strong> or <strong>target</strong>). The model learns the relationship between inputs and outputs so it can predict the label for new, unseen data. The inputs are described by <strong>features</strong> — the measurable variables the model uses, such as a customer's tenure, recent spend, and support tickets.</p>
+    <p>Задачи с учителем делятся на два вида по типу выхода. <strong>Классификация</strong> предсказывает дискретную категорию: спам/не спам, уйдёт/останется, мошенничество/норма. <strong>Регрессия</strong> предсказывает непрерывное число: цена дома, спрос на след. месяц, ожидаемая пожизненная ценность. Один и тот же набор данных может ставить любой из вопросов — в зависимости от того, как задана цель.</p>
+    <div class="key">С учителем = обучение по размеченным ответам. Категории → классификация. Числа → регрессия. Качество меток ограничивает качество модели.</div>
+    <p>Повторяются два критичных для бизнеса применения. <strong>Предсказание оттока</strong> — задача классификации: обучаем классификатор (логистическая регрессия, градиентный бустинг и т.п.) на исторических клиентах, размеченных как удержанные или ушедшие, используя признаки вроде тренда удовлетворённости, активности и стажа, затем оцениваем текущих клиентов по вероятности ухода, чтобы сфокусировать удержание. <strong>Прогноз спроса или продаж</strong> — обычно задача регрессии/временных рядов. Поскольку модели с учителем учатся на размеченной истории, они наследуют любую предвзятость в том, как создавались метки — тема, прямо связанная с оценкой моделей и этикой.</p>
+    <div class="sources">
+      <b>Открытые источники и что почитать</b>
+      <ul>
+        <li><a href="https://www.statlearning.com/" target="_blank" rel="noopener">An Introduction to Statistical Learning</a> — Ch. 3 (regression) &amp; Ch. 4 (classification), free PDF.</li>
+        <li><a href="https://scikit-learn.org/stable/supervised_learning.html" target="_blank" rel="noopener">scikit-learn: Обучение с учителем</a> — open-source reference on classifiers and regressors.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Содержание</a>
+  </section>
+
+  <section id="unsupervised">
+    <h2><span class="num">07</span> Обучение без учителя</h2>
+    <p><strong>Обучение без учителя</strong> works on data with no labels. Instead of predicting a known answer, the model discovers structure on its own. The two most common goals are grouping and simplification.</p>
+    <p><strong>Кластеризация</strong> группирует похожие записи так, что объекты внутри группы похожи друг на друга больше, чем на объекты других групп. <strong>K-means</strong> — самый известный алгоритм кластеризации: вы выбираете число кластеров <em>k</em>, и алгоритм итеративно назначает точки к ближайшему центру и пересчитывает центры, пока они не стабилизируются. <strong>Сегментация</strong> клиентов — деление базы на осмысленные группы по поведению (частота покупок, сумма заказа, вовлечённость) — классическое бизнес-применение, позволяющее адресные, а не одинаковые для всех действия.</p>
+    <p><strong>Понижение размерности</strong> упрощает данные со множеством переменных до нескольких информативных, сохраняя как можно больше сигнала. <strong>Метод главных компонент (PCA)</strong> — стандартный приём, полезный для визуализации и ускорения последующих моделей. Третье семейство — <strong>поиск ассоциативных правил</strong> (анализ корзины) — находит совместно встречающиеся товары («покупающие хлеб часто берут масло») для рекомендаций и раскладки в магазине.</p>
+    <div class="key">Нет меток, ищем структуру → без учителя. Группировка строк → кластеризация. Сжатие столбцов → понижение размерности. Совместные товары → ассоциативные правила.</div>
+    <p>Поскольку эталонной метки нет, оценка результатов без учителя более субъективна: кластеры судят по тому, стабильны ли они, интерпретируемы и полезны, а не по метрике точности.</p>
+    <div class="sources">
+      <b>Открытые источники и что почитать</b>
+      <ul>
+        <li><a href="https://www.statlearning.com/" target="_blank" rel="noopener">An Introduction to Statistical Learning</a> — Ch. 12 (unsupervised learning: PCA &amp; clustering).</li>
+        <li><a href="https://scikit-learn.org/stable/modules/clustering.html" target="_blank" rel="noopener">scikit-learn: Clustering</a> — open-source guide to k-means and other methods.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Содержание</a>
+  </section>
+
+  <section id="reinforcement">
+    <h2><span class="num">08</span> Обучение с подкреплением</h2>
+    <p><strong>Обучение с подкреплением (RL)</strong> trains an <strong>agent</strong> to make a sequence of decisions by interacting with an <strong>environment</strong>. Unlike supervised learning, there is no labelled "correct action" for each situation; the agent learns by trial and error, guided by a <strong>reward</strong> signal that tells it how good its actions were. Over many interactions it refines a <strong>policy</strong> — a strategy mapping each situation to an action — to maximise cumulative long-term reward.</p>
+    <figure>
+      <svg viewBox="0 0 620 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Обучение с подкреплением loop">
+        <g font-family="inherit">
+          <rect x="60" y="80" width="170" height="60" rx="12" fill="#2b2f63" stroke="#4a4f86"/>
+          <text x="145" y="116" text-anchor="middle" class="svg-label" font-weight="700">Агент</text>
+          <rect x="390" y="80" width="170" height="60" rx="12" fill="#161a35" stroke="#2c3260"/>
+          <text x="475" y="116" text-anchor="middle" class="svg-label" font-weight="700">Среда</text>
+          <path d="M230 96 H390" stroke="#5b8cff" stroke-width="2.5" marker-end="url(#arr)"/>
+          <text x="310" y="88" text-anchor="middle" class="svg-muted">действие</text>
+          <path d="M390 124 H230" stroke="#2ecc8f" stroke-width="2.5" marker-end="url(#arr)"/>
+          <text x="310" y="150" text-anchor="middle" class="svg-muted">состояние, награда</text>
+          <defs>
+            <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+              <path d="M0,0 L7,3 L0,6 Z" fill="#9aa0c7"/>
+            </marker>
+          </defs>
+        </g>
+      </svg>
+      <figcaption>Цикл RL: агент действует; среда возвращает новое состояние и награду; политика улучшается.</figcaption>
+    </figure>
+    <p>Словарь чисто ложится на бизнес-рекомендатель. <em>Агент</em> — это движок; <em>среда</em> — клиенты, товары и конкуренты; <em>состояние</em> — текущая ситуация (история и корзина клиента); <em>действия</em> — предложения или рекомендации, что он может сделать; <em>награда</em> — покупка или высокая оценка удовлетворённости; а <em>политика</em> — развивающийся свод правил, что движок оптимизирует ради долгосрочной ценности клиента. RL делает прескриптивную аналитику самоулучшающейся, заменяя статические правила системой, что учится на исходах. Знаменитые демонстрации — игры и робототехника, где агент осваивает задачу через миллионы проб и ошибок.</p>
+    <div class="sources">
+      <b>Открытые источники и что почитать</b>
+      <ul>
+        <li><a href="http://incompleteideas.net/book/the-book.html" target="_blank" rel="noopener">Sutton &amp; Barto, Reinforcement Learning: An Introduction</a> — the standard text, free online (full PDF).</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Содержание</a>
+  </section>
+
+  <section id="deep-learning">
+    <h2><span class="num">09</span> Глубокое обучение и нейросети</h2>
+    <p><strong>Глубокое обучение</strong> — подмножество машинного обучения, использующее <strong>нейросети</strong> со множеством слоёв (отсюда «глубокое»). Нейросеть состоит из простых единиц («нейронов»), расположенных слоями; у каждой связи есть вес, и при обучении сеть подстраивает эти веса, сокращая разрыв между предсказаниями и истиной. Множество слоёв позволяет сети автоматически выучивать иерархические признаки — для изображений ранние слои находят края, поздние — формы и объекты — поэтому глубокое обучение отлично работает с неструктурированными данными вроде изображений, аудио и текста.</p>
+    <p>Глубокие модели мощны, но прожорливы к данным и вычислениям и подвержены центральному напряжению любого моделирования: балансу между подгонкой под обучающие данные и обобщением на новые. Это напряжение разбирается в следующем разделе, но два режима провала стоит назвать здесь. <strong>Переобучение</strong> — когда модель слишком точно выучивает обучающие данные, включая шум, и хорошо работает на обучении, но плохо на новых данных. <strong>Недообучение</strong> — наоборот: модель слишком проста, чтобы уловить реальную закономерность, и работает плохо везде. Регуляризация, dropout и сбор большего объёма данных помогают сдерживать переобучение.</p>
+    <div class="key">Больше слоёв ≠ всегда лучше. Слишком сложная модель запоминает шум (переобучение); слишком простая теряет сигнал (недообучение). Искусство — найти баланс.</div>
+    <div class="sources">
+      <b>Открытые источники и что почитать</b>
+      <ul>
+        <li><a href="https://www.deeplearningbook.org/" target="_blank" rel="noopener">Goodfellow, Bengio &amp; Courville, Deep Learning</a> — the standard textbook, free online (see Ch. 6 &amp; 7).</li>
+        <li><a href="https://www.statlearning.com/" target="_blank" rel="noopener">An Introduction to Statistical Learning</a> — Ch. 10 gives an accessible deep-learning primer.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Содержание</a>
+  </section>
+
+  <section id="model-evaluation">
+    <h2><span class="num">10</span> Оценка моделей</h2>
+    <p>Модель полезна, только если работает на данных, что не видела. Чтобы это оценить, данные делят: модель учится на <strong>обучающем наборе</strong> и оценивается на отложенном <strong>тестовом наборе</strong>. <strong>Кросс-валидация</strong> усиливает это, чередуя разбиение по нескольким «фолдам», чтобы каждая запись побывала и в обучении, и в тесте в разное время, давая более надёжную оценку обобщения и снижая роль удачи одного разбиения.</p>
+    <p>Для классификации <strong>матрица ошибок</strong> сводит предсказания против реальности как истинно положительные, ложно положительные, истинно отрицательные и ложно отрицательные. Из неё выводят ключевые метрики:</p>
+    <figure>
+      <svg viewBox="0 0 520 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Confusion matrix">
+        <g font-family="inherit">
+          <text x="270" y="24" text-anchor="middle" class="svg-muted">Предсказано</text>
+          <text x="150" y="52" text-anchor="middle" class="svg-muted">Положит.</text>
+          <text x="370" y="52" text-anchor="middle" class="svg-muted">Отрицат.</text>
+          <text x="34" y="120" text-anchor="middle" class="svg-muted" transform="rotate(-90 34 120)">Факт</text>
+          <rect x="60" y="64" width="220" height="70" fill="rgba(46,204,143,.18)" stroke="#2c3260"/>
+          <text x="170" y="96" text-anchor="middle" class="svg-label" font-weight="700">Истинно положит.</text>
+          <text x="170" y="116" text-anchor="middle" class="svg-muted">верно помечено</text>
+          <rect x="280" y="64" width="200" height="70" fill="rgba(255,92,124,.16)" stroke="#2c3260"/>
+          <text x="380" y="96" text-anchor="middle" class="svg-label" font-weight="700">Ложно отрицат.</text>
+          <text x="380" y="116" text-anchor="middle" class="svg-muted">пропущено</text>
+          <rect x="60" y="134" width="220" height="70" fill="rgba(255,92,124,.16)" stroke="#2c3260"/>
+          <text x="170" y="166" text-anchor="middle" class="svg-label" font-weight="700">Ложно положит.</text>
+          <text x="170" y="186" text-anchor="middle" class="svg-muted">ложная тревога</text>
+          <rect x="280" y="134" width="200" height="70" fill="rgba(46,204,143,.18)" stroke="#2c3260"/>
+          <text x="380" y="166" text-anchor="middle" class="svg-label" font-weight="700">Истинно отрицат.</text>
+          <text x="380" y="186" text-anchor="middle" class="svg-muted">верно отклонено</text>
+        </g>
+      </svg>
+      <figcaption>Матрица ошибок. Precision = TP/(TP+FP); Recall = TP/(TP+FN).</figcaption>
+    </figure>
+    <p><strong>Accuracy</strong> — доля всех верных предсказаний. <strong>Precision</strong> спрашивает: из помеченных положительными — сколько реально таких? <strong>Recall</strong> спрашивает: из реально положительных — сколько мы поймали? <strong>F1-мера</strong> — их гармоническое среднее, полезна, когда нужно балансировать оба. <strong>ROC/AUC</strong> сводит компромисс между поимкой положительных и ложными тревогами по всем порогам.</p>
+    <div class="key">Accuracy вводит в заблуждение на несбалансированных данных: если 99% случаев отрицательны, всегда предсказывая «отрицательно», получите 99% accuracy, но не поймаете ничего. Смотрите precision и recall. И берегитесь утечки данных — попадания будущей или раскрывающей ответ информации в признаки — она завышает тест, но рушится в продакшне.</div>
+    <div class="sources">
+      <b>Открытые источники и что почитать</b>
+      <ul>
+        <li><a href="https://scikit-learn.org/stable/modules/model_evaluation.html" target="_blank" rel="noopener">scikit-learn: Metrics &amp; scoring</a> — precision, recall, F1, ROC/AUC, confusion matrix.</li>
+        <li><a href="https://scikit-learn.org/stable/modules/cross_validation.html" target="_blank" rel="noopener">scikit-learn: Cross-validation</a> — open-source reference.</li>
+        <li><a href="https://www.statlearning.com/" target="_blank" rel="noopener">An Introduction to Statistical Learning</a> — Ch. 5 (resampling: validation &amp; cross-validation).</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Содержание</a>
+  </section>
+
+  <section id="generative-ai">
+    <h2><span class="num">11</span> Генеративный ИИ и LLM</h2>
+    <p><strong>Генеративный ИИ</strong> описывает модели, что создают новый контент — текст, изображения, код, аудио — выучивая закономерности в огромных обучающих данных и затем порождая новые похожие выводы. Это контраст с традиционными («дискриминативными») моделями, что лишь классифицируют или оценивают существующие данные. <strong>Большая языковая модель (LLM)</strong> — генеративная модель, обученная на огромных объёмах текста, чтобы понимать и порождать язык; GPT, Claude и Gemini — примеры. Современные LLM построены на архитектуре <em>трансформер</em>, чей механизм внимания позволяет модели взвешивать релевантность каждого слова к каждому другому.</p>
+    <p>Вы взаимодействуете с генеративной моделью через <strong>промпт</strong> — инструкцию или вопрос, что вы даёте. Центральное ограничение — <strong>галлюцинация</strong>: модель может выдать гладкий уверенный вывод, который фактически неверен или выдуман, потому что она порождает правдоподобный текст, а не извлекает проверенные факты. Поэтому генеративный вывод стоит считать черновиком для проверки, а не авторитетным ответом.</p>
+    <div class="key">Суперсила генеративного ИИ в аналитике — быстро превращать неструктурированный текст в структурированные выводы, сворачивая тысячи отзывов или документов за секунды. Его слабость — надёжность: вывод требует проверки человеком, особенно для ответственных решений.</div>
+    <p>Для бизнес-аналитики самое ценное раннее применение — именно эта способность сворачивать неструктурированные данные в сочетании с проверкой человеком. Генеративный ИИ также вносит вопросы управления — предвзятость обучающих данных, приватность и риск гладкого, но ложного вывода — которыми должно управлять ответственное внедрение.</p>
+    <div class="sources">
+      <b>Открытые источники и что почитать</b>
+      <ul>
+        <li><a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">Vaswani et al., "Attention Is All You Need"</a> — the open-access paper introducing the transformer.</li>
+        <li><a href="https://doi.org/10.6028/NIST.AI.600-1" target="_blank" rel="noopener">NIST AI RMF: Generative AI Profile (AI 600-1)</a> — public standard on generative-AI risks.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Содержание</a>
+  </section>
+
+  <section id="nlp-sentiment">
+    <h2><span class="num">12</span> NLP и анализ тональности</h2>
+    <p><strong>Обработка естественного языка (NLP)</strong> — область, занимающаяся тем, чтобы компьютеры понимали, интерпретировали и порождали человеческий язык. Она лежит в основе поиска, перевода, чат-ботов и текстовой аналитики. Базовый шаг часто — <strong>текст-майнинг</strong>: извлечение полезной структуры и закономерностей из неструктурированного текста.</p>
+    <p><strong>Анализ тональности</strong> — конкретная ценная задача NLP: определение эмоциональной окраски текста, обычно через <strong>полярность</strong> — позитив, негатив или нейтрально (иногда с более тонкими градациями или конкретными эмоциями). Применённый к отзывам, обращениям в поддержку или соцсетям, он позволяет бизнесу количественно измерить «голос клиента» в масштабе, недоступном ручному чтению, и выявить повторяющиеся темы за жалобами или похвалой.</p>
+    <div class="key">Анализ тональности часто — идеальное первое внедрение ИИ для бизнеса: он решает реальную боль (понимание отзывов клиентов) при относительно малых изменениях в процессах.</div>
+    <p>Эффективная работа с тональностью начинается с <strong>очистки данных</strong> — нормализации текста, обработки пропусков, сленга и сарказма. Современные подходы используют LLM, чтобы быстро присваивать тональность и извлекать темы, но действует та же осторожность, что и для всего генеративного ИИ: модели могут неверно классифицировать неоднозначный или разговорный язык, поэтому вывод требует периодической проверки человеком, чтобы избежать систематической предвзятости в том, что помечается.</p>
+    <div class="sources">
+      <b>Открытые источники и что почитать</b>
+      <ul>
+        <li><a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">Vaswani et al., "Attention Is All You Need"</a> — the transformer architecture behind modern NLP.</li>
+        <li><a href="https://doi.org/10.6028/NIST.AI.600-1" target="_blank" rel="noopener">NIST Generative AI Profile</a> — risks relevant to text-classification and theme extraction.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Содержание</a>
+  </section>
+
+  <section id="data-infrastructure">
+    <h2><span class="num">13</span> Инфраструктура данных</h2>
+    <p>Аналитике нужна «сантехника». <strong>ETL</strong> — Extract, Transform, Load (извлечь, преобразовать, загрузить) — процесс, что забирает данные из систем-источников, чистит и переформатирует их и загружает в место назначения для анализа; более новый вариант <em>ELT</em> сначала загружает, а преобразует на месте. <strong>Конвейер данных</strong> — автоматизированный поток, что по расписанию перемещает данные от источника к назначению, держа отчёты актуальными без ручного труда.</p>
+    <p>Куда попадают данные — важно. <strong>Хранилище данных</strong> — центральное хранилище структурированных, интегрированных, очищенных данных, оптимизированных под запросы и отчётность — доверенный источник для дашбордов. <strong>Озеро данных</strong> вместо этого хранит сырые данные любого типа, структурированные и нет, в исходном виде; оно дешевле и гибче, но требует больше работы для готовности к анализу. Многие организации используют оба. <strong>Облачные вычисления</strong> дают масштабируемые хранение и обработку по запросу, что делает всё это доступным без собственного железа.</p>
+    <figure>
+      <svg viewBox="0 0 720 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ETL pipeline">
+        <g font-family="inherit">
+          <rect x="20" y="44" width="120" height="48" rx="10" fill="#161a35" stroke="#2c3260"/>
+          <text x="80" y="73" text-anchor="middle" class="svg-label">Источники</text>
+          <rect x="190" y="44" width="120" height="48" rx="10" fill="#1b2348" stroke="#2c3260"/>
+          <text x="250" y="67" text-anchor="middle" class="svg-label">Извлечь /</text>
+          <text x="250" y="82" text-anchor="middle" class="svg-muted">Преобразовать</text>
+          <rect x="360" y="44" width="120" height="48" rx="10" fill="#222a55" stroke="#3a4570"/>
+          <text x="420" y="73" text-anchor="middle" class="svg-label">Загрузить</text>
+          <rect x="530" y="44" width="170" height="48" rx="10" fill="#2b2f63" stroke="#4a4f86"/>
+          <text x="615" y="67" text-anchor="middle" class="svg-label">Хранилище /</text>
+          <text x="615" y="82" text-anchor="middle" class="svg-muted">BI и дашборды</text>
+          <path d="M140 68 H190" stroke="#5b8cff" stroke-width="2.5" marker-end="url(#arr2)"/>
+          <path d="M310 68 H360" stroke="#5b8cff" stroke-width="2.5" marker-end="url(#arr2)"/>
+          <path d="M480 68 H530" stroke="#5b8cff" stroke-width="2.5" marker-end="url(#arr2)"/>
+          <defs><marker id="arr2" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#9aa0c7"/></marker></defs>
+        </g>
+      </svg>
+      <figcaption>Типичный конвейер: источники → ETL → хранилище → бизнес-аналитика.</figcaption>
+    </figure>
+    <p>Инструменты <strong>бизнес-аналитики (BI)</strong> — такие как Power BI, Tableau и Looker — превращают данные хранилища в отчёты и интерактивные <strong>дашборды</strong>, что визуализируют ключевые метрики для мониторинга и решений. <strong>SQL</strong> остаётся основным языком запросов к структурированным данным. Над всем этим — <strong>управление данными</strong>: политики и процессы, обеспечивающие качество, безопасность и правильное, соответствующее нормам использование данных. Повторяющийся стратегический выбор — открытые инструменты (больше гибкости и контроля, больше настройки) против закрытых/управляемых сервисов (проще внедрение и поддержка вендора); большинство компаний сочетают оба.</p>
+    <div class="sources">
+      <b>Открытые источники и что почитать</b>
+      <ul>
+        <li><a href="https://www.postgresql.org/docs/current/tutorial-sql.html" target="_blank" rel="noopener">PostgreSQL Documentation: The SQL Language</a> — open-source, freely available SQL reference.</li>
+        <li><a href="https://www.itl.nist.gov/div898/handbook/" target="_blank" rel="noopener">NIST/SEMATECH e-Handbook</a> — public reference for turning data into analysis-ready form.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Содержание</a>
+  </section>
+
+  <section id="statistics">
+    <h2><span class="num">14</span> Основы статистики</h2>
+    <p>Надёжная аналитика держится на статистических основах. <strong>Очистка данных</strong> — обнаружение и исправление неточных, неполных или дублирующихся записей — обычно занимает большую часть времени аналитика, а пропуски обрабатывают либо <strong>импутацией</strong> (заполнением оценками), либо удалением затронутых записей. <strong>Выброс</strong> — точка далеко от остальных данных; это может быть ошибка или настоящий сигнал, поэтому выбросы изучают, а не слепо удаляют.</p>
+    <p>Описание данных использует меры центральной тенденции и разброса. <strong>Медиана</strong> (срединное значение) устойчива к выбросам, тогда как <strong>среднее</strong> тянется к крайностям; <strong>стандартное отклонение</strong> измеряет, насколько значения разбросаны вокруг среднего. Связи сводит <strong>коэффициент корреляции</strong>, лежащий от −1 до +1. Важно: <strong>корреляция не означает причинности</strong>: совместное движение двух величин может быть совпадением или вызвано скрытым третьим фактором.</p>
+    <div class="key">Медиана устойчива к выбросам, среднее — нет. Корреляция лежит от −1 до +1 и никогда не доказывает причину. Эти три факта предотвращают большую долю ошибок анализа.</div>
+    <p>Чтобы проверять идеи, аналитики используют <strong>проверку гипотез</strong>, где малое <strong>p-значение</strong> (обычно ниже 0,05) указывает на результат, маловероятный лишь по случайности — статистически значимый. <strong>A/B-тест</strong> применяет это, чтобы сравнить два варианта и понять, какой лучше. Берегитесь <strong>смещения выборки</strong>: если выборка нерепрезентативна для популяции, выводы будут искажены, сколько бы данных ни было. Наконец, <strong>временные ряды</strong> упорядочены во времени и часто показывают <strong>сезонность</strong> (регулярные повторяющиеся паттерны); <strong>прогнозирование</strong> использует такую историю для оценки будущих значений.</p>
+    <div class="sources">
+      <b>Открытые источники и что почитать</b>
+      <ul>
+        <li><a href="https://www.openintro.org/book/os/" target="_blank" rel="noopener">OpenIntro Statistics</a> — free, openly licensed coverage of all of the above.</li>
+        <li><a href="https://www.itl.nist.gov/div898/handbook/" target="_blank" rel="noopener">NIST/SEMATECH e-Handbook of Statistical Methods</a> — public-domain reference (EDA, hypothesis testing, time series).</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Содержание</a>
+  </section>
+
+  <section id="ai-ethics">
+    <h2><span class="num">15</span> Этика и управление ИИ</h2>
+    <p>Поскольку модели влияют на реальные решения, их рисками надо управлять осознанно. <strong>Алгоритмическая предвзятость</strong> — систематически несправедливое отношение модели к определённым группам; её ведущая причина — обучение на предвзятых или нерепрезентативных данных; добавление ИИ к предвзятым данным склонно <em>индустриализировать</em> предвзятость, а не убирать её. <strong>Справедливость</strong> — цель не ущемлять несправедливо отдельные группы, а <strong>объяснимость</strong> (интерпретируемость) — способность понять и сформулировать, как модель пришла к решению — необходимое для доверия и для оспаривания исходов.</p>
+    <p><strong>Подотчётность</strong> закрепляет чёткую ответственность за исходы модели, чтобы при сбое можно было отследить владельца и исправить. Два человеческих когнитивных искажения усугубляют риски: <strong>автоматизационная предвзятость</strong> — склонность чрезмерно доверять автоматическому выводу, даже когда он ошибочен, и <strong>предвзятость подтверждения</strong> — склонность предпочитать информацию, подтверждающую то, во что мы уже верим (и использовать ИИ для подтверждения, а не оспаривания взглядов).</p>
+    <div class="key">Меры сводятся к надзору: проверка человеком для ответственных решений, регулярный аудит моделей, мониторинг дрейфа и понятные политики использования данных. Встраивайте этику как контрольную точку процесса, а не разовый документ.</div>
+    <p>Модели также деградируют со временем — <strong>дрейф модели</strong> (или деградация) — это падение качества по мере сдвига реальных данных от обучающего распределения, поэтому мониторинг и переобучение — часть ответственной эксплуатации. Фреймворки вроде NIST AI Risk Management Framework организуют эти заботы вокруг управления, картирования, измерения и управления риском ИИ и подчёркивают, что доверенный ИИ строят, а не предполагают.</p>
+    <div class="sources">
+      <b>Открытые источники и что почитать</b>
+      <ul>
+        <li><a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener">NIST AI Risk Management Framework (AI RMF 1.0)</a> — the leading public standard (<a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf" target="_blank" rel="noopener">full PDF</a>).</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Содержание</a>
+  </section>
+
+  <section id="data-privacy">
+    <h2><span class="num">16</span> Приватность и защита данных</h2>
+    <p>Работа с персональными данными несёт юридические и этические обязанности. <strong>Общий регламент по защите данных (GDPR)</strong> — и его британский аналог — знаковый регламент, защищающий персональные данные и приватность людей, со значительными штрафами за нарушения. <strong>Персонально идентифицируемая информация (PII)</strong> — любые данные, способные опознать конкретного человека, и требуют строжайшего обращения.</p>
+    <p>Из этих правил вытекает несколько принципов. <strong>Минимизация данных</strong> означает сбор только тех персональных данных, что действительно нужны для заявленной цели — а не запасание «на всякий случай». <strong>Согласие</strong> требует явного разрешения до обработки персональных данных, уважая права людей и выполняя обязательства. <strong>Ролевой контроль доступа (RBAC)</strong> ограничивает, кто какие данные видит, по рабочей роли, снижая уязвимость. <strong>Privacy by design</strong> встраивает эти защиты в системы с самого начала, а не прикручивает после проблемы.</p>
+    <div class="key">Практическое соответствие: собирайте меньше (минимизация), спрашивайте сначала (согласие), ограничивайте доступ (RBAC) и закладывайте приватность с первого дня. Это и устраивает регуляторов, и укрепляет доверие клиентов.</div>
+    <p>По мере масштабирования ИИ приватность связывается с более широким <strong>управлением ИИ</strong> — сводом политик и процессов для ответственного, подотчётного ИИ — включая поимённое владение исходами модели и всё чаще соображения вроде ответственности за ИИ. Приватность — не просто издержка соответствия; прозрачная, аккуратная работа с данными сама по себе — отличие, что завоёвывает доверие клиентов.</p>
+    <div class="sources">
+      <b>Открытые источники и что почитать</b>
+      <ul>
+        <li><a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng" target="_blank" rel="noopener">Regulation (EU) 2016/679 (GDPR)</a> — the official legal text on EUR-Lex.</li>
+        <li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/" target="_blank" rel="noopener">ICO: UK GDPR guidance and resources</a> — openly licensed regulator guidance.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Содержание</a>
+  </section>
+
+  <section id="automation-spectrum">
+    <h2><span class="num">17</span> Спектр автоматизации &amp; human–AI collaboration</h2>
+    <p>Not every analytics tool should be equally autonomous. A widely used framing (popularised by IBM) places automation on a <strong>five-tier spectrum</strong>, ordered by how much the machine decides versus the human:</p>
+    <p><strong>1. Basic automation</strong> — simple task and workflow handling, such as auto-sorting and tagging emails; staff oversee the final action. <strong>2. Human-directed</strong> — the system advises in a consultative role (e.g., suggesting which product to pitch), but the human makes the call. <strong>3. Machine intervention</strong> — the machine decides in routine scenarios (e.g., reordering stock from predictions), while humans handle atypical or high-stakes cases. <strong>4. Fully autonomous</strong> — the system controls decisions in defined situations (e.g., launching and adjusting ad campaigns), with humans stepping in only for the unprecedented or strategic. <strong>5. Humans optional</strong> — full self-direction in any scenario, like a fully autonomous vehicle.</p>
+    <div class="key">Выбор уровня — это проектное решение. Чем больше автономии вы даёте, тем выше нужна точность модели — потому что остаётся меньше надзора человека, чтобы ловить ошибки.</div>
+    <p>The complementary idea is <strong>human–AI symbiosis</strong>: the goal is to <em>enrich</em> human expertise, not replace it. Research shows humans and AI often evaluate risk differently, so the strongest systems are <strong>hybrid</strong> — combining data-driven prediction with a structured model of human expert judgement. Such hybrids tend to outperform either humans or algorithms working alone, and earn higher adoption because experts trust a tool that reflects their reasoning.</p>
+    <div class="sources">
+      <b>Открытые источники и что почитать</b>
+      <ul>
+        <li><a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener">NIST AI Risk Management Framework</a> — human-AI configuration, oversight and accountability.</li>
+        <li><a href="https://doi.org/10.1109/3468.844354" target="_blank" rel="noopener">Parasuraman, Sheridan &amp; Wickens (2000), "Types and Levels of Human Interaction with Automation"</a> — the foundational academic model (IEEE).</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Содержание</a>
+  </section>
+
+  <section id="algorithmic-insurance">
+    <h2><span class="num">18</span> Риски ИИ и алгоритмическое страхование</h2>
+    <p>When an AI system makes high-stakes decisions — a medical triage, a credit approval — who bears the risk when it errs? <strong>Algorithmic insurance</strong> is a framework that prices and transfers that risk. Its central move is to shift liability from the <em>end user</em> to the <strong>model provider</strong>: because users (for example, clinicians) cannot control the underlying model, the insurance contract sits between the provider and an insurer, not the user.</p>
+    <p>This closes a feedback loop. If a deployed model produces more errors, the insurer <strong>raises the premium</strong>; that margin pressure forces the provider to improve the model. The premium itself is a function of the model's <strong>generalisability</strong> — its ability to perform on new, previously unseen populations — alongside accuracy and interpretability. So the framework rewards providers who train on diverse data and test for robustness.</p>
+    <div class="key">Ключевой вопрос: «Кто основной держатель риска?» В алгоритмическом страховании ответ — поставщик модели; это согласует финансовые стимулы с созданием более безопасных и обобщаемых моделей.</div>
+    <p>The concept moved from research into industry when a major reinsurer (Munich Re) created a dedicated AI-insurance unit, giving organisations a way to deploy AI while quantifying and hedging its operational risk rather than avoiding it altogether.</p>
+    <div class="sources">
+      <b>Открытые источники и что почитать</b>
+      <ul>
+        <li><a href="https://arxiv.org/abs/2106.00839" target="_blank" rel="noopener">Bertsimas &amp; Orfanoudaki, "Pricing Algorithmic Insurance"</a> — open-access paper (arXiv:2106.00839).</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Содержание</a>
+  </section>
+
+  <section id="bias-mitigation">
+    <h2><span class="num">19</span> Снижение предвзятости</h2>
+    <p><strong>Algorithmic bias</strong> usually traces back to biased or unrepresentative training data — and simply adding AI to biased data <em>industrialises</em> the bias rather than removing it. Mitigation therefore spans the whole pipeline, in three stages:</p>
+    <p><strong>Pre-processing (data curation)</strong> fixes representation <em>before</em> training — reweighing instances, resampling, or augmenting under-represented groups to achieve parity across protected attributes. <strong>In-processing (algorithmic constraints)</strong> builds fairness into the training objective itself; a classic technique is <strong>adversarial debiasing</strong>, where a secondary "adversary" model tries to predict a protected attribute from the main model's output, and the main model is penalised whenever the adversary succeeds. <strong>Post-processing (output correction)</strong> adjusts decision thresholds <em>after</em> training to equalise error rates (for example, equalised odds) across subgroups.</p>
+    <div class="key">Ни один приём не достаточен. Предвзятостью управляют по всей цепочке — курируют данные, ограничивают обучение, правят выводы — и затем непрерывно аудируют, потому что данные и популяции меняются со временем.</div>
+    <div class="sources">
+      <b>Открытые источники и что почитать</b>
+      <ul>
+        <li><a href="https://arxiv.org/abs/1908.09635" target="_blank" rel="noopener">Mehrabi et al., "A Survey on Bias and Fairness in Machine Learning"</a> — open-access (arXiv:1908.09635).</li>
+        <li><a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener">NIST AI Risk Management Framework</a> — managing bias and harmful outcomes.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Содержание</a>
+  </section>
+
+  <section id="ai-regulation">
+    <h2><span class="num">20</span> Регулирование ИИ: EU AI Act</h2>
+    <p>The <strong>EU AI Act</strong> (Regulation (EU) 2024/1689) is the first comprehensive AI law, and it takes a <strong>risk-based approach</strong> with four tiers. <strong>Unacceptable-risk</strong> systems (e.g., government social scoring) are banned. <strong>High-risk</strong> systems face strict obligations. <strong>Limited-risk</strong> systems carry transparency duties — a chatbot, for instance, must disclose that it is AI. <strong>Minimal-risk</strong> systems (spam filters, games) have no special obligations.</p>
+    <p>Systems used in areas like critical infrastructure, employment, healthcare, education and law enforcement are typically classified as <strong>high-risk</strong>. That classification legally mandates, before market deployment: a risk-management system, high-quality data governance, technical documentation and logging, transparency to users, meaningful <strong>human oversight</strong>, and appropriate accuracy and robustness — often with third-party conformity assessment.</p>
+    <div class="key">Даже если система юридически не «высокого риска», эти обязательства — документация, управление данными, надзор человека, прозрачность — это просто хорошее управление ИИ и разумный стандарт.</div>
+    <div class="sources">
+      <b>Открытые источники и что почитать</b>
+      <ul>
+        <li><a href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" target="_blank" rel="noopener">European Commission — Regulatory framework for AI</a> (official).</li>
+        <li><a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" rel="noopener">Regulation (EU) 2024/1689 (AI Act)</a> — the official legal text on EUR-Lex.</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Содержание</a>
+  </section>
+
+  <section id="measuring-genai-bias">
+    <h2><span class="num">21</span> Измерение предвзятости в генеративном ИИ</h2>
+    <p>Measuring bias in <strong>generative AI</strong> is harder than in a classifier, because the outputs are free-form text rather than labels you can score against a ground truth. Three methods are standard:</p>
+    <p><strong>Stereotype &amp; toxicity benchmarking</strong> runs curated prompt sets (such as <em>BOLD</em> or <em>RealToxicityPrompts</em>) and scores the generations for biased, toxic or asymmetric content across groups. <strong>Counterfactual fairness testing</strong> submits identical prompts while changing only a protected attribute — for example, "a 65-year-old <em>male</em> presenting with chest pain…" versus "…<em>female</em>…" — then compares the outputs (sentiment, recommendations, tone) for systematic variance. <strong>Automated red-teaming</strong> uses adversarial models to probe the system at scale, deliberately seeking latent biases and harmful outputs before real users encounter them.</p>
+    <div class="key">Эти количественные проверки дополняют, но не заменяют периодическую проверку человеком — генеративные модели могут неверно классифицировать неоднозначный или разговорный язык так, как бенчмарк не уловит.</div>
+    <div class="sources">
+      <b>Открытые источники и что почитать</b>
+      <ul>
+        <li><a href="https://doi.org/10.6028/NIST.AI.600-1" target="_blank" rel="noopener">NIST AI 600-1 — Generative AI Profile</a> — public standard on generative-AI risks.</li>
+        <li><a href="https://aclanthology.org/2020.findings-emnlp.301/" target="_blank" rel="noopener">Gehman et al., "RealToxicityPrompts"</a> — open-access benchmark paper (ACL Findings 2020).</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Содержание</a>
+  </section>
+
+  <section id="ai-verification">
+    <h2><span class="num">22</span> Проверка ИИ-анализа</h2>
+    <p>When analysts use AI assistants — LLMs that turn natural-language requests into code — the biggest danger is not a crash but <strong>automation bias</strong>: trusting a clean, professional-looking output without checking how it was produced. The most common errors are <strong>semantic, not syntactic</strong> — the code runs fine but computes the wrong thing, for example counting total rows instead of unique items, silently dropping a category, or inverting a percentage.</p>
+    <p>Research on how analysts verify AI-generated analyses identifies two complementary modes: <strong>procedure-oriented</strong> verification (reading the generated code and logic) and <strong>data-oriented</strong> verification (inspecting the raw intermediate tables and row counts). Practical habits that catch errors early: force the tool to print intermediate tables and row counts after each step; confirm a <em>unique</em> count (e.g., a distinct/<code>.nunique()</code> count) where intended; make the AI state and then check its assumptions about column meanings; and run quick sanity checks (do the percentages sum to 100%?).</p>
+    <div class="key">Относитесь к ИИ как к быстрому советнику, а логику оставляйте за человеком. Не просто читайте аккуратное объяснение — откройте промежуточные данные и проверьте их детальность.</div>
+    <div class="sources">
+      <b>Открытые источники и что почитать</b>
+      <ul>
+        <li><a href="https://arxiv.org/abs/2309.10947" target="_blank" rel="noopener">Gu et al., "How Do Analysts Understand and Verify AI-Assisted Data Analyses?"</a> — CHI 2024, open-access (arXiv:2309.10947).</li>
+      </ul>
+    </div>
+    <a class="backtop" href="#top">↑ Содержание</a>
+  </section>
+
+  <p style="text-align:center;color:var(--muted);margin-top:40px;font-size:.9rem">
+    Сделано как спутник для учёбы · <a href="test.ru.html">Пройти тест знаний →</a> · <a href="index.ru.html">Главная</a>
+  </p>
+</div>
+</body>
+</html>

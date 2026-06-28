@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ИИ простыми словами — учитесь, проверяйте себя, идите к первоисточникам</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#1a1e3a; --accent:#5b8cff; --accent2:#7c5cff;
+    --good:#2ecc8f; --text:#e8ebff; --muted:#9aa0c7; --line:#2c3260;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(1200px 800px at 20% -10%,#23275a 0%,#0f1226 55%) fixed;color:var(--text);line-height:1.6}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1000px;margin:0 auto;padding:40px 20px 80px}
+  .hero{text-align:center;margin-bottom:40px}
+  .hero h1{font-size:2.1rem;margin:0 0 10px;font-weight:800;letter-spacing:.2px}
+  .hero p{color:var(--muted);font-size:1.05rem;margin:0 auto;max-width:620px}
+  .kicker{display:inline-block;font-size:.74rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);
+    border:1px solid var(--line);border-radius:99px;padding:5px 14px;margin-bottom:16px}
+  /* top section cards */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:56px}
+  @media(max-width:760px){.cards{grid-template-columns:1fr}}
+  .card{display:block;background:linear-gradient(180deg,#1a1e3a,#161a33);border:1px solid var(--line);
+    border-radius:18px;padding:26px;transition:.18s;color:var(--text)}
+  .card:hover{transform:translateY(-3px);border-color:var(--accent);text-decoration:none;box-shadow:0 18px 50px rgba(0,0,0,.4)}
+  .card .ico{font-size:2rem;margin-bottom:12px}
+  .card h2{margin:0 0 8px;font-size:1.2rem}
+  .card p{margin:0 0 14px;color:var(--muted);font-size:.92rem}
+  .card .go{font-weight:700;color:var(--accent);font-size:.92rem}
+  .card .meta{display:inline-block;margin-top:12px;font-size:.74rem;color:var(--muted);border:1px solid var(--line);
+    border-radius:99px;padding:3px 10px}
+  /* resources */
+  .section-head{text-align:center;margin:0 0 8px}
+  .section-head h2{font-size:1.6rem;margin:0 0 8px}
+  .section-head p{color:var(--muted);margin:0 auto 6px;max-width:680px}
+  .note{text-align:center;color:var(--muted);font-size:.82rem;margin:0 auto 30px;max-width:680px;font-style:italic}
+  .providers{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+  @media(max-width:760px){.providers{grid-template-columns:1fr}}
+  .prov{background:linear-gradient(180deg,#1a1e3a,#161a33);border:1px solid var(--line);border-radius:18px;
+    padding:22px;border-left:4px solid var(--pc,#5b8cff)}
+  .prov .ph{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+  .prov .badge{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;font-weight:800;font-size:1.1rem;
+    background:var(--pc,#5b8cff);color:#0b0e1f;flex:0 0 42px}
+  .prov h3{margin:0;font-size:1.15rem}
+  .prov .who{color:var(--muted);font-size:.82rem;margin:2px 0 14px}
+  .prov h4{font-size:.72rem;text-transform:uppercase;letter-spacing:.8px;color:var(--accent);margin:14px 0 8px}
+  .prov ul{margin:0;padding-left:18px}
+  .prov li{margin:5px 0;font-size:.9rem}
+  .vid{display:flex;gap:12px;align-items:center;background:#12152d;border:1px solid var(--line);border-radius:12px;
+    padding:10px;margin-top:8px;transition:.15s}
+  .vid:hover{border-color:var(--accent);text-decoration:none}
+  .vid img{width:120px;height:68px;object-fit:cover;border-radius:8px;flex:0 0 120px;background:#0b0e1f}
+  .vid .vt{font-size:.85rem;font-weight:600;color:var(--text);line-height:1.35}
+  .vid .vs{font-size:.74rem;color:var(--muted);margin-top:3px}
+  .chan{display:inline-block;margin-top:10px;font-size:.82rem;font-weight:600;color:#fff;
+    background:rgba(91,140,255,.18);border:1px solid var(--line);padding:6px 12px;border-radius:8px}
+  .chan:hover{border-color:var(--accent);text-decoration:none}
+  /* start-here assistant */
+  .assistant{background:linear-gradient(180deg,#1a1e3a,#161a33);border:1px solid var(--line);border-radius:18px;padding:24px;margin-bottom:30px}
+  .assistant .ah{display:flex;align-items:center;gap:10px;margin-bottom:2px}
+  .assistant .ah .live{width:10px;height:10px;border-radius:50%;background:var(--good);box-shadow:0 0 10px var(--good)}
+  .assistant h2{margin:0;font-size:1.25rem}
+  .assistant .sub{color:var(--muted);font-size:.88rem;margin:4px 0 14px}
+  .chatlog{display:flex;flex-direction:column;gap:10px;max-height:370px;overflow-y:auto;margin-bottom:12px;padding-right:4px}
+  .msg{max-width:90%;padding:11px 14px;border-radius:13px;font-size:.92rem;line-height:1.5}
+  .msg.bot{background:#12152d;border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:4px}
+  .msg.user{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+  .msg.bot b{color:var(--accent)}
+  .msg .src{display:inline-block;margin-top:9px;font-size:.82rem;font-weight:600;color:#fff;background:rgba(91,140,255,.18);border:1px solid var(--line);padding:5px 11px;border-radius:8px;text-decoration:none}
+  .msg .src:hover{border-color:var(--accent);text-decoration:none}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .chip{font-size:.8rem;background:#161a35;border:1px solid var(--line);color:var(--muted);padding:6px 12px;border-radius:99px;cursor:pointer;transition:.15s}
+  .chip:hover{border-color:var(--accent);color:var(--text)}
+  .chatform{display:flex;gap:8px}
+  .chatform input{flex:1;background:#11142b;border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--text);font-size:.95rem;font-family:inherit}
+  .chatform input:focus{outline:none;border-color:var(--accent)}
+  .chatform button{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;border:0;padding:0 22px;border-radius:10px;font-weight:600;cursor:pointer}
+  /* compare toggle */
+  .compare{margin:0 0 28px}
+  .compare-toggle{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+  .ctab{background:#161a35;border:1px solid var(--line);color:var(--text);font-size:.92rem;font-weight:600;padding:11px 18px;border-radius:11px;cursor:pointer;transition:.15s}
+  .ctab:hover{border-color:var(--accent)}
+  .ctab.active{background:linear-gradient(90deg,var(--accent),var(--accent2));border-color:transparent;color:#fff}
+  .cpanel{display:none;background:linear-gradient(180deg,#1a1e3a,#161a33);border:1px solid var(--line);border-radius:16px;padding:22px 24px}
+  .cpanel.show{display:block}
+  .cpanel h3{margin:0 0 4px;font-size:1.15rem}
+  .cpanel>.intro{color:var(--muted);font-size:.9rem;margin:0 0 14px}
+  .cpanel .pt{margin:13px 0}
+  .cpanel .pt h4{margin:0 0 3px;font-size:.95rem;color:#cdd4ff}
+  .cpanel .pt p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.55}
+  .cpanel .pt p .lab{color:var(--accent);font-weight:600}
+  .cpanel .foot{margin-top:16px;font-size:.8rem;color:var(--muted);font-style:italic;border-top:1px solid var(--line);padding-top:12px}
+  /* language toggle */
+  .langbar{display:flex;justify-content:flex-end;margin-bottom:10px}
+  .langbar a{font-size:.8rem;font-weight:700;color:var(--muted);text-decoration:none;border:1px solid var(--line);padding:6px 14px}
+  .langbar a:first-child{border-radius:99px 0 0 99px}
+  .langbar a:last-child{border-radius:0 99px 99px 0;margin-left:-1px}
+  .langbar a.on{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;border-color:transparent}
+  /* jargon buster */
+  .jargon{margin:0 0 56px}
+  .jargon .jbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+  .jargon input{flex:1;min-width:200px;background:#11142b;border:1px solid var(--line);border-radius:10px;padding:11px 14px;color:var(--text);font-size:.95rem;font-family:inherit}
+  .jargon input:focus{outline:none;border-color:var(--accent)}
+  .glossary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:760px){.glossary{grid-template-columns:1fr}}
+  .term{background:linear-gradient(180deg,#1a1e3a,#161a33);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .term h4{margin:0 0 4px;font-size:.98rem;color:var(--text)}
+  .term h4 a{color:var(--accent);text-decoration:none}
+  .term p{margin:0;color:var(--muted);font-size:.86rem;line-height:1.45}
+  .term .more{font-size:.72rem;color:var(--accent);margin-top:6px;display:inline-block;text-decoration:none}
+  .jempty{color:var(--muted);font-size:.9rem;padding:10px 2px}
+  footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:50px;border-top:1px solid var(--line);padding-top:24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="langbar"><a href="index.html">EN</a><a class="on" href="index.ru.html">RU</a></div>
+
+  <div class="hero">
+    <span class="kicker">👋 ИИ — объясняем как новичкам</span>
+    <h1>Понять ИИ — без жаргона</h1>
+    <p>Учёная степень не нужна. Задайте вопрос и получите ответ простыми словами, проверьте себя в викторине, а затем — к первоисточникам. Если «машинное обучение» заставляет вас вежливо кивать или вы уже свободно говорите на языке алгоритмов — начните здесь.</p>
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:18px">
+      <span style="font-size:.8rem;color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:6px 14px">✅ Простыми словами</span>
+      <span style="font-size:.8rem;color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:6px 14px">🧠 Без учёной степени</span>
+      <span style="font-size:.8rem;color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:6px 14px">🔒 Приватно и бесплатно</span>
+    </div>
+  </div>
+
+  <!-- START HERE ASSISTANT -->
+  <section class="assistant" id="start-here">
+    <div class="ah"><span class="live"></span><h2>🤔 Впервые здесь? Спросите что угодно</h2></div>
+    <p class="sub">Запутались в термине? Просто напишите вопрос — «что такое LLM?», «мои данные в безопасности?», «что значит GDPR?» — и получите понятный ответ без жаргона со ссылкой на подробности. Помощник работает прямо в браузере (мгновенно и приватно) и отвечает на основе понятного справочника этого сайта.</p>
+    <div class="chatlog" id="chatlog"></div>
+    <div class="chips" id="chips"></div>
+    <form class="chatform" id="chatform" autocomplete="off">
+      <input id="chatinput" type="text" placeholder="напр. В чём разница между обучением с учителем и без учителя?" aria-label="Ask a question">
+      <button type="submit">Спросить</button>
+    </form>
+  </section>
+
+  <!-- THREE SECTIONS -->
+  <div class="cards">
+    <a class="card" href="reference.ru.html">
+      <div class="ico">📖</div>
+      <h2>Справочник простыми словами</h2>
+      <p>22 коротких темы — от «что вообще <em>такое</em> машинное обучение?» до этики ИИ — каждая объяснена просто, с наглядной схемой и первоисточником, если захотите углубиться.</p>
+      <span class="go">Начать чтение →</span>
+      <br><span class="meta">22 темы · схемы · источники</span>
+    </a>
+    <a class="card" href="test.ru.html">
+      <div class="ico">🎯</div>
+      <h2>Проверьте себя</h2>
+      <p>Думаете, что разобрались? Докажите. 20 случайных вопросов за раз (из банка 120+), мгновенная обратная связь и ссылка «подробнее», если ошиблись. Без оценок и давления.</p>
+      <span class="go">Пройти викторину →</span>
+      <br><span class="meta">120+ вопросов · 20 за раз</span>
+    </a>
+    <a class="card" href="#resources">
+      <div class="ico">🏛️</div>
+      <h2>Прямо из первоисточника</h2>
+      <p>Хотите от тех, кто реально создаёт ИИ? Бесплатные обучающие хабы и свежие выступления шести крупнейших ИИ-лабораторий — плюс что говорят крупные консалтинги о применении ИИ в работе.</p>
+      <span class="go">Смотреть источники →</span>
+      <br><span class="meta">6 ИИ-лабораторий + 6 консалтингов</span>
+    </a>
+  </div>
+
+  <!-- JARGON BUSTER -->
+  <div class="jargon" id="jargon">
+    <div class="section-head">
+      <h2>🔤 Разбор жаргона — слова об ИИ простыми словами</h2>
+      <p>Встретили незнакомое слово? Вот объяснение без воды. Начните вводить для фильтра и нажмите на термин, чтобы прочитать подробнее.</p>
+    </div>
+    <div class="jbar"><input id="jsearch" type="text" placeholder="Поиск термина… напр. галлюцинация, токен, GDPR" aria-label="Search glossary"></div>
+    <div class="glossary" id="glossary"></div>
+  </div>
+
+  <!-- RESOURCES SECTION -->
+  <div id="resources">
+    <div class="section-head">
+      <h2>🏛️ Прямо от создателей ИИ</h2>
+      <p>Зачем верить нам на слово? Каждая из шести крупнейших ИИ-лабораторий бесплатно делится материалами для начинающих — вот их хабы и свежее выступление кого-то из руководства. Интересно, в чём они согласны (а в чём спорят)? Нажмите кнопки ниже.</p>
+    </div>
+    <p class="note">Ссылки на каналы всегда показывают свежие видео; отдельные выступления ниже — срез на середину 2026 года. Названия видео — как опубликованы; выступления могут быть на сторонних новостных каналах.</p>
+
+    <div class="compare">
+      <div class="compare-toggle">
+        <button class="ctab active" data-panel="agree">🤝 В чём согласны</button>
+        <button class="ctab" data-panel="differ">⚔️ В чём спорят</button>
+      </div>
+      <div class="cpanel show" id="panel-agree">
+        <h3>🤝 В чём все шестеро в целом согласны</h3>
+        <p class="intro">У OpenAI, Anthropic, Google, Meta, DeepSeek и Microsoft свежие выступления, документация и релизы сходятся на удивление сильно.</p>
+        <div class="pt"><h4>Передовая смещается от чат-ботов к агентам и рассуждению</h4><p>Все шестеро выпускают автономных <span class="lab">агентов</span>, использующих инструменты, и модели рассуждения, которые «думают» перед ответом — от Autopilots у Microsoft до агентов OpenAI, Claude, Gemini и DeepSeek.</p></div>
+        <div class="pt"><h4>Возможности всё ещё растут с масштабом — но качество данных и дообучение важны не меньше размера</h4><p>Большие модели помогают, но все теперь подчёркивают важность лучших данных, дообучения и обучения рассуждению/с подкреплением больше, чем просто число параметров.</p></div>
+        <div class="pt"><h4>Мультимодальность — по умолчанию</h4><p>Текст, изображения, аудио и видео в одной модели — общее направление движения.</p></div>
+        <div class="pt"><h4>Надёжность и галлюцинации всё ещё не решены</h4><p>Все признают, что бенчмарки несовершенны, а ответы могут быть уверенно ошибочными — поэтому для ответственных задач нужен надзор человека.</p></div>
+        <div class="pt"><h4>Безопасность и принципы ответственного ИИ — обязательный минимум</h4><p>Каждая лаборатория публикует принципы безопасности/ответственного ИИ и поддерживает те или иные ограничители и оценку.</p></div>
+        <div class="pt"><h4>ИИ изменит работу — а вычисления остаются ограничением</h4><p>Все ждут серьёзного экономического эффекта и переобучения кадров и соревнуются в стоимости вывода, эффективности и энергии/вычислениях для масштабирования.</p></div>
+        <div class="foot">Сводка публичных заявлений, документации и выступлений по ссылкам ниже, по состоянию на середину 2026 года. Свежее — на каналах компаний.</div>
+      </div>
+      <div class="cpanel" id="panel-differ">
+        <h3>⚖️ В чём они действительно расходятся</h3>
+        <p class="intro">Разногласия не менее показательны — об открытости, отношении к безопасности, сроках и даже о базовой архитектуре.</p>
+        <div class="pt"><h4>Открытые веса против закрытых</h4><p><span class="lab">Meta</span> (Llama) и <span class="lab">DeepSeek</span> выпускают модели с открытыми весами, которые может запустить каждый; <span class="lab">OpenAI, Anthropic и Google</span> держат передовые модели закрытыми (у Google есть меньшая открытая Gemma; OpenAI выпустила часть открытых весов). <span class="lab">Microsoft</span> остаётся нейтральной площадкой, хостя многие. Это отражает реальный спор: делает ли открытость ИИ безопаснее или рискованнее.</p></div>
+        <div class="pt"><h4>Насколько выпячивать безопасность</h4><p><span class="lab">Anthropic</span> сильнее всех делает упор на безопасность (интерпретируемость, Responsible Scaling Policy, Constitutional AI). <span class="lab">Google DeepMind</span> строит безопасность вокруг научной строгости и AGI. <span class="lab">OpenAI</span> балансирует гонку возможностей с обязательствами по безопасности. Мустафа Сулейман из <span class="lab">Microsoft</span> продвигает «гуманистический суперинтеллект» — мощный, но управляемый. Янн Лекун из <span class="lab">Meta</span> сильнее всех сомневается, что нынешние модели несут экзистенциальный риск.</p></div>
+        <div class="pt"><h4>Сроки и определения AGI</h4><p>Амодеи (Anthropic) и Альтман (OpenAI) говорят о «мощном ИИ» в ближайшие годы; Хассабис (DeepMind) сдержаннее и ждёт новых прорывов; Лекун (Meta) уверен, что одни нынешние LLM туда вообще не приведут.</p></div>
+        <div class="pt"><h4>Ставка на архитектуру</h4><p>Большинство масштабируют трансформеры плюс рассуждение во время вывода (серия o у OpenAI, DeepSeek R1, «мышление» Gemini, Claude). Лекун из Meta ставит на иной путь — модели мира (JEPA) за пределами предсказания следующего токена.</p></div>
+        <div class="pt"><h4>Бизнес-модель и преимущество</h4><p>OpenAI и Anthropic — лаборатории продукт+API; Google встраивает ИИ в Поиск и Cloud; Microsoft продаёт корпоративную платформу (Copilot) и партнёрится; Meta открывает код, чтобы обесценить слой моделей; DeepSeek конкурирует радикально более низкой стоимостью обучения и вывода.</p></div>
+        <div class="pt"><h4>Геополитика</h4><p>Взлёт DeepSeek (Китай, дёшево, открыто) переосмыслил поле против лабораторий США и динамики экспортного контроля — линия разлома, которую каждый проходит по-своему.</p></div>
+        <div class="foot">Позиции меняются; это сводка публичных заявлений и выступлений по ссылкам ниже, по состоянию на середину 2026 года.</div>
+      </div>
+    </div>
+
+    <div class="providers">
+
+      <!-- Anthropic -->
+      <div class="prov" style="--pc:#d97757">
+        <div class="ph"><div class="badge">A</div><div><h3>Anthropic</h3></div></div>
+        <div class="who">Создатель Claude; лаборатория ИИ с упором на безопасность.</div>
+        <h4>Официальное обучение</h4>
+        <ul>
+          <li><a href="https://www.anthropic.com/learn" target="_blank" rel="noopener">Anthropic Academy (Learn)</a> — guides &amp; tracks</li>
+          <li><a href="https://anthropic.skilljar.com/" target="_blank" rel="noopener">Anthropic Courses</a> — free certificated courses</li>
+          <li><a href="https://docs.anthropic.com/" target="_blank" rel="noopener">Claude docs</a> &amp; <a href="https://github.com/anthropics/courses" target="_blank" rel="noopener">courses on GitHub</a></li>
+        </ul>
+        <h4>На YouTube — топ-менеджеры</h4>
+        <a class="vid" href="https://www.youtube.com/watch?v=K7F6ohcBJus" target="_blank" rel="noopener">
+          <img src="https://img.youtube.com/vi/K7F6ohcBJus/hqdefault.jpg" alt="Dario Amodei at WEF thumbnail" loading="lazy">
+          <div><div class="vt">Dario Amodei from the World Economic Forum</div><div class="vs">Dario Amodei, CEO · WSJ · 2026</div></div>
+        </a>
+        <a class="chan" href="https://www.youtube.com/@anthropic-ai" target="_blank" rel="noopener">▶ Официальный канал — свежие видео</a>
+      </div>
+
+      <!-- DeepSeek -->
+      <div class="prov" style="--pc:#7c5cff">
+        <div class="ph"><div class="badge">DS</div><div><h3>DeepSeek</h3></div></div>
+        <div class="who">Модели с открытыми весами из Китая (V3, R1).</div>
+        <h4>Официальное обучение</h4>
+        <ul>
+          <li><a href="https://api-docs.deepseek.com/" target="_blank" rel="noopener">DeepSeek API Docs</a> — reference &amp; quickstart</li>
+          <li><a href="https://github.com/deepseek-ai" target="_blank" rel="noopener">DeepSeek on GitHub</a> — open-source models &amp; papers</li>
+          <li><a href="https://huggingface.co/deepseek-ai" target="_blank" rel="noopener">DeepSeek on Hugging Face</a> — model cards &amp; weights</li>
+        </ul>
+        <h4>На YouTube — топ-менеджеры</h4>
+        <a class="vid" href="https://www.youtube.com/watch?v=PqPAhR5qTxQ" target="_blank" rel="noopener">
+          <img src="https://img.youtube.com/vi/PqPAhR5qTxQ/hqdefault.jpg" alt="DeepSeek founder thumbnail" loading="lazy">
+          <div><div class="vt">DeepSeek founder Liang Wenfeng — news feature</div><div class="vs">Liang Wenfeng, founder · Reuters</div></div>
+        </a>
+        <div class="vs" style="margin-top:8px">У DeepSeek нет официального канала на YouTube; компания публикуется в основном на GitHub и в документации API.</div>
+      </div>
+
+      <!-- Google -->
+      <div class="prov" style="--pc:#4285f4">
+        <div class="ph"><div class="badge">G</div><div><h3>Google</h3></div></div>
+        <div class="who">Модели Gemini и исследования Google DeepMind.</div>
+        <h4>Официальное обучение</h4>
+        <ul>
+          <li><a href="https://developers.google.com/machine-learning/crash-course" target="_blank" rel="noopener">Machine Learning Crash Course</a> — free, ~15h</li>
+          <li><a href="https://ai.google.dev/" target="_blank" rel="noopener">Google AI for Developers</a> — build with Gemini</li>
+          <li><a href="https://ai.google/learn-ai-skills/" target="_blank" rel="noopener">Learn AI Skills</a> — tools, training &amp; skills</li>
+        </ul>
+        <h4>На YouTube — топ-менеджеры</h4>
+        <a class="vid" href="https://www.youtube.com/watch?v=dgBLVm2L1P4" target="_blank" rel="noopener">
+          <img src="https://img.youtube.com/vi/dgBLVm2L1P4/hqdefault.jpg" alt="Demis Hassabis thumbnail" loading="lazy">
+          <div><div class="vt">A new era of discovery: AI and the frontiers of science</div><div class="vs">Demis Hassabis, CEO Google DeepMind · 2026</div></div>
+        </a>
+        <a class="chan" href="https://www.youtube.com/@Google_DeepMind" target="_blank" rel="noopener">▶ Канал Google DeepMind</a>
+      </div>
+
+      <!-- Meta -->
+      <div class="prov" style="--pc:#0866ff">
+        <div class="ph"><div class="badge">M</div><div><h3>Meta</h3></div></div>
+        <div class="who">Создатель открытых моделей Llama; исследования FAIR.</div>
+        <h4>Официальное обучение</h4>
+        <ul>
+          <li><a href="https://www.llama.com/docs/overview/" target="_blank" rel="noopener">Llama Docs &amp; Resources</a> — get started with Llama</li>
+          <li><a href="https://github.com/meta-llama/llama-cookbook" target="_blank" rel="noopener">Llama Cookbook</a> — notebooks: inference, fine-tuning, RAG</li>
+          <li><a href="https://ai.meta.com/" target="_blank" rel="noopener">Meta AI</a> — research &amp; blog</li>
+        </ul>
+        <h4>На YouTube — топ-менеджеры</h4>
+        <a class="vid" href="https://www.youtube.com/watch?v=ngBraLDqzdI" target="_blank" rel="noopener">
+          <img src="https://img.youtube.com/vi/ngBraLDqzdI/hqdefault.jpg" alt="Yann LeCun thumbnail" loading="lazy">
+          <div><div class="vt">Yann LeCun on what comes after LLMs</div><div class="vs">Yann LeCun, Meta chief AI scientist · 2026</div></div>
+        </a>
+        <a class="chan" href="https://www.youtube.com/@AIatMeta" target="_blank" rel="noopener">▶ Канал AI at Meta</a>
+      </div>
+
+      <!-- OpenAI -->
+      <div class="prov" style="--pc:#10a37f">
+        <div class="ph"><div class="badge">AI</div><div><h3>OpenAI</h3></div></div>
+        <div class="who">Создатель ChatGPT и моделей GPT.</div>
+        <h4>Официальное обучение</h4>
+        <ul>
+          <li><a href="https://academy.openai.com/" target="_blank" rel="noopener">OpenAI Academy</a> — free courses &amp; AI literacy</li>
+          <li><a href="https://developers.openai.com/" target="_blank" rel="noopener">OpenAI Developers</a> — docs, guides &amp; learn</li>
+          <li><a href="https://cookbook.openai.com/" target="_blank" rel="noopener">OpenAI Cookbook</a> — runnable code recipes</li>
+        </ul>
+        <h4>На YouTube — топ-менеджеры</h4>
+        <a class="vid" href="https://www.youtube.com/watch?v=Wpxv-8nG8ec" target="_blank" rel="noopener">
+          <img src="https://img.youtube.com/vi/Wpxv-8nG8ec/hqdefault.jpg" alt="OpenAI Town Hall thumbnail" loading="lazy">
+          <div><div class="vt">OpenAI Town Hall with Sam Altman</div><div class="vs">Sam Altman, CEO · OpenAI channel · 2026</div></div>
+        </a>
+        <a class="chan" href="https://www.youtube.com/@OpenAI" target="_blank" rel="noopener">▶ Официальный канал — свежие видео</a>
+      </div>
+
+      <!-- Microsoft -->
+      <div class="prov" style="--pc:#00a4ef">
+        <div class="ph"><div class="badge">MS</div><div><h3>Microsoft</h3></div></div>
+        <div class="who">Copilot и Azure AI; давний партнёр OpenAI.</div>
+        <h4>Официальное обучение</h4>
+        <ul>
+          <li><a href="https://microsoft.github.io/generative-ai-for-beginners/" target="_blank" rel="noopener">Generative AI for Beginners</a> — 21-lesson course</li>
+          <li><a href="https://learn.microsoft.com/en-us/training/paths/introduction-generative-ai/" target="_blank" rel="noopener">Microsoft Learn: Generative AI</a> — training paths</li>
+          <li><a href="https://github.com/microsoft/AI-For-Beginners" target="_blank" rel="noopener">AI for Beginners</a> — 12-week curriculum</li>
+        </ul>
+        <h4>На YouTube — топ-менеджеры</h4>
+        <a class="vid" href="https://www.youtube.com/watch?v=YTrBz6Z5c0E" target="_blank" rel="noopener">
+          <img src="https://img.youtube.com/vi/YTrBz6Z5c0E/hqdefault.jpg" alt="Mustafa Suleyman thumbnail" loading="lazy">
+          <div><div class="vt">Mustafa Suleyman on "humanist superintelligence"</div><div class="vs">Mustafa Suleyman, CEO Microsoft AI · FT · 2026</div></div>
+        </a>
+        <a class="chan" href="https://www.youtube.com/@Microsoft" target="_blank" rel="noopener">▶ Канал Microsoft</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CONSULTANCY / STRATEGY SECTION -->
+  <div id="strategy" style="margin-top:56px">
+    <div class="section-head">
+      <h2>💼 Взгляд «И что это значит для работы?»</h2>
+      <p>ИИ-лаборатории выше показывают, <em>как работает ИИ</em>. Крупные консалтинги отвечают на другой вопрос: <em>что бизнесу с этим делать?</em> Каждый бесплатно делится на удивление богатыми данными — вот их главные отчёты об ИИ с кратким выводом по каждому.</p>
+    </div>
+    <p class="note">Бесплатно для чтения (иногда просят email). Отчёты обновляются ежегодно; цифры — из последних изданий на середину 2026 года.</p>
+
+    <div class="providers">
+
+      <!-- McKinsey -->
+      <div class="prov" style="--pc:#034638">
+        <div class="ph"><div class="badge">McK</div><div><h3>McKinsey</h3></div></div>
+        <div class="who">QuantumBlack — ИИ-подразделение McKinsey.</div>
+        <h4>Главные бесплатные исследования</h4>
+        <ul>
+          <li><a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai" target="_blank" rel="noopener">The State of AI</a> — annual global survey</li>
+          <li><a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights" target="_blank" rel="noopener">QuantumBlack Insights</a> — articles &amp; research</li>
+        </ul>
+        <div style="margin-top:10px;font-size:.84rem;color:#cdd4ff;background:#12152d;border:1px solid var(--line);border-radius:10px;padding:9px 12px"><b style="color:var(--accent)">Вывод:</b> ≈9 из 10 организаций используют ИИ, но мало кто перестроил процессы достаточно, чтобы получить реальную ценность — 2026-й — переход от пилотов к операционной ответственности.</div>
+      </div>
+
+      <!-- BCG -->
+      <div class="prov" style="--pc:#00754a">
+        <div class="ph"><div class="badge">BCG</div><div><h3>BCG</h3></div></div>
+        <div class="who">Boston Consulting Group — ИИ-стратегия и BCG X.</div>
+        <h4>Главные бесплатные исследования</h4>
+        <ul>
+          <li><a href="https://www.bcg.com/capabilities/artificial-intelligence/insights" target="_blank" rel="noopener">AI Insights hub</a> — AI Radar &amp; AI at Work surveys</li>
+          <li><a href="https://www.bcg.com/featured-insights/the-leaders-guide-to-transforming-with-ai" target="_blank" rel="noopener">The Leader's Guide to Transforming with AI</a></li>
+        </ul>
+        <div style="margin-top:10px;font-size:.84rem;color:#cdd4ff;background:#12152d;border:1px solid var(--line);border-radius:10px;padding:9px 12px"><b style="color:var(--accent)">Вывод:</b> ИИ теперь задача уровня гендиректора, но лишь ≈1 из 4 компаний сообщает о значимом ROI — ценность даёт перестройка работы, а не просто новые инструменты.</div>
+      </div>
+
+      <!-- Bain -->
+      <div class="prov" style="--pc:#cc0000">
+        <div class="ph"><div class="badge">B&amp;C</div><div><h3>Bain</h3></div></div>
+        <div class="who">Bain & Company — ежегодный Technology Report.</div>
+        <h4>Главные бесплатные исследования</h4>
+        <ul>
+          <li><a href="https://www.bain.com/insights/topics/technology-report/" target="_blank" rel="noopener">Technology Report</a> — yearly AI &amp; tech trends</li>
+          <li><a href="https://www.bain.com/insights/will-ai-disrupt-techs-most-valuable-companies-technology-report-2025/" target="_blank" rel="noopener">Will AI disrupt tech's most valuable companies?</a></li>
+        </ul>
+        <div style="margin-top:10px;font-size:.84rem;color:#cdd4ff;background:#12152d;border:1px solid var(--line);border-radius:10px;padding:9px 12px"><b style="color:var(--accent)">Вывод:</b> «Лидеры в ИИ наращивают отрыв» — а удовлетворение спроса требует огромных вложений в вычисления, с прогнозируемым дефицитом финансирования дата-центров ≈$800 млрд.</div>
+      </div>
+
+      <!-- Deloitte -->
+      <div class="prov" style="--pc:#86bc25">
+        <div class="ph"><div class="badge">Del</div><div><h3>Deloitte</h3></div></div>
+        <div class="who">Институт ИИ Deloitte.</div>
+        <h4>Главные бесплатные исследования</h4>
+        <ul>
+          <li><a href="https://www.deloitte.com/us/en/what-we-do/capabilities/applied-artificial-intelligence/content/state-of-ai-in-the-enterprise.html" target="_blank" rel="noopener">State of AI in the Enterprise</a> — multi-country survey</li>
+        </ul>
+        <div style="margin-top:10px;font-size:.84rem;color:#cdd4ff;background:#12152d;border:1px solid var(--line);border-radius:10px;padding:9px 12px"><b style="color:var(--accent)">Вывод:</b> По опросу 3 235 руководителей из 24 стран: агентный ИИ стремительно входит в бизнес, и компании, где руководство задаёт управление ИИ, получают заметно больше ценности.</div>
+      </div>
+
+      <!-- Accenture -->
+      <div class="prov" style="--pc:#a100ff">
+        <div class="ph"><div class="badge">Acn</div><div><h3>Accenture</h3></div></div>
+        <div class="who">Accenture — ежегодный Technology Vision.</div>
+        <h4>Главные бесплатные исследования</h4>
+        <ul>
+          <li><a href="https://www.accenture.com/us-en/insights/technology/technology-trends-2025" target="_blank" rel="noopener">Technology Vision</a> — yearly trend report</li>
+          <li><a href="https://www.accenture.com/us-en/services/ai-data" target="_blank" rel="noopener">AI &amp; Data</a> — research &amp; services</li>
+        </ul>
+        <div style="margin-top:10px;font-size:.84rem;color:#cdd4ff;background:#12152d;border:1px solid var(--line);border-radius:10px;padding:9px 12px"><b style="color:var(--accent)">Вывод:</b> «Новая эра автономности» — 69% руководителей говорят, что ИИ заставляет срочно переосмыслить, как строятся системы и процессы.</div>
+      </div>
+
+      <!-- PwC -->
+      <div class="prov" style="--pc:#d04a02">
+        <div class="ph"><div class="badge">PwC</div><div><h3>PwC</h3></div></div>
+        <div class="who">PwC — ИИ-стратегия и рынок труда.</div>
+        <h4>Главные бесплатные исследования</h4>
+        <ul>
+          <li><a href="https://www.pwc.com/gx/en/services/ai/ai-jobs-barometer.html" target="_blank" rel="noopener">Global AI Jobs Barometer</a> — a billion+ job ads</li>
+          <li><a href="https://www.pwc.com/gx/en/issues/c-suite-insights/the-leadership-agenda/AI-jobs-barometer.html" target="_blank" rel="noopener">The Leadership Agenda: AI</a></li>
+        </ul>
+        <div style="margin-top:10px;font-size:.84rem;color:#cdd4ff;background:#12152d;border:1px solid var(--line);border-radius:10px;padding:9px 12px"><b style="color:var(--accent)">Вывод:</b> ИИ делит рынок труда на два пути — и компании, наиболее затронутые ИИ, повышают зарплаты и нанимают <em>быстрее</em>, а не медленнее.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    Сделано, чтобы ИИ стал понятен · обновлено в июне 2026<br>
+    <a href="reference.ru.html">📖 Справочник простыми словами</a> · <a href="test.ru.html">🎯 Проверьте себя</a> · каждая ссылка ведёт к бесплатному официальному источнику
+  </footer>
+</div>
+
+<script>
+/* ===== Start-here knowledge assistant (client-side; answers from the knowledge base) ===== */
+const KB = [
+ {id:"analytics-foundations",t:"Что такое бизнес-аналитика",kw:"бизнес аналитика решение данные определение что такое intelligence",a:"<b>Бизнес-аналитика</b> — это системное использование данных, статистики и моделирования для принятия более качественных решений: превращение сырых данных в практическую пользу. Хороший анализ ценен не сложностью модели, а тем, улучшает ли он решение."},
+ {id:"data-types",t:"Виды данных и большие данные",kw:"структурированные неструктурированные данные большие big data объём скорость разнообразие метаданные",a:"<b>Структурированные данные</b> имеют фиксированную форму (строки и столбцы); <b>неструктурированные</b> (текст, изображения, аудио) формы не имеют и требуют доп. обработки. «Большие данные» описывают через объём, скорость и разнообразие (часто плюс достоверность)."},
+ {id:"kpi",t:"KPI и метрики",kw:"kpi метрика ключевой показатель эффективности измерение цель",a:"<b>KPI</b> — измеримое значение, выбранное потому, что отражает прогресс к конкретной цели. Хорошие KPI согласованы с целью, измеримы, на них можно влиять и они привязаны ко времени — и за них кто-то отвечает."},
+ {id:"analytics-types",t:"Четыре вида аналитики",kw:"описательная диагностическая предиктивная прескриптивная виды аналитики что произошло",a:"Аналитика проходит четыре уровня: <b>описательная</b> (что произошло), <b>диагностическая</b> (почему), <b>предиктивная</b> (что вероятно) и <b>прескриптивная</b> (что делать). Ценность и сложность растут от взгляда в прошлое к взгляду в будущее."},
+ {id:"machine-learning",t:"Машинное обучение",kw:"машинное обучение ml три семейства виды искусственный интеллект ии",a:"<b>Машинное обучение</b> позволяет системам учиться закономерностям из данных, а не следовать жёстко прописанным правилам. Три семейства: с учителем (размеченные данные), без учителя (без меток) и с подкреплением (награды). ИИ — широкая область, МО — её часть, глубокое обучение — часть МО."},
+ {id:"supervised",t:"Обучение с учителем",kw:"с учителем классификация регрессия метка признак отток спам предсказать цена",a:"<b>Обучение с учителем</b> тренируется на размеченных примерах, чтобы предсказывать результат. Если результат — категория, это классификация (спам/не спам); если число — регрессия (цена)."},
+ {id:"unsupervised",t:"Обучение без учителя",kw:"без учителя кластеризация k-means сегментация pca понижение размерности ассоциативные правила группировка",a:"<b>Обучение без учителя</b> ищет структуру в неразмеченных данных — кластеризация группирует похожие записи (напр. k-means для сегментации клиентов), понижение размерности (PCA) упрощает множество переменных, а ассоциативные правила находят совместно встречающиеся товары."},
+ {id:"reinforcement",t:"Обучение с подкреплением",kw:"с подкреплением агент среда награда стратегия политика состояние проб и ошибок",a:"При <b>обучении с подкреплением</b> агент учится методом проб и ошибок: совершает действия в среде и корректируется по наградам, уточняя стратегию (политику) для максимизации долгосрочной награды. Так работают игровой ИИ, робототехника и рекомендательные системы."},
+ {id:"deep-learning",t:"Глубокое обучение и нейросети",kw:"глубокое обучение нейросеть нейронная сеть нейроны слои",a:"<b>Глубокое обучение</b> использует многослойные нейросети, которые сами выучивают признаки — поэтому оно отлично работает с изображениями, аудио и текстом. Сложность — баланс между точностью на обучении и обобщением (переобучение против недообучения)."},
+ {id:"model-evaluation",t:"Оценка моделей",kw:"оценка precision recall точность матрица ошибок кросс-валидация переобучение недообучение roc auc тест обучение несбалансированные утечка обобщение",a:"Модели проверяют на отложенных данных и через кросс-валидацию. Для классификации <b>precision</b> — доля верных среди помеченных положительными, <b>recall</b> — доля найденных среди реально положительных, а <b>F1</b> их балансирует; на несбалансированных данных accuracy вводит в заблуждение."},
+ {id:"generative-ai",t:"Генеративный ИИ и LLM",kw:"генеративный ии genai llm большая языковая модель gpt промпт галлюцинация трансформер",a:"<b>Генеративный ИИ</b> создаёт новый контент по выученным закономерностям; <b>LLM</b> — генеративная модель, обученная на огромных текстах, построена на архитектуре «трансформер». Ключевое ограничение — галлюцинации (гладкий, но ложный вывод), поэтому результат нужно проверять."},
+ {id:"nlp-sentiment",t:"NLP и анализ тональности",kw:"nlp обработка естественного языка тональность сентимент полярность текст майнинг",a:"<b>NLP</b> позволяет компьютерам работать с человеческим языком. <b>Анализ тональности</b> определяет эмоциональную окраску текста (позитив/негатив/нейтрально) — ценное и несложное первое применение ИИ для понимания отзывов в масштабе."},
+ {id:"data-infrastructure",t:"Инфраструктура данных",kw:"etl elt хранилище данных озеро конвейер облако bi бизнес-аналитика sql дашборд управление данными",a:"«Сантехника» данных перемещает и хранит их: <b>ETL</b>-конвейеры извлекают-преобразуют-загружают; <b>хранилище</b> держит структурированные готовые к запросам данные, а <b>озеро</b> — сырые данные любого вида; BI-инструменты и SQL делают из них дашборды. Управление данными держит их качественными, защищёнными и соответствующими нормам."},
+ {id:"statistics",t:"Основы статистики",kw:"статистика корреляция причинность выброс медиана среднее стандартное отклонение p-значение гипотеза a/b тест смещение выборки временной ряд сезонность прогноз очистка пропуски",a:"Базовая статистика спасает от ошибок: <b>медиана</b> устойчива к выбросам, <b>корреляция</b> лежит в диапазоне от -1 до +1 и не доказывает причинность, малое <b>p-значение</b> говорит о статистической значимости, а нерепрезентативная выборка искажает всё."},
+ {id:"ai-ethics",t:"Этика и управление ИИ",kw:"этика управление смещение справедливость объяснимость интерпретируемость подотчётность автоматизация подтверждение ответственный дрейф модели надзор человек в контуре",a:"Когда модели влияют на решения, рисками надо управлять: <b>предвзятость алгоритма</b> обычно идёт от предвзятых данных, <b>справедливость</b> и <b>объяснимость</b> укрепляют доверие, а <b>подотчётность</b> закрепляет ответственность. Меры — надзор человека, аудит и мониторинг дрейфа."},
+ {id:"data-privacy",t:"Приватность и защита данных",kw:"приватность gdpr согласие минимизация данных rbac ролевой доступ pii персональные данные",a:"Работа с персональными данными налагает обязанности: <b>GDPR</b> защищает данные людей, <b>PII</b> требует строжайшего обращения, а принципы минимизации данных, согласия, ролевого доступа и privacy-by-design держат вас в рамках закона и доверия."},
+ {id:"automation-spectrum",t:"Спектр автоматизации",kw:"уровни автоматизации ibm с учителем человека вмешательство машины полностью автономный человек опционален симбиоз гибрид человек ии сотрудничество",a:"Автоматизация — это <b>спектр из пяти уровней</b> (популяризован IBM): базовая, под управлением человека, вмешательство машины, полностью автономная, человек опционален. Чем больше автономии, тем выше нужна точность. Дополняет это <b>симбиоз человека и ИИ</b> — гибрид данных и человеческого суждения, который обогащает, а не заменяет экспертизу."},
+ {id:"algorithmic-insurance",t:"Риски ИИ и алгоритмическое страхование",kw:"алгоритмическое страхование риск премия поставщик munich re обобщаемость ответственность кто платит",a:"<b>Алгоритмическое страхование</b> оценивает риск ИИ и переносит ответственность с пользователя на <b>поставщика модели</b>. Если модель чаще ошибается, страховщик поднимает премию — это давит на поставщика улучшать модель. Премия зависит от <b>обобщаемости</b> модели (как хорошо она работает на новых данных)."},
+ {id:"bias-mitigation",t:"Снижение предвзятости",kw:"снижение предвзятости предобработка in-processing постобработка состязательное устранение перевзвешивание справедливость",a:"Предвзятость снижают по всему конвейеру: <b>предобработка</b> чинит данные (перевзвешивание, ресэмплинг); <b>in-processing</b> встраивает справедливость в обучение (напр. состязательное устранение); <b>постобработка</b> правит пороги после обучения, чтобы выровнять ошибки между группами. Ни один шаг сам по себе не достаточен — нужен постоянный аудит."},
+ {id:"ai-regulation",t:"Регулирование ИИ: EU AI Act",kw:"eu ai act закон ес регулирование высокий риск право соответствие уровни риска европа",a:"<b>EU AI Act</b> использует четыре уровня риска: неприемлемый (запрещён), высокий (строгие требования), ограниченный (требования прозрачности) и минимальный (без обязательств). Системы <b>высокого риска</b> (критическая инфраструктура, найм, медицина, правопорядок) должны иметь управление рисками, управление данными, документацию, надзор человека и устойчивость до вывода на рынок."},
+ {id:"measuring-genai-bias",t:"Измерение предвзятости в генеративном ИИ",kw:"измерение предвзятости генеративный контрфактический справедливость bold realtoxicityprompts red-teaming токсичность бенчмарк",a:"Предвзятость генеративного ИИ измеряют <b>бенчмарками</b> (наборы промптов BOLD, RealToxicityPrompts), <b>контрфактическим тестом</b> (меняем только защищённый атрибут и сравниваем выводы) и <b>автоматическим red-teaming</b> (состязательное прощупывание в масштабе). Это дополняет, но не заменяет проверку человеком."},
+ {id:"ai-verification",t:"Проверка ИИ-анализа",kw:"автоматизационная предвзятость проверка ии ассистент llm анализ количество строк уникальные nunique процедурная по данным промежуточные таблицы семантическая ошибка",a:"С ИИ-ассистентами по анализу главная опасность — <b>автоматизационная предвзятость</b>: доверять аккуратному выводу без проверки. Ошибки обычно семантические, а не синтаксические (напр. подсчёт строк вместо уникальных). Проверяйте промежуточные таблицы и количество строк, подтверждайте уникальные подсчёты — логику оставляйте за человеком."}
+];
+const COMPOSITE = [
+ {re:/с учителем.*без учителя|без учителя.*с учителем|разниц.*(учител)/, id:"supervised", a:"<b>С учителем</b> — обучение по размеченным данным для предсказания известной цели (классификация или регрессия). <b>Без учителя</b> — без меток, ищем структуру: кластеризуем клиентов или снижаем размерность. Быстрый тест: есть ли у вас ответы, на которых учиться?"},
+ {re:/precision.*recall|recall.*precision|точност.*полнот|полнот.*точност/, id:"model-evaluation", a:"<b>Precision (точность)</b> — из помеченных положительными, сколько реально таких. <b>Recall (полнота)</b> — из реально положительных, сколько поймали. <b>F1</b> балансирует оба — полезно при несбалансированных классах."},
+ {re:/корреляц.*причин|причин.*корреляц/, id:"statistics", a:"<b>Корреляция</b> показывает, движутся ли две величины вместе (от -1 до +1); она <b>не</b> доказывает, что одна вызывает другую. Скрытый третий фактор или совпадение могут дать корреляцию без причинности."},
+ {re:/ии.*мо|машинн.*глубок|разниц.*между ии/, id:"machine-learning", a:"<b>ИИ</b> — широкая цель: машины делают умные вещи; <b>машинное обучение</b> — часть, что учится из данных; <b>глубокое обучение</b> — часть МО на многослойных нейросетях. Генеративный ИИ/LLM — недавняя ветвь глубокого обучения."},
+ {re:/переобуч|недообуч/, id:"model-evaluation", a:"<b>Переобучение</b> — модель слишком точно подстроилась под обучающие данные (включая шум) и плохо обобщает. <b>Недообучение</b> — слишком простая, не уловила закономерность. Искусство — баланс; помогают больше данных и регуляризация."}
+];
+const _$ = id => document.getElementById(id);
+function scrollLog(){ const l=_$("chatlog"); if(l) l.scrollTop=l.scrollHeight; }
+function addMsg(content, who, isText){ const d=document.createElement("div"); d.className="msg "+who; if(isText){ d.textContent=content; } else { d.innerHTML=content; } _$("chatlog").appendChild(d); scrollLog(); }
+function findAnswer(qRaw){
+  const q=qRaw.toLowerCase();
+  for(const c of COMPOSITE){ if(c.re.test(q)) return c; }
+  if(/^(hi|hello|hey|yo|help|start)\b/.test(q)) return {a:"Привет! Спросите о любом понятии на сайте — виды аналитики, машинное обучение, генеративный ИИ, статистика, этика или приватность. Попробуйте подсказку ниже.", id:""};
+  const STOP=new Set("что такое какой какая когда где почему как это этот эта эти тот значит про объясни можешь дайте мне моё нужно про и для в на с о об у".split(" "));
+  const words=q.split(/[^a-z0-9]+/).filter(w=>w.length>2 && !STOP.has(w));
+  let best=null, score=0;
+  for(const s of KB){ let sc=0; const hay=(s.t+" "+s.kw).toLowerCase(); for(const w of words){ if(hay.includes(w)) sc+=(s.t.toLowerCase().includes(w)?2:1); } if(sc>score){score=sc;best=s;} }
+  if(best && score>0) return {a:best.a, id:best.id};
+  return {a:"Этого пока нет в справочнике. Я могу объяснить виды аналитики, обучение с учителем/без учителя/с подкреплением, глубокое обучение, оценку моделей, генеративный ИИ, NLP, инфраструктуру данных, статистику, этику ИИ и приватность данных. Переформулируйте или выберите подсказку ниже.", id:""};
+}
+function ask(text){
+  if(!text || !text.trim()) return;
+  addMsg(text, "user", true);
+  const r=findAnswer(text);
+  let html=r.a;
+  if(r.id){ const sec=KB.find(s=>s.id===r.id); html += '<br><a class="src" href="reference.ru.html#'+r.id+'" target="_blank" rel="noopener">📖 Читать раздел: '+(sec?sec.t:"")+' →</a>'; }
+  setTimeout(()=>addMsg(html, "bot", false), 130);
+}
+const SUGGESTIONS=["Что такое машинное обучение?","Обучение с учителем и без учителя","Что такое переобучение?","Что такое precision и recall?","Что такое генеративный ИИ?","Что требует GDPR?"];
+(function initChat(){
+  if(!_$("chatlog")) return;
+  addMsg("Привет 👋 Я справочный помощник. Задайте общий вопрос об ИИ, данных или аналитике — отвечу на основе справочника этого сайта со ссылкой на подробности.", "bot", false);
+  const chips=_$("chips");
+  SUGGESTIONS.forEach(s=>{ const c=document.createElement("button"); c.type="button"; c.className="chip"; c.textContent=s; c.onclick=()=>ask(s); chips.appendChild(c); });
+  _$("chatform").addEventListener("submit", e=>{ e.preventDefault(); const v=_$("chatinput").value; _$("chatinput").value=""; ask(v); });
+})();
+/* ===== Jargon Buster glossary ===== */
+const GLOSSARY=[
+ {t:"Искусственный интеллект (ИИ)",d:"Когда компьютеры делают то, что обычно требует человеческого ума.",s:"machine-learning"},
+ {t:"Машинное обучение",d:"Программы, которые находят закономерности на примерах, а не по жёстким правилам.",s:"machine-learning"},
+ {t:"Модель",d:"Обученный «мозг», что делает прогнозы — как рецепт, выученный из данных.",s:"machine-learning"},
+ {t:"Алгоритм",d:"Пошаговый рецепт, которому следует компьютер."},
+ {t:"Генеративный ИИ",d:"ИИ, который создаёт новое: текст, изображения, код.",s:"generative-ai"},
+ {t:"LLM (большая языковая модель)",d:"ИИ, обученный на огромных текстах; читает и пишет на языке, как ChatGPT.",s:"generative-ai"},
+ {t:"Промпт",d:"Инструкция или вопрос, который вы вводите в ИИ.",s:"generative-ai"},
+ {t:"Галлюцинация",d:"Когда ИИ уверенно выдумывает.",s:"generative-ai"},
+ {t:"Токен",d:"Маленький кусочек текста (примерно часть слова), который читает и пишет LLM.",s:"generative-ai"},
+ {t:"Обучение (тренировка)",d:"Учим модель, показывая ей множество примеров.",s:"deep-learning"},
+ {t:"Нейросеть",d:"Модель по образу мозга из слоёв простых «нейронов».",s:"deep-learning"},
+ {t:"Глубокое обучение",d:"Машинное обучение на многослойных нейросетях.",s:"deep-learning"},
+ {t:"Обучение с учителем",d:"Учимся на размеченных примерах — с ответами.",s:"supervised"},
+ {t:"Обучение без учителя",d:"Ищем закономерности, когда ответов нет.",s:"unsupervised"},
+ {t:"Кластеризация",d:"Группировка похожих объектов вместе.",s:"unsupervised"},
+ {t:"Классификация",d:"Разбор по категориям (спам/не спам).",s:"supervised"},
+ {t:"Регрессия",d:"Предсказание числа, например цены.",s:"supervised"},
+ {t:"Переобучение",d:"Когда модель запоминает примеры вместо настоящей закономерности.",s:"model-evaluation"},
+ {t:"Предвзятость",d:"Несправедливые или искажённые результаты, часто из-за перекошенных данных.",s:"ai-ethics"},
+ {t:"Агент",d:"ИИ, который может совершать действия и пользоваться инструментами, а не только болтать.",s:"automation-spectrum"},
+ {t:"Дообучение (fine-tuning)",d:"Доп. обучение, что специализирует общую модель под конкретную задачу."},
+ {t:"Параметр",d:"Одно из множества внутренних чисел, которые модель настраивает при обучении."},
+ {t:"Прескриптивная аналитика",d:"Аналитика, которая советует, что делать, а не только что было.",s:"analytics-types"},
+ {t:"GDPR",d:"Закон ЕС, защищающий персональные данные людей.",s:"data-privacy"},
+ {t:"Структурированные и неструктурированные данные",d:"Аккуратные таблицы против «сырых» текста, картинок и аудио.",s:"data-types"},
+ {t:"Проверка вывода ИИ",d:"Всегда перепроверяйте вывод ИИ — он может выглядеть идеально, но быть ошибочным.",s:"ai-verification"}
+];
+(function initGlossary(){
+  const grid=document.getElementById("glossary"); if(!grid) return;
+  function render(q){
+    q=(q||"").trim().toLowerCase();
+    grid.innerHTML="";
+    const items=GLOSSARY.filter(g=> !q || (g.t+" "+g.d).toLowerCase().includes(q));
+    if(!items.length){ grid.innerHTML='<div class="jempty">Ничего не найдено — попробуйте другое слово.</div>'; return; }
+    items.forEach(g=>{
+      const el=document.createElement("div"); el.className="term";
+      const title=g.s ? '<a href="reference.ru.html#'+g.s+'" target="_blank" rel="noopener">'+g.t+'</a>' : g.t;
+      el.innerHTML='<h4>'+title+'</h4><p>'+g.d+'</p>'+(g.s?'<a class="more" href="reference.ru.html#'+g.s+'" target="_blank" rel="noopener">Подробнее →</a>':'');
+      grid.appendChild(el);
+    });
+  }
+  render("");
+  const inp=document.getElementById("jsearch");
+  if(inp) inp.addEventListener("input",e=>render(e.target.value));
+})();
+/* ===== Resources: agree / differ toggle ===== */
+document.querySelectorAll(".ctab").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".ctab").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".cpanel").forEach(p=>p.classList.remove("show"));
+    btn.classList.add("active");
+    const p=document.getElementById("panel-"+btn.dataset.panel);
+    if(p) p.classList.add("show");
+  });
+});
+</script>
+</body>
+</html>

@@ -94,11 +94,32 @@
   .cpanel .pt p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.55}
   .cpanel .pt p .lab{color:var(--accent);font-weight:600}
   .cpanel .foot{margin-top:16px;font-size:.8rem;color:var(--muted);font-style:italic;border-top:1px solid var(--line);padding-top:12px}
+  /* language toggle */
+  .langbar{display:flex;justify-content:flex-end;margin-bottom:10px}
+  .langbar a{font-size:.8rem;font-weight:700;color:var(--muted);text-decoration:none;border:1px solid var(--line);padding:6px 14px}
+  .langbar a:first-child{border-radius:99px 0 0 99px}
+  .langbar a:last-child{border-radius:0 99px 99px 0;margin-left:-1px}
+  .langbar a.on{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;border-color:transparent}
+  /* jargon buster */
+  .jargon{margin:0 0 56px}
+  .jargon .jbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+  .jargon input{flex:1;min-width:200px;background:#11142b;border:1px solid var(--line);border-radius:10px;padding:11px 14px;color:var(--text);font-size:.95rem;font-family:inherit}
+  .jargon input:focus{outline:none;border-color:var(--accent)}
+  .glossary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:760px){.glossary{grid-template-columns:1fr}}
+  .term{background:linear-gradient(180deg,#1a1e3a,#161a33);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .term h4{margin:0 0 4px;font-size:.98rem;color:var(--text)}
+  .term h4 a{color:var(--accent);text-decoration:none}
+  .term p{margin:0;color:var(--muted);font-size:.86rem;line-height:1.45}
+  .term .more{font-size:.72rem;color:var(--accent);margin-top:6px;display:inline-block;text-decoration:none}
+  .jempty{color:var(--muted);font-size:.9rem;padding:10px 2px}
   footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:50px;border-top:1px solid var(--line);padding-top:24px}
 </style>
 </head>
 <body>
 <div class="wrap">
+
+  <div class="langbar"><a class="on" href="index.html">EN</a><a href="index.ru.html">RU</a></div>
 
   <div class="hero">
     <span class="kicker">👋 AI, explained like you're new here</span>
@@ -146,6 +167,16 @@
       <span class="go">See the sources →</span>
       <br><span class="meta">6 AI labs + 6 consultancies</span>
     </a>
+  </div>
+
+  <!-- JARGON BUSTER -->
+  <div class="jargon" id="jargon">
+    <div class="section-head">
+      <h2>🔤 Jargon Buster — AI words in plain English</h2>
+      <p>Hit a word you don't know? Here's the no-nonsense version. Start typing to filter, and tap a term to read more where we cover it.</p>
+    </div>
+    <div class="jbar"><input id="jsearch" type="text" placeholder="Search a term… e.g. hallucination, token, GDPR" aria-label="Search glossary"></div>
+    <div class="glossary" id="glossary"></div>
   </div>
 
   <!-- RESOURCES SECTION -->
@@ -450,6 +481,53 @@ const SUGGESTIONS=["What is machine learning?","Supervised vs unsupervised learn
   const chips=_$("chips");
   SUGGESTIONS.forEach(s=>{ const c=document.createElement("button"); c.type="button"; c.className="chip"; c.textContent=s; c.onclick=()=>ask(s); chips.appendChild(c); });
   _$("chatform").addEventListener("submit", e=>{ e.preventDefault(); const v=_$("chatinput").value; _$("chatinput").value=""; ask(v); });
+})();
+/* ===== Jargon Buster glossary ===== */
+const GLOSSARY=[
+ {t:"Artificial Intelligence (AI)",d:"Getting computers to do things that normally need human smarts.",s:"machine-learning"},
+ {t:"Machine learning",d:"Software that spots patterns from examples instead of being hand-coded.",s:"machine-learning"},
+ {t:"Model",d:"The trained \"brain\" that makes predictions — like a recipe learned from data.",s:"machine-learning"},
+ {t:"Algorithm",d:"A step-by-step recipe a computer follows."},
+ {t:"Generative AI",d:"AI that creates new things: text, images, code.",s:"generative-ai"},
+ {t:"LLM (Large Language Model)",d:"An AI trained on tons of text that reads and writes language, like ChatGPT.",s:"generative-ai"},
+ {t:"Prompt",d:"The instruction or question you type into an AI.",s:"generative-ai"},
+ {t:"Hallucination",d:"When an AI confidently makes something up.",s:"generative-ai"},
+ {t:"Token",d:"A small chunk of text (about a word-piece) that an LLM reads and writes.",s:"generative-ai"},
+ {t:"Training",d:"Teaching a model by showing it lots of examples.",s:"deep-learning"},
+ {t:"Neural network",d:"A brain-inspired model built from layers of simple \"neurons\".",s:"deep-learning"},
+ {t:"Deep learning",d:"Machine learning using many-layered neural networks.",s:"deep-learning"},
+ {t:"Supervised learning",d:"Learning from labelled examples — the answers are included.",s:"supervised"},
+ {t:"Unsupervised learning",d:"Finding patterns when no answers are given.",s:"unsupervised"},
+ {t:"Clustering",d:"Grouping similar things together.",s:"unsupervised"},
+ {t:"Classification",d:"Sorting things into categories (spam / not spam).",s:"supervised"},
+ {t:"Regression",d:"Predicting a number, like a price.",s:"supervised"},
+ {t:"Overfitting",d:"When a model memorises the examples instead of learning the real pattern.",s:"model-evaluation"},
+ {t:"Bias",d:"Unfair or skewed results, often caused by skewed data.",s:"ai-ethics"},
+ {t:"Agent",d:"An AI that can take actions and use tools, not just chat.",s:"automation-spectrum"},
+ {t:"Fine-tuning",d:"Extra training that specialises a general model for a specific job."},
+ {t:"Parameter",d:"One of the many internal numbers a model tunes during training."},
+ {t:"Prescriptive analytics",d:"Analytics that recommends what to do, not just what happened.",s:"analytics-types"},
+ {t:"GDPR",d:"The EU law that protects people's personal data.",s:"data-privacy"},
+ {t:"Structured vs unstructured data",d:"Tidy tables vs messy text, images and audio.",s:"data-types"},
+ {t:"Hallucination check / verification",d:"Always sanity-check AI output — it can look perfect but be wrong.",s:"ai-verification"}
+];
+(function initGlossary(){
+  const grid=document.getElementById("glossary"); if(!grid) return;
+  function render(q){
+    q=(q||"").trim().toLowerCase();
+    grid.innerHTML="";
+    const items=GLOSSARY.filter(g=> !q || (g.t+" "+g.d).toLowerCase().includes(q));
+    if(!items.length){ grid.innerHTML='<div class="jempty">No match — try another word.</div>'; return; }
+    items.forEach(g=>{
+      const el=document.createElement("div"); el.className="term";
+      const title=g.s ? '<a href="reference.html#'+g.s+'" target="_blank" rel="noopener">'+g.t+'</a>' : g.t;
+      el.innerHTML='<h4>'+title+'</h4><p>'+g.d+'</p>'+(g.s?'<a class="more" href="reference.html#'+g.s+'" target="_blank" rel="noopener">Learn more →</a>':'');
+      grid.appendChild(el);
+    });
+  }
+  render("");
+  const inp=document.getElementById("jsearch");
+  if(inp) inp.addEventListener("input",e=>render(e.target.value));
 })();
 /* ===== Resources: agree / differ toggle ===== */
 document.querySelectorAll(".ctab").forEach(btn=>{
