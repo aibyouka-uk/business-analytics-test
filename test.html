@@ -89,6 +89,7 @@
     <div class="pill"><span><span id="bankCount">100</span>-question bank</span><span>20 random per test</span><span>shuffled answers</span></div>
     <p>Each attempt draws <b>20 questions at random</b> from a growing pool of <span id="bankCount2">100</span>, covering analytics types, machine learning, generative AI, data infrastructure, statistics, AI ethics, automation tiers, AI risk insurance and responsible-AI verification. Answer order is shuffled, so every run is different. You get instant feedback and a short explanation after each answer.</p>
     <button class="btn big" id="startBtn">Start test</button>
+    <div id="startbest" style="margin-top:14px;color:var(--accent);font-weight:600;font-size:.9rem"></div>
   </div>
 
   <!-- QUIZ -->
@@ -114,8 +115,10 @@
     <div class="big" id="finalPct">0%</div>
     <div class="verdict" id="verdict">—</div>
     <div class="score" id="finalScore"></div>
+    <div class="score" id="bestline" style="color:var(--accent);font-weight:700;margin-top:2px"></div>
     <div class="breakdown" id="breakdown"></div>
     <div class="nav" style="justify-content:center;margin-top:22px">
+      <button class="btn big" id="shareBtn">Share my score</button>
       <button class="btn big" id="againBtn">New 20-question test</button>
     </div>
   </div>
@@ -359,6 +362,7 @@ function showResults(){
   const pct=Math.round((score/test.length)*100);
   $("finalPct").textContent=pct+"%";
   $("finalScore").textContent=`${score} of ${test.length} correct`;
+  try{ const prev=+(localStorage.getItem("baBest")||0); const rec=score>prev; if(rec) localStorage.setItem("baBest",String(score)); $("bestline").textContent="Your best: "+Math.max(score,prev)+" / "+test.length+(rec&&prev>0?" — new personal best! 🎉":""); }catch(e){}
   let v;
   if(pct>=85) v="Excellent — strong command of the concepts and applications.";
   else if(pct>=70) v="Solid understanding — a few areas to revisit.";
@@ -381,6 +385,8 @@ $("againBtn").onclick=startTest;
 $("quitBtn").onclick=()=>{ $("quizCard").classList.add("hidden"); $("startCard").classList.remove("hidden"); };
 // reflect the real (uncapped) bank size in the intro
 ["bankCount","bankCount2"].forEach(id=>{ const el=$(id); if(el) el.textContent=BANK.length; });
+(function(){try{const b=+(localStorage.getItem("baBest")||0); if(b>0){const el=$("startbest"); if(el) el.textContent="🏆 Your personal best: "+b+" / 20";}}catch(e){}})();
+$("shareBtn").onclick=()=>{ const url=location.origin+location.pathname; const txt="I scored "+score+"/"+test.length+" on the Business Analytics & AI quiz — try it: "+url; const ok=()=>{$("shareBtn").textContent="Copied to clipboard ✓";setTimeout(()=>{$("shareBtn").textContent="Share my score";},2200);}; if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok).catch(()=>{$("shareBtn").textContent="Copy: "+txt;});}else{$("shareBtn").textContent="Copy: "+txt;} };
 </script>
 </body>
 </html>

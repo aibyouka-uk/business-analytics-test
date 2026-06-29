@@ -504,7 +504,7 @@ function findAnswer(qRaw){
   let best=null, score=0;
   for(const s of KB){ let sc=0; const hay=(s.t+" "+s.kw).toLowerCase(); for(const w of words){ if(hay.includes(w)) sc+=(s.t.toLowerCase().includes(w)?2:1); } if(sc>score){score=sc;best=s;} }
   if(best && score>0) return {a:best.a, id:best.id};
-  return {a:"I don't have that in the knowledge base yet. I can explain analytics types, supervised/unsupervised/reinforcement learning, deep learning, model evaluation, generative AI, NLP, data infrastructure, statistics, AI ethics and data privacy. Try rephrasing, or pick a suggestion below.", id:""};
+  return {a:"I don't cover that one yet — but here's where to look:", id:"", links:[{t:"\uD83D\uDCD6 Browse the full guide",href:"reference.html"},{t:"\uD83D\uDD0E Search Wikipedia",href:"https://en.wikipedia.org/w/index.php?search="+encodeURIComponent(qRaw)},{t:"\uD83C\uDF10 Search Google",href:"https://www.google.com/search?q="+encodeURIComponent(qRaw+" AI")}]};
 }
 function ask(text){
   if(!text || !text.trim()) return;
@@ -512,6 +512,7 @@ function ask(text){
   const r=findAnswer(text);
   let html=r.a;
   if(r.id){ const sec=KB.find(s=>s.id===r.id); html += '<br><a class="src" href="reference.html#'+r.id+'" target="_blank" rel="noopener">📖 Read the full section: '+(sec?sec.t:"")+' →</a>'; }
+  if(r.links){ r.links.forEach(l=>{ html += '<br><a class="src" href="'+l.href+'" target="_blank" rel="noopener">'+l.t+'</a>'; }); }
   setTimeout(()=>addMsg(html, "bot", false), 130);
 }
 const SUGGESTIONS=["What is machine learning?","Supervised vs unsupervised learning","What is overfitting?","Explain precision and recall","What is generative AI?","What does GDPR require?"];

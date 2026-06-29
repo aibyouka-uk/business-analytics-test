@@ -89,6 +89,7 @@
     <div class="pill"><span>банк из <span id="bankCount">100</span> вопросов</span><span>20 случайных за тест</span><span>перемешанные ответы</span></div>
     <p>Каждый заход берёт <b>20 случайных вопросов</b> из растущего банка из <span id="bankCount2">100</span> — виды аналитики, машинное обучение, генеративный ИИ, инфраструктура данных, статистика, этика ИИ, уровни автоматизации, страхование рисков ИИ и проверка ответственного ИИ. Порядок ответов перемешан, поэтому каждый раз по-новому. После каждого ответа — мгновенная обратная связь и короткое пояснение.</p>
     <button class="btn big" id="startBtn">Начать тест</button>
+    <div id="startbest" style="margin-top:14px;color:var(--accent);font-weight:600;font-size:.9rem"></div>
   </div>
 
   <!-- QUIZ -->
@@ -114,8 +115,10 @@
     <div class="big" id="finalPct">0%</div>
     <div class="verdict" id="verdict">—</div>
     <div class="score" id="finalScore"></div>
+    <div class="score" id="bestline" style="color:var(--accent);font-weight:700;margin-top:2px"></div>
     <div class="breakdown" id="breakdown"></div>
     <div class="nav" style="justify-content:center;margin-top:22px">
+      <button class="btn big" id="shareBtn">Поделиться результатом</button>
       <button class="btn big" id="againBtn">Новый тест из 20 вопросов</button>
     </div>
   </div>
@@ -359,6 +362,7 @@ function showResults(){
   const pct=Math.round((score/test.length)*100);
   $("finalPct").textContent=pct+"%";
   $("finalScore").textContent=`${score} из ${test.length} верно`;
+  try{ const prev=+(localStorage.getItem("baBest")||0); const rec=score>prev; if(rec) localStorage.setItem("baBest",String(score)); $("bestline").textContent="Личный рекорд: "+Math.max(score,prev)+" / "+test.length+(rec&&prev>0?" — новый личный рекорд! 🎉":""); }catch(e){}
   let v;
   if(pct>=85) v="Отлично — уверенное владение понятиями и применениями.";
   else if(pct>=70) v="Хороший уровень — есть что повторить.";
@@ -381,6 +385,8 @@ $("againBtn").onclick=startTest;
 $("quitBtn").onclick=()=>{ $("quizCard").classList.add("hidden"); $("startCard").classList.remove("hidden"); };
 // reflect the real (uncapped) bank size in the intro
 ["bankCount","bankCount2"].forEach(id=>{ const el=$(id); if(el) el.textContent=BANK.length; });
+(function(){try{const b=+(localStorage.getItem("baBest")||0); if(b>0){const el=$("startbest"); if(el) el.textContent="🏆 Личный рекорд: "+b+" / 20";}}catch(e){}})();
+$("shareBtn").onclick=()=>{ const url=location.origin+location.pathname; const txt="Мой результат: "+score+"/"+test.length+" в викторине по бизнес-аналитике и ИИ — попробуй: "+url; const ok=()=>{$("shareBtn").textContent="Скопировано ✓";setTimeout(()=>{$("shareBtn").textContent="Поделиться результатом";},2200);}; if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok).catch(()=>{$("shareBtn").textContent="Скопируй: "+txt;});}else{$("shareBtn").textContent="Скопируй: "+txt;} };
 </script>
 </body>
 </html>
