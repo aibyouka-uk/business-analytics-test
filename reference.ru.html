@@ -4,52 +4,64 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Справочник · Бизнес-аналитика и ИИ</title>
+<meta name="description" content="Справочник простыми словами: 22 подробные темы об ИИ и аналитике с наглядными схемами и первоисточниками — от машинного обучения до этики ИИ.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AI, explained simply">
+<meta property="og:title" content="Справочник по ИИ и аналитике простыми словами">
+<meta property="og:description" content="Справочник простыми словами: 22 подробные темы об ИИ и аналитике с наглядными схемами и первоисточниками — от машинного обучения до этики ИИ.">
+<meta property="og:url" content="https://aibyouka-uk.github.io/business-analytics-test/reference.ru.html">
+<meta property="og:image" content="https://aibyouka-uk.github.io/business-analytics-test/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Справочник по ИИ и аналитике простыми словами">
+<meta name="twitter:description" content="Справочник простыми словами: 22 подробные темы об ИИ и аналитике с наглядными схемами и первоисточниками — от машинного обучения до этики ИИ.">
+<meta name="twitter:image" content="https://aibyouka-uk.github.io/business-analytics-test/og.png">
 <style>
   :root{
-    --bg:#0f1226; --card:#1a1e3a; --accent:#5b8cff; --accent2:#7c5cff;
-    --good:#2ecc8f; --bad:#ff5c7c; --text:#e8ebff; --muted:#9aa0c7; --line:#2c3260;
+    --bg:#f7f8fa; --surface:#ffffff; --surface2:#f3f4f6;
+    --text:#111827; --muted:#6b7280; --line:#e5e7eb;
+    --accent:#4f46e5; --accent-d:#4338ca; --good:#059669; --bad:#dc2626;
+    --shadow:0 1px 2px rgba(16,24,40,.04),0 4px 12px rgba(16,24,40,.06);
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    background:radial-gradient(1200px 800px at 20% -10%,#23275a 0%,#0f1226 55%) fixed;color:var(--text);
-    line-height:1.62;}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--text);line-height:1.62;-webkit-font-smoothing:antialiased}
   a{color:var(--accent);text-decoration:none}
   a:hover{text-decoration:underline}
-  .top{position:sticky;top:0;z-index:20;background:rgba(15,18,38,.86);backdrop-filter:blur(10px);
+  .top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);
     border-bottom:1px solid var(--line);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
-  .top h1{font-size:1rem;margin:0;font-weight:700}
-  .top a.btn{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;padding:8px 16px;
-    border-radius:9px;font-size:.85rem;font-weight:600}
-  .top a.btn:hover{text-decoration:none;opacity:.92}
+  .top h1{font-size:1rem;margin:0;font-weight:800;letter-spacing:-.01em}
+  .top a.btn{background:var(--accent);color:#fff;padding:8px 16px;border-radius:9px;font-size:.85rem;font-weight:600}
+  .top a.btn:hover{text-decoration:none;background:var(--accent-d)}
   .wrap{max-width:880px;margin:0 auto;padding:28px 20px 80px}
   .lead{color:var(--muted);font-size:1rem;margin:6px 0 26px}
-  .toc{background:linear-gradient(180deg,#1a1e3a,#161a33);border:1px solid var(--line);border-radius:16px;
-    padding:20px 24px;margin-bottom:34px}
-  .toc h2{margin:0 0 12px;font-size:.8rem;text-transform:uppercase;letter-spacing:1px;color:var(--accent)}
+  .toc{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px 24px;margin-bottom:34px;box-shadow:var(--shadow)}
+  .toc h2{margin:0 0 12px;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--accent)}
   .toc ol{margin:0;padding-left:20px;columns:2;column-gap:34px}
   .toc li{margin:5px 0;break-inside:avoid}
   @media(max-width:560px){.toc ol{columns:1}}
   section{scroll-margin-top:64px;border-top:1px solid var(--line);padding:30px 0 6px}
   section:first-of-type{border-top:0}
-  section h2{font-size:1.5rem;margin:0 0 4px;display:flex;align-items:baseline;gap:10px}
+  section h2{font-size:1.5rem;margin:0 0 4px;display:flex;align-items:baseline;gap:10px;letter-spacing:-.02em;color:#0f172a}
   section h2 .num{font-size:.9rem;color:var(--accent);font-weight:700}
-  h3{font-size:1.05rem;margin:22px 0 6px;color:#cdd4ff}
+  h3{font-size:1.05rem;margin:22px 0 6px;color:#0f172a}
   p{margin:12px 0}
-  .key{background:#161a35;border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
-    padding:12px 16px;margin:16px 0;color:#dfe3ff}
-  figure{margin:22px 0;background:#11142b;border:1px solid var(--line);border-radius:14px;padding:18px;text-align:center}
+  .key{background:#eef2ff;border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:12px 16px;margin:16px 0;color:#312e81}
+  figure{margin:22px 0;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;text-align:center;box-shadow:var(--shadow)}
   figure svg{max-width:100%;height:auto}
   figcaption{color:var(--muted);font-size:.85rem;margin-top:10px}
-  .sources{margin:18px 0 4px;background:#12152d;border:1px solid var(--line);border-radius:12px;padding:12px 16px;font-size:.9rem}
-  .sources b{color:var(--accent);font-size:.78rem;text-transform:uppercase;letter-spacing:.7px}
+  .sources{margin:18px 0 4px;background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:12px 16px;font-size:.9rem}
+  .sources b{color:var(--accent);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
   .sources ul{margin:8px 0 0;padding-left:18px}
   .sources li{margin:4px 0;color:var(--muted)}
   .backtop{display:inline-block;margin-top:14px;font-size:.82rem;color:var(--muted)}
   .pill{display:inline-block;font-size:.7rem;border:1px solid var(--line);border-radius:99px;padding:2px 10px;color:var(--muted);margin-left:6px}
   /* SVG helpers */
-  .svg-label{fill:var(--text);font-size:13px;font-family:inherit}
-  .svg-muted{fill:var(--muted);font-size:11px;font-family:inherit}
+  .svg-label{fill:#1f2937;font-size:13px;font-family:inherit}
+  .svg-muted{fill:#6b7280;font-size:11px;font-family:inherit}
 </style>
 </head>
 <body>
@@ -146,10 +158,10 @@
           </linearGradient>
         </defs>
         <g font-family="inherit">
-          <rect x="20" y="60" width="160" height="60" rx="10" fill="#161a35" stroke="#2c3260"/>
-          <rect x="200" y="60" width="160" height="60" rx="10" fill="#1b2348" stroke="#2c3260"/>
-          <rect x="380" y="60" width="160" height="60" rx="10" fill="#222a55" stroke="#3a4570"/>
-          <rect x="560" y="60" width="180" height="60" rx="10" fill="#2b2f63" stroke="#4a4f86"/>
+          <rect x="20" y="60" width="160" height="60" rx="10" fill="#eef2ff" stroke="#c7d2fe"/>
+          <rect x="200" y="60" width="160" height="60" rx="10" fill="#e0e7ff" stroke="#c7d2fe"/>
+          <rect x="380" y="60" width="160" height="60" rx="10" fill="#c7d2fe" stroke="#a5b4fc"/>
+          <rect x="560" y="60" width="180" height="60" rx="10" fill="#a5b4fc" stroke="#818cf8"/>
           <text x="100" y="86" text-anchor="middle" class="svg-label" font-weight="700">Описательная</text>
           <text x="100" y="104" text-anchor="middle" class="svg-muted">Что произошло?</text>
           <text x="280" y="86" text-anchor="middle" class="svg-label" font-weight="700">Диагностическая</text>
@@ -184,18 +196,18 @@
     <figure>
       <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Machine learning taxonomy">
         <g font-family="inherit">
-          <rect x="300" y="14" width="160" height="44" rx="10" fill="#2b2f63" stroke="#4a4f86"/>
+          <rect x="300" y="14" width="160" height="44" rx="10" fill="#a5b4fc" stroke="#818cf8"/>
           <text x="380" y="41" text-anchor="middle" class="svg-label" font-weight="700">Машинное обучение</text>
-          <line x1="380" y1="58" x2="130" y2="96" stroke="#3a4570"/>
-          <line x1="380" y1="58" x2="380" y2="96" stroke="#3a4570"/>
-          <line x1="380" y1="58" x2="630" y2="96" stroke="#3a4570"/>
-          <rect x="40" y="96" width="180" height="48" rx="10" fill="#161a35" stroke="#2c3260"/>
+          <line x1="380" y1="58" x2="130" y2="96" stroke="#a5b4fc"/>
+          <line x1="380" y1="58" x2="380" y2="96" stroke="#a5b4fc"/>
+          <line x1="380" y1="58" x2="630" y2="96" stroke="#a5b4fc"/>
+          <rect x="40" y="96" width="180" height="48" rx="10" fill="#eef2ff" stroke="#c7d2fe"/>
           <text x="130" y="120" text-anchor="middle" class="svg-label" font-weight="700">С учителем</text>
           <text x="130" y="136" text-anchor="middle" class="svg-muted">размеченные данные</text>
-          <rect x="290" y="96" width="180" height="48" rx="10" fill="#161a35" stroke="#2c3260"/>
+          <rect x="290" y="96" width="180" height="48" rx="10" fill="#eef2ff" stroke="#c7d2fe"/>
           <text x="380" y="120" text-anchor="middle" class="svg-label" font-weight="700">Без учителя</text>
           <text x="380" y="136" text-anchor="middle" class="svg-muted">без меток</text>
-          <rect x="540" y="96" width="180" height="48" rx="10" fill="#161a35" stroke="#2c3260"/>
+          <rect x="540" y="96" width="180" height="48" rx="10" fill="#eef2ff" stroke="#c7d2fe"/>
           <text x="630" y="120" text-anchor="middle" class="svg-label" font-weight="700">С подкреплением</text>
           <text x="630" y="136" text-anchor="middle" class="svg-muted">награды</text>
           <text x="130" y="176" text-anchor="middle" class="svg-muted">Классификация ·</text>
@@ -259,9 +271,9 @@
     <figure>
       <svg viewBox="0 0 620 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Обучение с подкреплением loop">
         <g font-family="inherit">
-          <rect x="60" y="80" width="170" height="60" rx="12" fill="#2b2f63" stroke="#4a4f86"/>
+          <rect x="60" y="80" width="170" height="60" rx="12" fill="#a5b4fc" stroke="#818cf8"/>
           <text x="145" y="116" text-anchor="middle" class="svg-label" font-weight="700">Агент</text>
-          <rect x="390" y="80" width="170" height="60" rx="12" fill="#161a35" stroke="#2c3260"/>
+          <rect x="390" y="80" width="170" height="60" rx="12" fill="#eef2ff" stroke="#c7d2fe"/>
           <text x="475" y="116" text-anchor="middle" class="svg-label" font-weight="700">Среда</text>
           <path d="M230 96 H390" stroke="#5b8cff" stroke-width="2.5" marker-end="url(#arr)"/>
           <text x="310" y="88" text-anchor="middle" class="svg-muted">действие</text>
@@ -312,16 +324,16 @@
           <text x="150" y="52" text-anchor="middle" class="svg-muted">Положит.</text>
           <text x="370" y="52" text-anchor="middle" class="svg-muted">Отрицат.</text>
           <text x="34" y="120" text-anchor="middle" class="svg-muted" transform="rotate(-90 34 120)">Факт</text>
-          <rect x="60" y="64" width="220" height="70" fill="rgba(46,204,143,.18)" stroke="#2c3260"/>
+          <rect x="60" y="64" width="220" height="70" fill="rgba(46,204,143,.18)" stroke="#c7d2fe"/>
           <text x="170" y="96" text-anchor="middle" class="svg-label" font-weight="700">Истинно положит.</text>
           <text x="170" y="116" text-anchor="middle" class="svg-muted">верно помечено</text>
-          <rect x="280" y="64" width="200" height="70" fill="rgba(255,92,124,.16)" stroke="#2c3260"/>
+          <rect x="280" y="64" width="200" height="70" fill="rgba(255,92,124,.16)" stroke="#c7d2fe"/>
           <text x="380" y="96" text-anchor="middle" class="svg-label" font-weight="700">Ложно отрицат.</text>
           <text x="380" y="116" text-anchor="middle" class="svg-muted">пропущено</text>
-          <rect x="60" y="134" width="220" height="70" fill="rgba(255,92,124,.16)" stroke="#2c3260"/>
+          <rect x="60" y="134" width="220" height="70" fill="rgba(255,92,124,.16)" stroke="#c7d2fe"/>
           <text x="170" y="166" text-anchor="middle" class="svg-label" font-weight="700">Ложно положит.</text>
           <text x="170" y="186" text-anchor="middle" class="svg-muted">ложная тревога</text>
-          <rect x="280" y="134" width="200" height="70" fill="rgba(46,204,143,.18)" stroke="#2c3260"/>
+          <rect x="280" y="134" width="200" height="70" fill="rgba(46,204,143,.18)" stroke="#c7d2fe"/>
           <text x="380" y="166" text-anchor="middle" class="svg-label" font-weight="700">Истинно отрицат.</text>
           <text x="380" y="186" text-anchor="middle" class="svg-muted">верно отклонено</text>
         </g>
@@ -380,14 +392,14 @@
     <figure>
       <svg viewBox="0 0 720 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ETL pipeline">
         <g font-family="inherit">
-          <rect x="20" y="44" width="120" height="48" rx="10" fill="#161a35" stroke="#2c3260"/>
+          <rect x="20" y="44" width="120" height="48" rx="10" fill="#eef2ff" stroke="#c7d2fe"/>
           <text x="80" y="73" text-anchor="middle" class="svg-label">Источники</text>
-          <rect x="190" y="44" width="120" height="48" rx="10" fill="#1b2348" stroke="#2c3260"/>
+          <rect x="190" y="44" width="120" height="48" rx="10" fill="#e0e7ff" stroke="#c7d2fe"/>
           <text x="250" y="67" text-anchor="middle" class="svg-label">Извлечь /</text>
           <text x="250" y="82" text-anchor="middle" class="svg-muted">Преобразовать</text>
-          <rect x="360" y="44" width="120" height="48" rx="10" fill="#222a55" stroke="#3a4570"/>
+          <rect x="360" y="44" width="120" height="48" rx="10" fill="#c7d2fe" stroke="#a5b4fc"/>
           <text x="420" y="73" text-anchor="middle" class="svg-label">Загрузить</text>
-          <rect x="530" y="44" width="170" height="48" rx="10" fill="#2b2f63" stroke="#4a4f86"/>
+          <rect x="530" y="44" width="170" height="48" rx="10" fill="#a5b4fc" stroke="#818cf8"/>
           <text x="615" y="67" text-anchor="middle" class="svg-label">Хранилище /</text>
           <text x="615" y="82" text-anchor="middle" class="svg-muted">BI и дашборды</text>
           <path d="M140 68 H190" stroke="#5b8cff" stroke-width="2.5" marker-end="url(#arr2)"/>
