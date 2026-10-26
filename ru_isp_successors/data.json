@@ -1,0 +1,33 @@
+{
+  "_note": "Edges are directed: from -> to. Confidence: high/medium/low/unverified. Fill 'ogrn'/'inn' from EGRUL (egrul.nalog.ru) to upgrade confidence. Dates are ISO partial (YYYY, YYYY-MM, YYYY-MM-DD) or null if unknown.",
+  "entities": {
+    "su29": {"names": ["Су-29 Телеком", "Су 29 телеком", "Su-29 Telecom", "Su29 Telecom"], "kind": "brand/operator", "city": "Moscow"},
+    "iskratelecom": {"names": ["Искрателеком", "ЗАО Искрателеком", "АО Искрателеком", "Iskratelecom"], "kind": "legal entity", "city": "Moscow", "notes": "Wikipedia gives 2002 as founding year; part of the VestCall group. Company self-description elsewhere says 'since 2007'."},
+    "gorcom": {"names": ["Горком", "ГорКом", "Gorcom", "GorCom", "Телеком ГорКом"], "kind": "brand/operator group", "city": "Moscow"},
+    "gorcom_yz": {"names": ["ГорКом Юг-Запад", "Gorcom Yug-Zapad"], "kind": "branch/legal entity", "city": "Moscow"},
+    "sevensky_brand": {"names": ["Seven Sky", "Sevensky", "SevenSky", "Севен Скай", "СевенСкай", "Cевен Скай"], "kind": "brand", "city": "Moscow"},
+    "sevensky_ooo": {"names": ["ООО Севен Скай", "ООО \"Севен Скай\""], "kind": "legal entity", "inn": "7704372625", "registered": "2016-09-22", "city": "Moscow", "notes": "Per rusprofile search snippet; verify in EGRUL."},
+    "inttel": {"names": ["Инт-Тел", "Инт-тел", "Интел-Тел", "Интелтел", "Int-Tel", "Intel-Tel", "IntTel", "Inttel"], "kind": "brand (ISP)", "city": "Moscow", "site": "int-tel.net"},
+    "gorod_telecom": {"names": ["Город Телеком", "Gorod Telecom", "GorodTelecom"], "kind": "unknown", "notes": "Only an app listing (RuStore, com.gorodtelecom.app) found. No registry data located."}
+  },
+  "edges": [
+    {"from": "su29", "to": "iskratelecom", "type": "merger/renaming", "start": null, "end": null, "confidence": "medium",
+     "source": "Wikipedia ru: Искрателеком (via search snippet)", "note": "Article says the provider began as 'Су 29 телеком' and its name changed through mergers."},
+    {"from": "iskratelecom", "to": "gorcom", "type": "rebrand", "start": null, "end": null, "confidence": "medium",
+     "source": "Wikipedia ru: Искрателеком (via search snippet)", "note": "Rebranded to 'ГорКом'; both brands later coexisted."},
+    {"from": "gorcom", "to": "sevensky_brand", "type": "rebrand", "start": "2013-12", "end": null, "confidence": "medium",
+     "source": "Wikipedia ru snippet + secondary source (late-2013 rebrand to Seven Sky for consumers)", "note": "Brands coexisted afterwards; consumer service under Seven Sky."},
+    {"from": "iskratelecom", "to": "sevensky_brand", "type": "brand", "start": "2013-12", "end": null, "confidence": "medium",
+     "source": "Habr career page / provider directories describe Seven Sky as operating under АО Искрателеком", "note": ""},
+    {"from": "sevensky_brand", "to": "sevensky_ooo", "type": "legal entity of brand", "start": "2016-09-22", "end": null, "confidence": "medium",
+     "source": "rusprofile.ru/id/10641257 (search snippet)", "note": "ООО Севен Скай registered 2016-09-22; relationship to АО Искрателеком (assignment of subscribers?) not established."},
+    {"from": "gorcom_yz", "to": "gorcom", "type": "part of", "start": null, "end": null, "confidence": "low",
+     "source": "Blog (dobriy-samarit.livejournal.com) saying UFAS approved purchase of ГорКом Юг-Запад by a Cyprus investment company", "note": "Low-reliability source; ownership change, not a successor."},
+    {"from": "inttel", "to": "sevensky_ooo", "type": "brand operated by", "start": null, "end": null, "confidence": "medium",
+     "source": "int-tel.net/payment lists 'Инт-тел (ООО \"Севен Скай\")'", "note": "Current operator of the Int-Tel brand per its own site. Date of transfer unknown; check whether Int-Tel was an independent ISP that Seven Sky absorbed or a sub-brand."},
+    {"from": "inttel", "to": "sevensky_brand", "type": "affiliated brand", "start": null, "end": null, "confidence": "medium",
+     "source": "same as above", "note": ""},
+    {"from": "gorod_telecom", "to": "gorcom", "type": "possible link", "start": null, "end": null, "confidence": "unverified",
+     "source": "User hypothesis", "note": "No source found linking Город Телеком to ГорКом/Seven Sky."}
+  ]
+}
